@@ -5,10 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/27 13:25:02 by artberna          #+#    #+#              #
-#    Updated: 2024/09/12 14:30:27 by artberna         ###   ########.fr        #
+#    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
+#    Updated: 2024/09/12 14:54:40 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#******************************************************************************
+#                                    MAIN                                     *
+#******************************************************************************
 
 NAME = minishell
 HEADER = minishell.h
@@ -25,7 +29,7 @@ MY_LIBRARY = my_library
 #                       SOURCES, OBJECTS & DEPENDENCIES                       *
 #******************************************************************************
 
-MINISHELL_SRC = 
+MINISHELL_SRC =
 
 MINISHELL_FLS = $(addsuffix .c, $(MINISHELL_SRC))
 
@@ -65,15 +69,15 @@ BLEU = \033[1;34m
 all : $(NAME)
 	@echo "$(ROSE)COMPILATION FINISHED, $(NAME) IS CREATED!$(RESET)"
 
-$(NAME) : $(OBJ)| $(MY_LIBRARY)/my_library.a
-	@$(CC) $(FLAGS) $(SPECIAL_FLAGS) $(LIB_FLAGS) $(OBJ) -o $(NAME)
+$(NAME) : $(OBJ) | $(MY_LIBRARY)/my_library.a
+	@$(CC) $(FLAGS) $(OBJ) $(LIB_FLAGS) $(SPECIAL_FLAGS) -o $(NAME)
 
 $(MY_LIBRARY)/my_library.a :
 	@make -C $(MY_LIBRARY)
 
 $(OBJ_DEP_DIR)%.o: %.c $(HEADER) | $(OBJF)
 	@$(CC) $(FLAGS) -MMD -MP -c $< -o $@
-	@echo "$(BLEU)Compiling $< to $@.$(RESET)"
+	@echo "$(BLEU)Compiling $< to $@$(RESET)"
 
 $(OBJF):
 	@mkdir -p $(OBJ_DEP_DIR)
@@ -81,12 +85,13 @@ $(OBJF):
 clean :
 	@$(RM) $(OBJ_DEP_DIR)
 	@make clean -C $(MY_LIBRARY)
-	@echo "$(VIOLET)Suppressing objects & dependencies files of $(NAME).$(RESET)"
+	@echo "$(VIOLET)Suppressing objects & dependencies files of $(NAME)$(RESET)"
 
 fclean : clean
 	@$(RM) $(NAME)
 	@rm -f $(MY_LIBRARY)/my_library.a
-	@echo "$(VERT)Suppressing archives $(NAME).$(RESET)"
+	@echo "$(VERT)Suppressing archives $(MY_LIBRARY).a$(RESET)"
+	@echo "$(VERT)Suppressing archives $(NAME)$(RESET)"
 
 re : fclean all
 
