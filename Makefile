@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/27 13:25:02 by artberna          #+#    #+#              #
-#    Updated: 2024/09/11 10:46:41 by artberna         ###   ########.fr        #
+#    Updated: 2024/09/12 10:36:22 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_DIR = src/
 #                       SOURCES, OBJECTS & DEPENDENCIES                       *
 #******************************************************************************
 
-MINISHELL_SRC = random
+MINISHELL_SRC = 
 
 MINISHELL_FLS = $(addsuffix .c, $(MINISHELL_SRC))
 

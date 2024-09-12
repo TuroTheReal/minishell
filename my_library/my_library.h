@@ -6,23 +6,30 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:41:00 by artberna          #+#    #+#             */
-/*   Updated: 2024/06/18 10:30:06 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/12 10:35:57 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MY_LIBRARY_H
 # define MY_LIBRARY_H
 
+# include <errno.h>
+# include <fcntl.h>
+# include <inttypes.h>
+# include <limits.h>
+# include <pthread.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stddef.h>
 # include <string.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <stdint.h>
 # include <stdio.h>
 # include <stdarg.h>
-# include <limits.h>
-# include <inttypes.h>
-# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <signal.h>
+# include <unistd.h>
 
 //  *************************  LIBFT  *************************
 
