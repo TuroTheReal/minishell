@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/27 13:25:02 by artberna          #+#    #+#              #
-#    Updated: 2024/09/12 10:36:22 by artberna         ###   ########.fr        #
+#    Updated: 2024/09/12 14:30:27 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ HEADER = minishell.h
 
 OBJ_DEP_DIR = obj_dep/
 SRC_DIR = src/
+MY_LIBRARY = my_library
 
 #******************************************************************************
 #                       SOURCES, OBJECTS & DEPENDENCIES                       *
@@ -45,6 +46,7 @@ SPECIAL_FLAGS = -lreadline
 FLAGS = -Wall -Wextra -Werror -I. -g3
 RM = rm -rf
 AR = ar rcs
+LIB_FLAGS = -L./$(MY_LIBRARY) -l:my_library.a
 
 #******************************************************************************
 #                                  COLORS                                     *
@@ -63,8 +65,11 @@ BLEU = \033[1;34m
 all : $(NAME)
 	@echo "$(ROSE)COMPILATION FINISHED, $(NAME) IS CREATED!$(RESET)"
 
-$(NAME) : $(OBJ)
-	@$(CC) $(FLAGS) $(SPECIAL_FLAGS) $(OBJ) -o $(NAME)
+$(NAME) : $(OBJ)| $(MY_LIBRARY)/my_library.a
+	@$(CC) $(FLAGS) $(SPECIAL_FLAGS) $(LIB_FLAGS) $(OBJ) -o $(NAME)
+
+$(MY_LIBRARY)/my_library.a :
+	@make -C $(MY_LIBRARY)
 
 $(OBJ_DEP_DIR)%.o: %.c $(HEADER) | $(OBJF)
 	@$(CC) $(FLAGS) -MMD -MP -c $< -o $@
@@ -75,10 +80,12 @@ $(OBJF):
 
 clean :
 	@$(RM) $(OBJ_DEP_DIR)
+	@make clean -C $(MY_LIBRARY)
 	@echo "$(VIOLET)Suppressing objects & dependencies files of $(NAME).$(RESET)"
 
 fclean : clean
 	@$(RM) $(NAME)
+	@rm -f $(MY_LIBRARY)/my_library.a
 	@echo "$(VERT)Suppressing archives $(NAME).$(RESET)"
 
 re : fclean all
