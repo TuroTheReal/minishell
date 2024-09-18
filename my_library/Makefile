@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/06/24 10:12:16 by artberna         ###   ########.fr        #
+#    Updated: 2024/09/18 13:31:48 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp \
 ft_strnstr ft_strrchr ft_strtrim ft_substr ft_tolower \
 ft_toupper ft_lstadd_back ft_lstadd_front ft_lstclear \
 ft_lstdelone ft_lstiter ft_lstlast ft_lstmap \
-ft_lstnew ft_lstsize
+ft_lstnew ft_lstsize ft_strndup
 LIBFT_FLS = $(addprefix $(LIBFT_DIR),$(addsuffix .c, $(LIBFT_SRC)))
 
 PRINTF_SRC = ft_printf ft_write

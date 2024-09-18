@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/12 16:29:28 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:58:48 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,30 @@
 
 typedef struct s_cmds	t_cmds;
 
+# define IS_TOKEN "<>|\'\""
+
 typedef enum e_token_type
 {
-	TOK_CMD,
-	TOK_ARG,
-	TOK_PIPE,
+	TOK_STR,
 	TOK_I_REDIR,
 	TOK_O_REDIR,
+	TOK_APP_REDIR,
+	TOK_HEREDOC,
 	TOK_PIPE,
-	TOK_EOF,
-	TOK_S_QUOTE,
-	TOK_D_QUOTE,
-	TOK_OTHERS,
 }	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type	type;
-	char			*input;
+	int				index;
+	char			*token;
+	struct s_token	*next;
 }					t_token;
 
 typedef struct s_gdata
 {
 	unsigned int	nb_cmd;
-	int				ifile;
-	int				ofile;
+	char			*input;
 	t_cmds			*s_cmds;
 }					t_gdata;
 
@@ -53,21 +52,36 @@ typedef enum e_cmd_type
 {
 	CMD,
 	PIPE,
+	BUILTIN,
 	HEREDOC,
-	I_FILE,
-	O_FILE,
 }	t_cmd_type;
 
 typedef struct s_cmds
 {
 	unsigned int	index;
-	t_cmd_type		type;
-	unsigned int	nb_tok;
+	t_cmd_type		type_redir;
 	char			**cmd;
+	int				ifile;
+	int				ofile;
 	struct s_gdata	*g_data;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }					t_cmds;
+
+// Utils
+void	exit_error(const char *s);
+
+// Lexer
+t_token	*lexer(t_gdata *data);
+
+// Lexer Handler
+t_token	*tokenize(char *s);
+
+// Lexer Utils
+t_token	*create_token(const char *s, int len, t_token_type type);
+void	add_token(t_token **tok, t_token *new_node);
+void	free_token(t_token *tok);
+void	print_token(t_token *tok); //debug
 
 /******************************************************************************
 #                                    DIEGO                                    *
