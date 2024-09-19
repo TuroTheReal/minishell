@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/09/18 17:20:05 by artberna         ###   ########.fr        #
+#    Updated: 2024/09/19 16:25:17 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ MY_LIBRARY = my_library
 #                       SOURCES, OBJECTS & DEPENDENCIES                       *
 #******************************************************************************
 
-MINISHELL_SRC = main utils lexer lexer_utils lexer_handler
+MINISHELL_SRC = main utils lexer lexer_utils lexer_handler input_error_handler \
+parser parser_utils parser_handler
 
 MINISHELL_FLS = $(addsuffix .c, $(MINISHELL_SRC))
 

@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   input_error_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/12 11:46:15 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/19 16:51:18 by artberna         ###   ########.fr       */
+/*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
+/*   Updated: 2024/09/19 17:06:19 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*lexer(t_gdata *data)
+int	input_error_handler(t_token *tok)
 {
-	int		i;
-	int		j;
-	t_token	*tok;
-	t_token	*tmp;
-
-	tok = NULL;
-	i = 0;
-	j = 0;
-	while (data->input[i])
+	while (tok)
 	{
-		if (data->input[i] != ' ' && data->input[i] != '\t')
+		if (tok->token[0] == 'X')
 		{
-			tmp = tokenize(&data->input[i]);
-			if (!tmp)
-				return (free_token(tok), NULL);
-			tmp->index = j++;
-			add_token(&tok, tmp);
-			i += ft_strlen(tmp->token);
+			free_token(tok);
+			ft_printf("SYNTAX ERROR\n");
+			rl_on_new_line();
+			return (1);
 		}
+		if (tok->next)
+			tok = tok->next;
 		else
-			i++;
+			return (0);
 	}
-	return (tok);
+	return (0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/18 16:58:48 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:31:57 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ typedef enum e_token_type
 	TOK_APP_REDIR,
 	TOK_HEREDOC,
 	TOK_PIPE,
+	TOK_COMMAND,
+	TOK_ARG,
+	TOK_FILE,
 }	t_token_type;
 
 typedef struct s_token
@@ -83,6 +86,16 @@ void	add_token(t_token **tok, t_token *new_node);
 void	free_token(t_token *tok);
 void	print_token(t_token *tok); //debug
 
+// Error Input Handler
+int		input_error_handler(t_token *tok);
+
+// Parser
+t_cmds	*parser(t_token *tok, char **env);
+
+// Parser Handler
+
+
+// Parser Utils
 /******************************************************************************
 #                                    DIEGO                                    *
 #*****************************************************************************/
