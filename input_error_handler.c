@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/20 15:02:39 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:04:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	handle_redir(t_token *tok)
 	{
 		if (tok->type != TOK_STR && tok->type != TOK_PIPE)
 		{
-			if (tok->type == TOK_IR && !tok->next) \
+			if (tok->type == TOK_IR && !tok->next)
 				return (printf("%s", NL_ERROR), 1);
 			else if (tok->type == TOK_IR && tok->next->type == TOK_OR)
 				return (printf("%s", OR_ERROR), 1);
