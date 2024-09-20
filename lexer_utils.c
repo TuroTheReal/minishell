@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:34:48 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/19 16:49:06 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 11:29:30 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_token	*create_token(const char *s, int len, t_token_type type)
 		exit_error("strdup input token failed");
 	}
 	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
@@ -70,5 +71,6 @@ void	add_token(t_token **tok, t_token *new_node)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_node;
+		new_node->prev = tmp;
 	}
 }

@@ -6,11 +6,28 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/20 11:21:21 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:45:43 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	handle_redir(t_token *tok)
+{
+	while (tok)
+	{
+		if (tok->type != TOK_STR && tok->type != TOK_PIPE)
+		{
+			if (tok->type == TOK_I_REDIR && tok->next->type == TOK_O_REDIR)
+				return (printf("%s", OR_ERROR), 1);
+			if (!tok->next || (tok->type == TOK_O_REDIR && \
+				tok->next->type == TOK_I_REDIR))
+				return (printf("%s", NL_ERROR), 1);
+		}
+		tok = tok->next;
+	}
+	return (0);
+}
 
 static int	handle_str(t_token *tok)
 {
@@ -36,13 +53,8 @@ static int	handle_pipe(t_token *tok)
 	{
 		if (tok->type == TOK_PIPE)
 		{
-			if (!tok->next || tok->next->type == TOK_PIPE)
-				return (ft_printf("%s", S_PIPE_ERROR), 1);
-			else if (tok->next->type != TOK_STR)
-			{
-				if (tok->next->type == TOK_PIPE)
-					return (ft_printf("%s", D_PIPE_ERROR), 1);
-			}
+			if (!tok->prev || !tok->next || tok->next->type != TOK_STR)
+				return (ft_printf("%s", PIPE_ERROR), 1);
 		}
 		if (tok->next)
 			tok = tok->next;
@@ -59,7 +71,7 @@ int	input_error_handler(t_token **tok)
 	error = 0;
 	error += handle_str(*tok);
 	error += handle_pipe(*tok);
-	// error += handle_i_redir_app(tok);
+	error += handle_redir(*tok);
 	// error += handle_o_redir_heredoc(tok);
 	return (error);
 }

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:38:50 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/19 14:33:41 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:45:20 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static t_token_type	get_token_type(char *s)
 	{
 		if (s[1] == '<')
 			return (TOK_HEREDOC);
-		return (TOK_I_REDIR);
+		return (TOK_O_REDIR);
 	}
 	else if (s[0] == '>')
 	{
 		if (s[1] == '>')
 			return (TOK_APP_REDIR);
-		return (TOK_O_REDIR);
+		return (TOK_I_REDIR);
 	}
 	return (TOK_STR);
 }
