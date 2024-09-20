@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:38:50 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/20 14:45:20 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:02:18 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static int	get_token_len(char *s, t_token_type type)
 	int	len;
 
 	len = 0;
-	if (type == TOK_I_REDIR || type == TOK_O_REDIR || type == TOK_PIPE)
+	if (type == TOK_IR || type == TOK_OR || type == TOK_PIPE)
 		len = 1;
-	else if (type == TOK_APP_REDIR || type == TOK_HEREDOC)
+	else if (type == TOK_APP || type == TOK_HDOC)
 		len = 2;
 	else if (type == TOK_STR)
 		len = get_token_str_len(s);
@@ -61,14 +61,14 @@ static t_token_type	get_token_type(char *s)
 	else if (s[0] == '<')
 	{
 		if (s[1] == '<')
-			return (TOK_HEREDOC);
-		return (TOK_O_REDIR);
+			return (TOK_HDOC);
+		return (TOK_OR);
 	}
 	else if (s[0] == '>')
 	{
 		if (s[1] == '>')
-			return (TOK_APP_REDIR);
-		return (TOK_I_REDIR);
+			return (TOK_APP);
+		return (TOK_IR);
 	}
 	return (TOK_STR);
 }

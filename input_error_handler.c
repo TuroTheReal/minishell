@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/20 14:45:43 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:02:39 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,21 @@ static int	handle_redir(t_token *tok)
 	{
 		if (tok->type != TOK_STR && tok->type != TOK_PIPE)
 		{
-			if (tok->type == TOK_I_REDIR && tok->next->type == TOK_O_REDIR)
-				return (printf("%s", OR_ERROR), 1);
-			if (!tok->next || (tok->type == TOK_O_REDIR && \
-				tok->next->type == TOK_I_REDIR))
+			if (tok->type == TOK_IR && !tok->next) \
 				return (printf("%s", NL_ERROR), 1);
+			else if (tok->type == TOK_IR && tok->next->type == TOK_OR)
+				return (printf("%s", OR_ERROR), 1);
+			else if (!tok->next || (tok->type == TOK_OR && \
+				tok->next->type == TOK_IR))
+				return (printf("%s", NL_ERROR), 1);
+			else if (tok->type == TOK_IR && tok->next->type == TOK_IR)
+				return (printf("%s", IR_ERROR), 1);
+			else if (tok->type == TOK_OR && tok->next->type == TOK_OR)
+				return (printf("%s", OR_ERROR), 1);
+			else if (tok->type == TOK_APP && tok->next->type == TOK_APP)
+				return (printf("%s", APP_ERROR), 1);
+			else if (tok->type == TOK_HDOC && tok->next->type == TOK_HDOC)
+				return (printf("%s", HDOC_ERROR), 1);
 		}
 		tok = tok->next;
 	}

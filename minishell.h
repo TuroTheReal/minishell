@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/20 14:36:51 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:01:44 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_cmds	t_cmds;
 typedef enum e_token_type
 {
 	TOK_STR,
-	TOK_I_REDIR,
-	TOK_O_REDIR,
-	TOK_APP_REDIR,
-	TOK_HEREDOC,
+	TOK_IR,
+	TOK_OR,
+	TOK_APP,
+	TOK_HDOC,
 	TOK_PIPE,
 	TOK_COMMAND,
 	TOK_ARG,
