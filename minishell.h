@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/19 16:31:57 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:54:30 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 typedef struct s_cmds	t_cmds;
 
 # define IS_TOKEN "<>|\'\""
+# define S_PIPE_ERROR "minishell: syntax error near unexpected token \'|\'\n"
+# define D_PIPE_ERROR "minishell: syntax error near unexpected token \'||\'\n"
 
 typedef enum e_token_type
 {
@@ -87,7 +89,7 @@ void	free_token(t_token *tok);
 void	print_token(t_token *tok); //debug
 
 // Error Input Handler
-int		input_error_handler(t_token *tok);
+int		input_error_handler(t_token **tok);
 
 // Parser
 t_cmds	*parser(t_token *tok, char **env);

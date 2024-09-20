@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/19 17:06:57 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:35:41 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		data->input = readline("minishell >");
+		add_history(data->input);
 		tok = lexer(data);
-		if (input_error_handler(tok))
+		if (input_error_handler(&tok))
 			continue; ;
 		// cmd = parser(tok, env);
-		// rl_on_new_line(); // a check
+		rl_on_new_line(); // a check
 		print_token(tok);
 		free_token(tok);
 		free(data->input);
 	}
+	clear_history();
 	free(data);
 	return (0);
 }
