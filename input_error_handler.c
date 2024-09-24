@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/24 10:30:57 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:50:51 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,27 @@ static int	handle_pipe(t_token *tok)
 	return (0);
 }
 
-int	input_error_handler(t_token **tok)
+int	input_error_handler(t_token **tok, t_gdata *data)
 {
-	int	error;
+	int		error;
+	t_token	*tmp;
 
 	error = 0;
-	while (*tok)
+	tmp = *tok;
+	while (tmp)
 	{
-		error += handle_pipe(*tok);
-		error += handle_redir(*tok);
-		error += handle_str(*tok);
+		error += handle_pipe(tmp);
+		error += handle_redir(tmp);
+		error += handle_str(tmp);
 		if (error)
+		{
+			rl_on_new_line();
+			free_token(*tok);
+			free(data->input);
 			return (error);
-		if ((*tok)->next)
-			(*tok) = (*tok)->next;
+		}
+		if ((tmp)->next)
+			(tmp) = (tmp)->next;
 	}
 	return (error);
 }

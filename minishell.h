@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/20 15:01:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:47:59 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	free_token(t_token *tok);
 void	print_token(t_token *tok); //debug
 
 // Error Input Handler
-int		input_error_handler(t_token **tok);
+int		input_error_handler(t_token **tok, t_gdata *data);
 
 // Parser
 t_cmds	*parser(t_token *tok, char **env);
