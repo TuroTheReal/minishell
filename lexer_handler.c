@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:38:50 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/20 15:02:18 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:18:24 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static int	get_close_quote(char *s, char c)
 	i = 1;
 	while (s[i] && s[i] != c)
 		i++;
-	return (i);
+	if (s[i] == c)
+		return (i);
+	return (i - 1);
 }
 
 static int	get_token_str_len(char *s)

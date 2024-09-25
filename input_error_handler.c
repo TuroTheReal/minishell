@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/24 10:50:51 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:20:28 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,15 @@ int	input_error_handler(t_token **tok, t_gdata *data)
 		error += handle_str(tmp);
 		if (error)
 		{
-			rl_on_new_line();
 			free_token(*tok);
 			free(data->input);
+			rl_on_new_line();
 			return (error);
 		}
 		if ((tmp)->next)
 			(tmp) = (tmp)->next;
+		else
+			return (error);
 	}
 	return (error);
 }

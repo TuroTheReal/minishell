@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/24 10:47:59 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:18:32 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_cmds	t_cmds;
 # define OR_ERROR "minishell: syntax error near unexpected token '<'\n"
 # define APP_ERROR "minishell: syntax error near unexpected token '>>'\n"
 # define HDOC_ERROR "minishell: syntax error near unexpected token '<<'\n"
+# define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
 
 typedef enum e_token_type
 {
@@ -37,6 +38,8 @@ typedef enum e_token_type
 	TOK_APP,
 	TOK_HDOC,
 	TOK_PIPE,
+	TOK_SQUOTE,
+	TOK_DQUOTE,
 	TOK_COMMAND,
 	TOK_ARG,
 	TOK_FILE,
@@ -60,10 +63,13 @@ typedef struct s_gdata
 
 typedef enum e_cmd_type
 {
-	CMD,
 	PIPE,
-	BUILTIN,
-	HEREDOC,
+	I_REDIR,
+	O_REDIR,
+	APPEND,
+	HDOC,
+	ELSE,
+	LAST,
 }	t_cmd_type;
 
 typedef struct s_cmds
@@ -100,7 +106,6 @@ int		input_error_handler(t_token **tok, t_gdata *data);
 t_cmds	*parser(t_token *tok, char **env);
 
 // Parser Handler
-
 
 // Parser Utils
 /******************************************************************************

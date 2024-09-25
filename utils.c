@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:46:07 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/17 16:45:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:00:27 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,3 @@ void	exit_error(const char *s)
 	perror(s);
 	exit(EXIT_FAILURE);
 }
-
