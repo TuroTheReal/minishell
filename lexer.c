@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:46:15 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/25 14:24:21 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:39:12 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static int	handle_quote(char *s)
 	s_quote = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'')
-			s_quote++;
-		if (s[i] == '\"')
-			d_quote++;
+		if (s[i] == '\'' && !d_quote)
+			s_quote = !s_quote;
+		if (s[i] == '\"' && !s_quote)
+			d_quote = !d_quote;
 		i++;
 	}
 	if (d_quote % 2 != 0 || s_quote % 2 != 0)
