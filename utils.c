@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:46:07 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/25 11:00:27 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:27:58 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,14 @@ void	exit_error(const char *s)
 {
 	perror(s);
 	exit(EXIT_FAILURE);
+}
+
+void	free_double(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
 }

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/25 14:18:32 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:27:16 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ typedef enum e_token_type
 	TOK_APP,
 	TOK_HDOC,
 	TOK_PIPE,
-	TOK_SQUOTE,
-	TOK_DQUOTE,
 	TOK_COMMAND,
 	TOK_ARG,
 	TOK_FILE,
@@ -61,24 +59,13 @@ typedef struct s_gdata
 	t_cmds			*s_cmds;
 }					t_gdata;
 
-typedef enum e_cmd_type
-{
-	PIPE,
-	I_REDIR,
-	O_REDIR,
-	APPEND,
-	HDOC,
-	ELSE,
-	LAST,
-}	t_cmd_type;
-
 typedef struct s_cmds
 {
 	unsigned int	index;
-	t_cmd_type		type_redir;
+	unsigned int	nb_redir;
 	char			**cmd;
-	int				ifile;
-	int				ofile;
+	char			*hdoc;
+	struct s_token	*redir;
 	struct s_gdata	*g_data;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
@@ -86,6 +73,7 @@ typedef struct s_cmds
 
 // Utils
 void	exit_error(const char *s);
+void	free_double(char **tab);
 
 // Lexer
 t_token	*lexer(t_gdata *data);
@@ -103,11 +91,11 @@ void	print_token(t_token *tok); //debug
 int		input_error_handler(t_token **tok, t_gdata *data);
 
 // Parser
-t_cmds	*parser(t_token *tok, char **env);
 
 // Parser Handler
 
 // Parser Utils
+
 /******************************************************************************
 #                                    DIEGO                                    *
 #*****************************************************************************/
