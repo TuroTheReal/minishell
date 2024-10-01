@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:06:10 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/18 17:06:28 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:23:02 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strndup(const char *s, int len)
 		return (NULL);
 	if ((int)ft_strlen(s) < len)
 		len = ft_strlen(s);
-	dup = malloc(sizeof(char) * len + 1);
+	dup = ft_calloc(sizeof(char), len + 1);
 	if (!dup)
 		return (NULL);
 	i = 0;

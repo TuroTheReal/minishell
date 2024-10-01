@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/26 13:30:11 by artberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:55:35 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 		tok = lexer(data);
 		if (input_error_handler(&tok, data))
 			continue ;
-		// cmd = parser(tok, env, data);
-		// if (!cmd)
-		// 	return (free(data->input), free_token(tok)); // continue ? // rl_on_new_line(); ?
-		print_token(tok);
+		print_token(tok); // debug
+		cmd = parser(tok, data, env);
+		if (!cmd)
+			return (free(data->input), free_token(tok)); // continue ? // rl_on_new_line(); ?
+		print_cmd(cmd); // debug
 		//if (exec(cmd, data, env) == pas bon)
 			// continue;
 		free_token(tok);
