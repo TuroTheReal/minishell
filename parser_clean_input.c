@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:37:52 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/02 14:12:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:13:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,13 @@
 // 	return (s);
 // }
 
-static char	*remove_quote(char *s)
+static char	*copy_str(char *new_str, char *s, int i, int j)
 {
 	int		s_quote;
 	int		d_quote;
-	int		i;
-	int		j;
-	char	*new_str;
 
-	new_str = ft_calloc(ft_strlen(s) + 1, sizeof(char));
-	if (!new_str)
-		return (NULL);
 	d_quote = 0;
 	s_quote = 0;
-	i = 0;
-	j = 0;
 	while (s[i])
 	{
 		if (s[i] == '\'' && !d_quote)
@@ -100,11 +92,24 @@ static char	*remove_quote(char *s)
 			i++;
 			continue ;
 		}
-		else
-			new_str[j++] = s[i++];
+		new_str[j++] = s[i++];
 	}
 	new_str[j] = '\0';
-	free(s);
+	return (free(s), new_str);
+}
+
+static char	*remove_quote(char *s)
+{
+	char	*new_str;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	new_str = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!new_str)
+		return (NULL);
+	new_str = copy_str(new_str, s, i , j);
 	return (new_str);
 }
 
@@ -121,11 +126,15 @@ char	*get_clean_input(char *s, char **env, t_cmds *cmd)
 	{
 		while (s[i])
 		{
-			if (s[i] == '\'' || s[i] == '\"')
-			{
-				s = remove_quote(s);
-					return (s);
-			}
+			if (s[i] == '\'')
+				return (remove_quote(s));
+			// else if (s[i] == '\"')
+			// {
+			// 	remove_quote(s);
+			// 	return (replace_dollar(s));
+			// }
+			// else
+			// 	return (replace_dollar(s));
 			i++;
 		}
 	}
