@@ -6,11 +6,29 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:10 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/01 10:40:02 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:31:36 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// static void	remove_node(t_token *node, t_token **list)
+// {
+// 	if (node->prev == NULL)
+// 	{
+// 		*list = node->next;
+// 		if (node->next)
+// 			node->next->prev = NULL;
+// 	}
+// 	else
+// 	{
+// 		node->prev->next = node->next;
+// 		if (node->next)
+// 			node->next->prev = node->prev;
+// 	}
+// 	free(node->token);
+// 	free(node);
+// }
 
 static char	**create_tab(char *str)
 {
@@ -53,10 +71,6 @@ static void	add_to_tab(char *str, t_cmds *cmd)
 		cmd->cmd = create_tab(str);
 }
 
-// static void	replace_dollar(char *str)
-// {
-// }
-
 void	parsenize(t_cmds *cmd, t_token *tok, char **env, t_gdata *data)
 {
 	(void)env;
@@ -64,7 +78,11 @@ void	parsenize(t_cmds *cmd, t_token *tok, char **env, t_gdata *data)
 	{
 		if (tok->type == TOK_STR)
 		{
-			// replace_dollar(tok->token);
+			tok->token = get_clean_input(tok->token, env, cmd);
+			// if (!tok->token)
+			// 	continue ; // free tout ?
+			// if (tok->token[0] == '\0')
+			// 	remove_node(tok, &tok);
 			add_to_tab(tok->token, cmd);
 		}
 		else if (tok->type == TOK_PIPE)

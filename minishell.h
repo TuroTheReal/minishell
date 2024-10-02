@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/01 10:35:03 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:29:05 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_token	*lexer(t_gdata *data);
 
 // Lexer Handler
 t_token	*tokenize(char *s);
+int		get_token_str_len(char *s);
 
 // Lexer Utils
 t_token	*create_token(const char *s, int len, t_token_type type);
@@ -100,6 +101,9 @@ void	parsenize(t_cmds *cmd, t_token *tok, char **env, t_gdata *data);
 void	extend_cmd(t_cmds **cmd, t_gdata *data);
 int		is_redir(t_token_type type);
 void	print_cmd(t_cmds *cmd); //debug
+
+// Parser Clean Input
+char	*get_clean_input(char *str, char **env, t_cmds *cmd);
 
 
 /******************************************************************************
