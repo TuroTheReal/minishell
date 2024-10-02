@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:37:52 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/02 15:13:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:11:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static char	*copy_str(char *new_str, char *s, int i, int j)
 		new_str[j++] = s[i++];
 	}
 	new_str[j] = '\0';
-	return (free(s), new_str);
+	return (new_str);
 }
 
 static char	*remove_quote(char *s)
@@ -106,10 +106,11 @@ static char	*remove_quote(char *s)
 
 	i = 0;
 	j = 0;
-	new_str = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	new_str = ft_calloc(ft_strlen(s) - 1, sizeof(char));
 	if (!new_str)
 		return (NULL);
-	new_str = copy_str(new_str, s, i , j);
+	new_str = copy_str(new_str, s, i, j);
+	free(s);
 	return (new_str);
 }
 

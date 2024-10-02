@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:21 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/02 15:03:32 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:19:17 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,26 @@ void	print_cmd(t_cmds *cmd) //debug
 		i = 0;
 		while (cmd->cmd && cmd->cmd[i])
 		{
-			printf("cmd[%d] = $%s$\n",i,  cmd->cmd[i]);
+			printf("cmd[%d] = $%s$\n", i, cmd->cmd[i]);
 			i++;
 		}
 		// if (cmd->redir)
 		// 	print_token(cmd->redir);
 		cmd = cmd->next;
+	}
+}
+
+void	free_cmd(t_cmds *cmd)
+{
+	t_cmds	*tmp;
+
+	while (cmd)
+	{
+		tmp = cmd;
+		cmd = cmd->next;
+		if (tmp->cmd)
+			free(tmp->cmd);
+		free(tmp);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:46:07 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/26 11:27:58 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:02:53 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	free_double(char **tab)
 
 	i = 0;
 	while (tab[i])
-		free(tab[i++]);
+	{
+		free(tab[i]);
+		i++;
+	}
 	free(tab);
 }
