@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:10 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/02 16:07:36 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:02:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	parsenize(t_cmds *cmd, t_token *tok, char **env, t_gdata *data)
 	{
 		if (tok->type == TOK_STR)
 		{
-			tok->token = get_clean_input(tok->token, env, cmd);
+			tok->token = get_clean_input(tok->token, env);
 			if (ft_strlen(tok->token) > 0)
 				add_to_tab(tok->token, cmd);
 		}

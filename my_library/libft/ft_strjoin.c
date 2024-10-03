@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:43:31 by artberna          #+#    #+#             */
-/*   Updated: 2024/06/20 10:05:48 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:03:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	new_str[i + j] = '\0';
-	return (new_str);
+	return (free(s1), free(s2), new_str);
 }
 
 /*

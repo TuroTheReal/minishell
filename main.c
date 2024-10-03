@@ -6,11 +6,12 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/02 16:47:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:57:10 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 static void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 {
 	free_cmd(cmd);
@@ -18,10 +19,9 @@ static void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 	free(input);
 	rl_on_new_line();
 }
+
 static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 {
-	(void)env;
-	(void)cmd;
 	while (1)
 	{
 		data->input = readline("minishell > ");
