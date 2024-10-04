@@ -6,13 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:43:31 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/03 15:03:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:45:50 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "my_library.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*new_str;
 	int		i;
@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	length = (ft_strlen(s1) + ft_strlen(s2));
 	i = 0;
 	j = 0;
-	new_str = (char *)malloc(sizeof(char) * length + 1);
+	new_str = (char *)malloc(sizeof(char) * (length + 1));
 	if (!new_str)
 		return (NULL);
 	while (s1[i])
@@ -38,7 +38,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	new_str[i + j] = '\0';
-	return (free(s1), free(s2), new_str);
+	return (new_str);
 }
 
 /*
