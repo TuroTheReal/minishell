@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:37:52 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/04 16:39:47 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:09:33 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,11 @@ static char	*copy_str(char *dest, char *src, int limit)
 	return (to_return);
 }
 
-static int	remove_quote(char **dest, char *src)
+static int	remove_quote(char **dest, char *src, char **env)
 {
 	int	i;
 
+	(void)env;
 	i = 0;
 	if (src[i] == '\'')
 	{
@@ -146,7 +147,7 @@ static int	remove_quote(char **dest, char *src)
 		while (src[i] != '\"')
 			i++;
 		*dest = copy_str(*dest, src + 1, i - 1);
-		// replace_dollar(dest, src, i);
+		// *dest = replace_dollar(*dest, src, env, i);
 		return (i + 1);
 	}
 	return (0);
@@ -169,7 +170,7 @@ static char	*ft_realloc(void *s, int old_size, int new_size)
 	return (ret);
 }
 
-static char	*quote_n_dollar(char *dest, char *src)
+static char	*quote_n_dollar(char *dest, char *src, char **env)
 {
 	int	i;
 	int	j;
@@ -178,9 +179,9 @@ static char	*quote_n_dollar(char *dest, char *src)
 	while (src[i])
 	{
 		if (src[i] == '\'' || src[i] == '\"')
-			i += remove_quote(&dest, &src[i]);
+			i += remove_quote(&dest, &src[i], env);
 		// else if (src[i] == '$')
-		// 	i += replace_dollar(&dest, &src[i]);
+		// 	dest = replace_dollar(&dest, &src[i], env, ft_strlen(src));
 		else
 		{
 			j = ft_strlen(dest);
@@ -203,7 +204,7 @@ char	*get_clean_input(char *s, char **env)
 		exit_error("strdup failed");
 	if (s[0] == '\0' || !s)
 		return (NULL);
-	new_str = quote_n_dollar(new_str, s);
+	new_str = quote_n_dollar(new_str, s, env);
 	free(s);
 	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/04 14:34:41 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:08:58 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	print_cmd(t_cmds *cmd); //debug
 char	*get_clean_input(char *str, char **env);
 
 // Parser Replace Dollar
-int		replace_dollar(char *dest, char *src);
+char	*replace_dollar(char *dest, char *src, char **env, int limit);
 
 /******************************************************************************
 #                                    DIEGO                                    *

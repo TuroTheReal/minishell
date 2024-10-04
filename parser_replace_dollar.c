@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:53:30 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/04 14:09:51 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:09:08 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@
 // 	}
 // 	return (s);
 // }
+
+// char	*replace_dollar(char *dest, char *src, char **env, int limit)
+// {
+
+// }
+
 
 // si il y a dollar, recuperer jusqua ' ' $ ou \0
 // extraire la str en fonction des index au dessus
