@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:37:52 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/04 17:09:33 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:04:56 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,14 @@ static char	*copy_str(char *dest, char *src, int limit)
 
 static int	remove_quote(char **dest, char *src, char **env)
 {
-	int	i;
+	char	*tmp;
+	int		i;
 
-	(void)env;
 	i = 0;
 	if (src[i] == '\'')
 	{
 		i++;
-		while (src[i] != '\'')
+		while (src[i] && src[i] != '\'')
 			i++;
 		*dest = copy_str(*dest, src + 1, i - 1);
 		return (i + 1);
@@ -144,10 +144,10 @@ static int	remove_quote(char **dest, char *src, char **env)
 	else if (src[i] == '\"')
 	{
 		i++;
-		while (src[i] != '\"')
+		while (src[i] && src[i] != '\"')
 			i++;
 		*dest = copy_str(*dest, src + 1, i - 1);
-		// *dest = replace_dollar(*dest, src, env, i);
+		tmp = replace_dollar(*dest, env, i);
 		return (i + 1);
 	}
 	return (0);
@@ -181,7 +181,7 @@ static char	*quote_n_dollar(char *dest, char *src, char **env)
 		if (src[i] == '\'' || src[i] == '\"')
 			i += remove_quote(&dest, &src[i], env);
 		// else if (src[i] == '$')
-		// 	dest = replace_dollar(&dest, &src[i], env, ft_strlen(src));
+		// 	dest = replace_dollar(&src[i], env, ft_strlen(&src[i]));
 		else
 		{
 			j = ft_strlen(dest);
@@ -198,7 +198,6 @@ char	*get_clean_input(char *s, char **env)
 {
 	char	*new_str;
 
-	(void)env;
 	new_str = ft_strdup("");
 	if (!new_str)
 		exit_error("strdup failed");

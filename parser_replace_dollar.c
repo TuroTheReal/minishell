@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:53:30 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/04 17:09:08 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:39:53 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,54 @@
 // 	return (s);
 // }
 
-// char	*replace_dollar(char *dest, char *src, char **env, int limit)
-// {
 
-// }
+static char	*find_var(char *src, int limit)
+{
+	char	*to_ret;
+	int		i;
+
+	i = 1;
+	while (i < limit && (ft_isalnum(src[i]) || src[i] == '_'))
+		i++;
+	if (i == 1)
+		return (NULL);
+	to_ret = ft_strndup(src + 1, i - 1);
+	if (!to_ret)
+		return (NULL);
+	return (to_ret);
+}
+
+char	*replace_dollar(char *str, char **env, int limit)
+{
+	char	*to_find;
+	char	*to_join;
+	int		i;
+
+	(void)env;
+	i = 1;
+	printf("src = ~%s~\n", str); // debug
+	while (i < limit)
+	{
+		if (str[i] == '$')
+		{
+			to_find = find_var(&str[i], limit - i);
+			if (!to_find)
+				return (NULL);
+			printf("to_find = ~%s~\n", to_find); // debug
+			to_join = getenv(to_find);
+			free(to_find);
+			if (!to_join)
+				return (NULL);
+			printf("to_join = ~%s~\n", to_join); // debug
+			return (to_join);
+		}
+		i++;
+	}
+	return (NULL);
+}
 
 
-// si il y a dollar, recuperer jusqua ' ' $ ou \0
+// si il y 0a dollar, recuperer jusqua ' ' $ ou \0
 // extraire la str en fonction des index au dessus
 // chercher occurence de STR dans ENV avec STRRCHR
 // si occurence, malloc NEW STR avec le variable dedans
