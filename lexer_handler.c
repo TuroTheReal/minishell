@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:38:50 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/07 16:22:31 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:23:43 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static t_token_type	get_token_type(char *s)
 			return (TOK_APP);
 		return (TOK_IR);
 	}
-	wiefwe
 	return (TOK_STR);
 }
 
