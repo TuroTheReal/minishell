@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/25 14:20:28 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:57:39 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	handle_str(t_token *tok)
 {
-	if (tok->type == TOK_STR)
+	if (tok->type == TOK_STR || tok->type == TOK_S_Q || tok->type == TOK_D_Q)
 	{
 		if (tok->token[0] == '!' && tok->token[1] == '\0')
 			return (1);
@@ -28,7 +28,8 @@ static int	handle_str(t_token *tok)
 
 static int	handle_redir(t_token *tok)
 {
-	if (tok->type != TOK_STR && tok->type != TOK_PIPE)
+	if (tok->type != TOK_STR && tok->type != TOK_PIPE \
+		&& tok->type != TOK_S_Q && tok->type != TOK_D_Q)
 	{
 		if (tok->type == TOK_IR && !tok->next)
 			return (printf("%s", NL_ERROR), 1);
@@ -53,7 +54,7 @@ static int	handle_pipe(t_token *tok)
 {
 	if (tok->type == TOK_PIPE)
 	{
-		if (!tok->prev || !tok->next || tok->next->type != TOK_STR)
+		if (!tok->prev || !tok->next)
 			return (ft_printf("%s", PIPE_ERROR), 1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/07 15:58:05 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:23:48 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ typedef struct s_cmds	t_cmds;
 
 typedef enum e_token_type
 {
+	TOK_SPC,
 	TOK_STR,
+	TOK_S_Q,
+	TOK_D_Q,
 	TOK_IR,
 	TOK_OR,
 	TOK_APP,
 	TOK_HDOC,
 	TOK_PIPE,
-	TOK_COMMAND,
-	TOK_ARG,
-	TOK_FILE,
 }	t_token_type;
 
 typedef struct s_token

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:46:15 by artberna          #+#    #+#             */
-/*   Updated: 2024/09/25 14:39:12 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:14:57 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,12 @@ t_token	*lexer(t_gdata *data)
 		return (tok);
 	while (data->input[i])
 	{
-		if (data->input[i] != ' ' && data->input[i] != '\t')
-		{
-			tmp = tokenize(&data->input[i]);
-			if (!tmp)
-				return (free_token(tok), free(data->input), NULL);
-			tmp->index = j++;
-			add_token(&tok, tmp);
-			i += ft_strlen(tmp->token);
-		}
-		else
-			i++;
+		tmp = tokenize(&data->input[i]);
+		if (!tmp)
+			return (free_token(tok), free(data->input), NULL);
+		tmp->index = j++;
+		add_token(&tok, tmp);
+		i += ft_strlen(tmp->token);
 	}
 	return (tok);
 }

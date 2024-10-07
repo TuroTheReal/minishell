@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/03 11:57:10 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:22:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 
 static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 {
+	(void)env;
 	while (1)
 	{
 		data->input = readline("minishell > ");
@@ -29,16 +30,16 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 			return ;
 		add_history(data->input);
 		tok = lexer(data);
-		if (input_error_handler(&tok, data))
-			continue ;
+		// if (input_error_handler(&tok, data))
+		// 	continue ;
 		print_token(tok); // debug
-		cmd = parser(tok, data, env);
-		if (!cmd)
-		{
-			free_minishell(NULL, tok, data->input);
-			continue ;
-		}
-		print_cmd(cmd); // debug
+		// cmd = parser(tok, data, env);
+		// if (!cmd)
+		// {
+		// 	free_minishell(NULL, tok, data->input);
+		// 	continue ;
+		// }
+		// print_cmd(cmd); // debug
 		//if (exec(cmd, data, env) == pas bon)
 			// continue ;
 		free_minishell(cmd, tok, data->input);

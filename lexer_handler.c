@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:38:50 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/07 16:23:43 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:25:04 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ int	get_token_str_len(char *s)
 			i += get_close_quote(&s[i], '\'');
 		else if (s[i] == '\"')
 			i += get_close_quote(&s[i], '\"');
-		else if (ft_strrchr(IS_TOKEN, s[i]) || (s[i] == ' ' || s[i] == '\t'))
+		else if (s[i] == ' ')
+		{
+			while (s[i] == ' ')
+				i++;
+		}
+		else if (ft_strrchr(IS_TOKEN, s[i]))
 			break ;
 		i++;
 	}
@@ -47,11 +52,11 @@ static int	get_token_len(char *s, t_token_type type)
 	int	len;
 
 	len = 0;
-	if (type == TOK_IR || type == TOK_OR || type == TOK_PIPE)
+	if (type == TOK_IR || type == TOK_OR || type == TOK_PIPE || type == TOK_SPC)
 		len = 1;
 	else if (type == TOK_APP || type == TOK_HDOC)
 		len = 2;
-	else if (type == TOK_STR)
+	else if (type == TOK_STR || type == TOK_S_Q || type == TOK_D_Q)
 		len = get_token_str_len(s);
 	return (len);
 }
@@ -72,6 +77,12 @@ static t_token_type	get_token_type(char *s)
 			return (TOK_APP);
 		return (TOK_IR);
 	}
+	else if (s[0] == '\'')
+		return (TOK_S_Q);
+	else if (s[0] == '\"')
+		return (TOK_D_Q);
+	else if (s[0] == ' ')
+		return (TOK_SPC);
 	return (TOK_STR);
 }
 
