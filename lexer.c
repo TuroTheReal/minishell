@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:46:15 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/07 17:14:57 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:53:12 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ static int	handle_quote(char *s)
 	return (0);
 }
 
+static int	add_str_len(char *s, t_token_type type, char *ref)
+{
+	int	len;
+
+	len = ft_strlen(s);
+	if (type == TOK_SPC)
+	{
+		while (ref[len] == ' ')
+			len++;
+	}
+	else if (type == TOK_S_Q || type == TOK_D_Q)
+		len += 2;
+	return (len);
+}
+
 t_token	*lexer(t_gdata *data)
 {
 	int		i;
@@ -53,7 +68,7 @@ t_token	*lexer(t_gdata *data)
 			return (free_token(tok), free(data->input), NULL);
 		tmp->index = j++;
 		add_token(&tok, tmp);
-		i += ft_strlen(tmp->token);
+		i += add_str_len(tmp->token, tmp->type, &data->input[i]);
 	}
 	return (tok);
 }

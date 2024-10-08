@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:38:50 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/07 17:25:04 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 13:24:10 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,21 @@ static int	get_close_quote(char *s, char c)
 	i = 1;
 	while (s[i] && s[i] != c)
 		i++;
-	if (s[i] == c)
-		return (i);
-	return (i - 1);
+	return (i + 1);
 }
 
-int	get_token_str_len(char *s)
+static int	get_token_str_len(char *s)
 {
 	int	i;
+	int	d_q;
+	int	s_q;
 
+	d_q = 0;
+	s_q = 0;
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'')
-			i += get_close_quote(&s[i], '\'');
-		else if (s[i] == '\"')
-			i += get_close_quote(&s[i], '\"');
-		else if (s[i] == ' ')
-		{
-			while (s[i] == ' ')
-				i++;
-		}
-		else if (ft_strrchr(IS_TOKEN, s[i]))
+		if (ft_strrchr(IS_TOKEN, s[i]) || (s[i] == ' ' || s[i] == '\t'))
 			break ;
 		i++;
 	}
@@ -56,8 +49,12 @@ static int	get_token_len(char *s, t_token_type type)
 		len = 1;
 	else if (type == TOK_APP || type == TOK_HDOC)
 		len = 2;
-	else if (type == TOK_STR || type == TOK_S_Q || type == TOK_D_Q)
+	else if (type == TOK_STR)
 		len = get_token_str_len(s);
+	else if (type == TOK_S_Q)
+		len = get_close_quote(s, '\'');
+	else if (type == TOK_D_Q)
+		len = get_close_quote(s, '\"');
 	return (len);
 }
 

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:21 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/03 16:38:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 13:46:28 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ int	is_redir(t_token_type type)
 {
 	if (type == TOK_APP || type == TOK_IR || \
 		type == TOK_OR || type == TOK_HDOC)
+		return (1);
+	return (0);
+}
+
+int	is_cmd(t_token_type type)
+{
+	if (type == TOK_S_Q || type == TOK_D_Q || \
+		type == TOK_STR)
 		return (1);
 	return (0);
 }

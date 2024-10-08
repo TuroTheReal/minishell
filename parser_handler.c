@@ -6,29 +6,11 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:10 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/03 12:02:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:49:27 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void	remove_node(t_token *node, t_token **list)
-// {
-// 	if (node->prev == NULL)
-// 	{
-// 		*list = node->next;
-// 		if (node->next)
-// 			node->next->prev = NULL;
-// 	}
-// 	else
-// 	{
-// 		node->prev->next = node->next;
-// 		if (node->next)
-// 			node->next->prev = node->prev;
-// 	}
-// 	free(node->token);
-// 	free(node);
-// }
 
 static char	**create_tab(char *str)
 {
@@ -73,13 +55,20 @@ static void	add_to_tab(char *str, t_cmds *cmd)
 
 void	parsenize(t_cmds *cmd, t_token *tok, char **env, t_gdata *data)
 {
+	char	*tmp;
+
+	(void)env;
 	while (tok)
 	{
-		if (tok->type == TOK_STR)
+		if (is_cmd(tok->type))
 		{
-			tok->token = get_clean_input(tok->token, env);
-			if (ft_strlen(tok->token) > 0)
-				add_to_tab(tok->token, cmd);
+			tmp = ft_strdup(tok->token);
+			while (tok->next && is_cmd(tok->next->type))
+			{
+				tmp = ft_strjoin(tmp, tok->next->token);
+				tok = tok->next;
+			}
+			add_to_tab(tok->token, cmd);
 		}
 		else if (tok->type == TOK_PIPE)
 			extend_cmd(&cmd, data);

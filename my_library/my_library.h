@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:41:00 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/03 17:12:22 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 13:30:21 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_realloc(void *s, int old_size, int new_size);
 char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *s, int len);
