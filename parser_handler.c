@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:10 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/09 11:29:46 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:06:04 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,10 @@ static char	*copy_str(char *str, t_token *tok)
 	return (str);
 }
 
-void	parsenize(t_cmds *cmd, t_token *tok, char **env, t_gdata *data)
+void	parsenize(t_cmds *cmd, t_token *tok, t_gdata *data)
 {
 	char	*tmp;
 
-	(void)env;
 	while (tok)
 	{
 		if (is_cmd(tok->type))

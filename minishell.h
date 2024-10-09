@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/08 14:47:35 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:59:36 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		input_error_handler(t_token **tok, t_gdata *data);
 t_cmds	*parser(t_token *tok, t_gdata *data, char **env);
 
 // Parser Handler
-void	parsenize(t_cmds *cmd, t_token *tok, char **env, t_gdata *data);
+void	parsenize(t_cmds *cmd, t_token *tok, t_gdata *data);
 
 // Parser Utils
 void	extend_cmd(t_cmds **cmd, t_gdata *data);
@@ -102,6 +102,9 @@ int		is_redir(t_token_type type);
 int		is_cmd(t_token_type type);
 void	free_cmd(t_cmds *cmd);
 void	print_cmd(t_cmds *cmd); //debug
+
+// Handle Dollar
+void	handle_dollar(t_token *tok, char **env);
 
 /******************************************************************************
 #                                    DIEGO                                    *
