@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:10 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/09 16:06:04 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:21:24 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,17 @@ static void	add_to_tab(char *str, t_cmds *cmd)
 		cmd->cmd = create_tab(str);
 }
 
-static char	*copy_str(char *str, t_token *tok)
+static char	*copy_str(char *str, t_token **tok)
 {
-	str = ft_strdup(tok->token);
-	while (tok->next && is_cmd(tok->next->type))
+	str = ft_strdup((*tok)->token);
+	if (!str)
+		return (NULL);
+	while ((*tok)->next && is_cmd((*tok)->next->type))
 	{
-		str = ft_strjoin(str, tok->next->token);
-		tok = tok->next;
+		str = ft_strjoin(str, (*tok)->next->token);
+		if (!str)
+			return (NULL);
+		(*tok) = (*tok)->next;
 	}
 	return (str);
 }
@@ -77,7 +81,7 @@ void	parsenize(t_cmds *cmd, t_token *tok, t_gdata *data)
 				tok = tok->next;
 				continue ;
 			}
-			tmp = copy_str(tmp, tok);
+			tmp = copy_str(tmp, &tok);
 			add_to_tab(tmp, cmd);
 			free(tmp);
 		}
