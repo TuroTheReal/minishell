@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:43:31 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/09 16:03:00 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 09:55:20 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,18 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1 && !s2)
 		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
 	length = (ft_strlen(s1) + ft_strlen(s2));
 	i = 0;
 	j = 0;
 	new_str = (char *)malloc(sizeof(char) * (length + 1));
 	if (!new_str)
 		return (NULL);
-	while (s1[i])
-	{
-		new_str[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		new_str[i + j] = s2[j];
-		j++;
-	}
-	new_str[i + j] = '\0';
+	ft_memcpy(new_str, s1, ft_strlen(s1));
+	ft_memcpy(new_str + ft_strlen(s1), s2, ft_strlen(s2) + 1);
 	return (free(s1), new_str);
 }
 

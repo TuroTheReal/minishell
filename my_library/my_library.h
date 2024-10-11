@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:41:00 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/08 13:30:21 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:19:38 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 
 size_t	ft_strlen(const char *str);
+size_t	ft_strcpy(char *dest, const char *src);
 size_t	ft_strlcpy(char *dest, const char *src, size_t siz);
-size_t	ft_strlcat(char *dest, const char *src, size_t n);
+size_t	ft_strcat(char *dest, char *src);
+size_t	ft_strlcat(char *dest, char *src, size_t n);
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
