@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/11 13:49:38 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:41:49 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static char	*make_var(char *s, char **env, int *i, char *result)
 	ft_strcpy(new_res, result);
 	ft_strcat(new_res, tmp);
 	free(result);
+	free(tmp);
 	return (new_res);
 }
 
