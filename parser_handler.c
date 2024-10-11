@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:10 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/11 14:21:24 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:05:14 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	parsenize(t_cmds *cmd, t_token *tok, t_gdata *data)
 		}
 		else if (tok->type == TOK_PIPE)
 			extend_cmd(&cmd, data);
-		// else if (is_redir(tok->type))
-		// 	handle_redir(cmd, tok);
+		else if (is_redir(tok->type))
+			handle_redir(cmd, &tok);
 		tok = tok->next;
 	}
 }

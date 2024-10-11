@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_error_handler.c                              :+:      :+:    :+:   */
+/*   handle_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/08 11:58:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:07:13 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	handle_str(t_token *tok)
+static int	str_error(t_token *tok)
 {
 	if (tok->type == TOK_STR || tok->type == TOK_S_Q || tok->type == TOK_D_Q)
 	{
@@ -26,7 +26,7 @@ static int	handle_str(t_token *tok)
 	return (0);
 }
 
-static int	handle_redir(t_token *tok)
+static int	redir_error(t_token *tok)
 {
 	if (tok->type != TOK_STR && tok->type != TOK_PIPE \
 		&& tok->type != TOK_S_Q && tok->type != TOK_D_Q)
@@ -50,7 +50,7 @@ static int	handle_redir(t_token *tok)
 	return (0);
 }
 
-static int	handle_pipe(t_token *tok)
+static int	pipe_error(t_token *tok)
 {
 	if (tok->type == TOK_PIPE)
 	{
@@ -60,7 +60,7 @@ static int	handle_pipe(t_token *tok)
 	return (0);
 }
 
-int	input_error_handler(t_token **tok, t_gdata *data)
+int	error_handler(t_token **tok, t_gdata *data)
 {
 	int		error;
 	t_token	*tmp;
@@ -69,9 +69,9 @@ int	input_error_handler(t_token **tok, t_gdata *data)
 	tmp = *tok;
 	while (tmp)
 	{
-		error += handle_pipe(tmp);
-		error += handle_redir(tmp);
-		error += handle_str(tmp);
+		error += pipe_error(tmp);
+		error += redir_error(tmp);
+		error += str_error(tmp);
 		if (error)
 		{
 			free_token(*tok);
