@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:21 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/12 13:31:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:06:39 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static t_cmds	*create_node(t_gdata *data)
 	new->next = NULL;
 	new->prev = NULL;
 	new->redir = NULL;
-	new->hdoc = NULL;
 	new->g_data = data;
 	return (new);
 }

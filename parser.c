@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:13:43 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/11 15:48:09 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:06:23 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	init_cmd(t_cmds **head, t_cmds **curr, t_gdata *data)
 	(*curr)->next = NULL;
 	(*curr)->prev = NULL;
 	(*curr)->redir = NULL;
-	(*curr)->hdoc = NULL;
 	(*curr)->g_data = data;
 }
 

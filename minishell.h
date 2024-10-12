@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/11 16:05:06 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:17:48 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ typedef struct s_cmds
 	unsigned int	index;
 	unsigned int	nb_redir;
 	char			**cmd;
-	char			*hdoc;
 	struct s_token	*redir;
 	struct s_gdata	*g_data;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 }					t_cmds;
+
+// Main
+void	free_minishell(t_cmds *cmd, t_token *tok, char *input);
 
 // Utils
 void	exit_error(const char *s);

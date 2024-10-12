@@ -6,13 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/12 13:33:41 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:17:28 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
+void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 {
 	free_cmd(cmd);
 	free_token(tok);
@@ -31,6 +31,8 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 		add_history(data->input);
 		tok = lexer(data);
 		print_token(tok);
+		if (error_handler(&tok, data))
+			continue ;
 		cmd = parser(tok, data, env);
 		if (!cmd)
 		{
@@ -38,14 +40,12 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 			continue ;
 		}
 		print_cmd(cmd); // debug
-		// while (cmd) // debug, free manquant si actif
-		// {
-		// 	printf("STRUCT TOKEN CMD N%d\n", cmd->index);
-		// 	print_token(cmd->redir);
-		// 	cmd = cmd->next;
-		// }
-		// if (error_handler(&tok, data))
-		// 	continue ;
+		while (cmd) // debug, free manquant si actif
+		{
+			printf("STRUCT TOKEN CMD N%d\n", cmd->index);
+			print_token(cmd->redir);
+			cmd = cmd->next;
+		}
 		//if (exec(cmd, data, env) == pas bon)
 			// continue ;
 		free_minishell(cmd, tok, data->input);
