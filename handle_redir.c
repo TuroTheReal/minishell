@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:49:21 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/11 16:44:36 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/12 13:18:03 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 void	handle_redir(t_cmds *cmd, t_token **tok)
 {
-	t_token		*new_tok;
+	t_token			*new_tok;
 	t_token_type	type;
 
+	if (!tok || !(*tok))
+		return ;
 	type = (*tok)->type;
-	while ((*tok)->type == TOK_SPC)
+	if ((*tok)->next->type == TOK_SPC && (*tok)->next->next)
+		(*tok) = (*tok)->next->next;
+	else if ((*tok)->next)
 		(*tok) = (*tok)->next;
-	// if (!(*tok) || !is_cmd((*tok)->type))
-	// 	return ;
+	if (!is_cmd((*tok)->type))
+		return ;
 	new_tok = create_token((*tok)->token, ft_strlen((*tok)->token), type);
 	if (!new_tok)
 		exit_error("create_token failed");
@@ -30,5 +34,4 @@ void	handle_redir(t_cmds *cmd, t_token **tok)
 		add_token(&(cmd->redir), new_tok);
 	else
 		cmd->redir = new_tok;
-	(*tok) = (*tok)->next;
 }

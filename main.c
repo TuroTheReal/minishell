@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/11 15:49:31 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/12 13:20:29 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 			return ;
 		add_history(data->input);
 		tok = lexer(data);
+		print_token(tok);
 		cmd = parser(tok, data, env);
 		if (!cmd)
 		{
@@ -37,7 +38,7 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 			continue ;
 		}
 		print_cmd(cmd); // debug
-		while (cmd)
+		while (cmd) // debug
 		{
 			printf("STRUCT TOKEN CMD N%d\n", cmd->index);
 			print_token(cmd->redir);
