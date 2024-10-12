@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:21 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/09 11:17:29 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/12 13:31:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	free_cmd(t_cmds *cmd)
 		cmd = cmd->next;
 		if (tmp->cmd)
 			free_double(tmp->cmd);
+		if (tmp->redir)
+			free_token(tmp->redir);
 		free(tmp);
 	}
 }
