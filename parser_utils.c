@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:14:21 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/12 14:06:39 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:30:36 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void	extend_cmd(t_cmds **cmd, t_gdata *data)
 	(*cmd)->next = create_node(data);
 	(*cmd)->next->prev = *cmd;
 	(*cmd)->next->index = (*cmd)->index + 1;
-	*cmd = (*cmd)->next;
+	(*cmd)->next->index = (*cmd)->index + 1;
+	data->nb_command++;
 }

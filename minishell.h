@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/12 14:17:48 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:30:06 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_token
 
 typedef struct s_gdata
 {
-	unsigned int	nb_cmd;
+	unsigned int	nb_command;
 	char			*input;
 	t_cmds			*s_cmds;
 }					t_gdata;
