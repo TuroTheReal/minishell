@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/14 14:30:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:32:48 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd, char **env)
 			continue ;
 		}
 		// print_cmd(cmd); // debug
+		printf("NB COMMAND = %d\n", data->nb_command); // debug
 		while (cmd) // debug, free manquant si actif
 		{
 			printf("STRUCT TOKEN CMD N%d\n", cmd->index);
