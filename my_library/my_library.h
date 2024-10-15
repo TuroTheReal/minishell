@@ -6,14 +6,14 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:41:00 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 10:33:30 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:34:49 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MY_LIBRARY_H
 # define MY_LIBRARY_H
 
-#include <dirent.h>
+# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <inttypes.h>

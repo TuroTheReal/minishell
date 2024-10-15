@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 11:21:53 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:00:19 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,16 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 			free_minishell(NULL, tok, data->input);
 			continue ;
 		}
-		test = cmd;
+		test = cmd; // debug
 		print_cmd(test); // debug
 		printf("NB COMMAND = %d\n", data->nb_command); // debug
-		while (test) // debug, free manquant si actif
+		while (test) // debug
 		{
 			printf("STRUCT TOKEN CMD N%d\n", test->index);
 			print_token(test->redir);
 			test = test->next;
 		}
-		//if (exec(cmd, data, env) == pas bon)
-			// continue ;
+		minishell_exec(cmd, data->s_env);
 		free_minishell(cmd, tok, data->input);
 	}
 }
@@ -71,8 +70,6 @@ int	main(int ac, char **av, char **env)
 	data->s_env = ft_calloc(sizeof(t_env), 1);
 	if (init_struct_env(env, data->s_env))
 		return (free(data), 1);
-	for (int i = 0; data->s_env->tab_env[i]; i++)// debug
-		printf("%s\n", data->s_env->tab_env[i]); // debug
 	minishell(data, tok, cmd);
 	clear_history();
 	free_double(data->s_env->tab_env);

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 11:23:53 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:48:09 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_cmds
 // Main
 void	free_minishell(t_cmds *cmd, t_token *tok, char *input);
 
-// Utils
+// Utils Parsing
 void	exit_error(const char *s);
 void	free_double(char **tab);
 
@@ -130,6 +130,80 @@ void	handle_redir(t_cmds *cmd, t_token **tok);
 #                                    DIEGO                                    *
 #*****************************************************************************/
 
+//Builtins_export
+void	my_export(t_env *struct_env, t_cmds *t_cmds);
+void	my_export_create(t_env *struct_env, t_cmds *t_cmds, int len);
+void	my_export_create_2(t_env *struct_env, t_cmds *t_cmds,
+			char **tab_var, int index);
+void	my_export_replace(t_env *struct_env, t_cmds *t_cmds, int index);
+int		is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
+
+//Minishell_exec
+void	minishell_exec(t_cmds *cmds, t_env *struct_env);
+void	multiple_commands(t_cmds *cmds, t_env *struct_env);
+void	parent_process(int *fd, int *infile, pid_t pid);
+void	child_process(t_cmds *temp, int infile, int *fd, t_env *struct_env);
+
+//Minishell_exec_2
+void	one_command(t_cmds *cmds, t_env *struct_env);
+void	child_process_one_command(t_cmds *cmds, t_env *struct_env);
+void	redirection(t_cmds *cmds, t_env *struct_env);
+void	create_hdoc_file(t_cmds *cmds);
+int		input_heredoc(t_token *temp_tok, char *line, int fd);
+
+//Execution
+void	execution(t_cmds *cmds, t_env *struct_env);
+int		is_it_builtins(t_cmds *cmds);
+void	exec_command(t_cmds *cmds, t_env *struct_env);
+void	exec_command_2(t_cmds *cmds, t_env *struct_env);
+char	*find_command(char *command, t_env *struct_env);
+
+//Change_redirection
+int		change_in_stdout(t_cmds *cmds);
+int		saved_stdout(t_cmds *cmds, int file_fd);
+int		change_out_stdout(t_cmds *cmds);
+int		change_in_stdin(t_cmds *cmds);
+int		change_out_stdin(t_cmds *cmds);
+
+//Change_redirection_utils
+t_token	*last_token_node(t_cmds *cmds, int flag);
+int		create_file(t_cmds *cmds);
+int		create_file_2(t_token *temp);
+int		verif_file(t_cmds *cmds);
+int		verif_file_2(char *file);
+
+//Builtins_fonctions
+int		builtins_fonctions(t_cmds *t_cmds, t_env *struct_env);
+void	my_env(t_env *struct_env);
+void	my_pwd(void);
+void	my_echo(char **cmd);
+void	print_var(char **tab_var);
+
+//Builtins_export
+void	my_export(t_env *struct_env, t_cmds *t_cmds);
+void	my_export_create(t_env *struct_env, t_cmds *t_cmds, int len);
+void	my_export_create_2(t_env *struct_env, t_cmds *t_cmds,
+			char **tab_var, int index);
+void	my_export_replace(t_env *struct_env, t_cmds *t_cmds, int index);
+int		is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
+
+//Builtins_unset
+void	my_unset(t_env *struct_env, t_cmds *t_cmds);
+int		valide_value_env(char **env, char **cmd, int index);
+void	my_unset_delete(t_env *struct_env, int index);
+
+//Builtins_cd
+void	my_cd(t_env *struct_env, t_cmds *t_cmds);
+void	cd_dir_env(t_env *struct_env, char *dir);
+void	cd_dir_move_up(t_env *struct_env, char *dir);
+void	replace_dir(t_env *struct_env, char *old_dir,
+			char *new_dir, char *new_old_dir);
+void	cd_dir_path(t_env *struct_env, char *path);
+
+//Builtins_cd_2
+char	*display_dir(char *cmd, char *old_dir);
+char	*ft_getenv(t_env *struct_env, char *dir);
+
 //Utils
 void	putstr(char *str);
 char	**copy_tab(char **env, int len);
@@ -137,16 +211,11 @@ void	free_double_tab(char **tab, int i);
 int		init_struct_env(char **env, t_env *struct_env);
 void	free_list(t_cmds *cmds);
 
-//Builtins_cd_2
-char	*display_dir(char *cmd, char *old_dir);
-char	*ft_getenv(t_env *struct_env, char *dir);
-
-//builtins_export
-void	my_export(t_env *struct_env, t_cmds *t_cmds);
-void	my_export_create(t_env *struct_env, t_cmds *t_cmds, int len);
-void	my_export_create_2(t_env *struct_env, t_cmds *t_cmds,
-			char **tab_var, int index);
-void	my_export_replace(t_env *struct_env, t_cmds *t_cmds, int index);
-int		is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
+//Utils_exec_2
+void	ft_error(char *str, t_cmds *cmds);
+void	fork_error(t_cmds *temp, int *fd);
+int		is_it_heredoc(t_cmds *cmds);
+int		is_it_heredoc_2(t_cmds *cmds);
+void	file_fd_value(t_token *in, int *file_fd);
 
 #endif
