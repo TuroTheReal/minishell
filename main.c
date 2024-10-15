@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:09:21 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:02:21 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 			print_token(test->redir);
 			test = test->next;
 		}
-		minishell_exec(cmd, data->s_env);
+		// minishell_exec(cmd, data->s_env);
 		free_minishell(cmd, tok, data->input);
 	}
 }
