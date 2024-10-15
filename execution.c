@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/15 13:59:07 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:27:30 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ char	*find_command(char *command, t_env *struct_env)
 	i = 0;
 	while (long_path_split[i])
 	{
-		path_split = ft_strjoin(long_path_split[i], "/");
-		final_path = ft_strjoin(path_split, command);
-		// free(path_split);
+		path_split = ft_strjoin_no_free(long_path_split[i], "/");
+		final_path = ft_strjoin_no_free(path_split, command);
+		free(path_split);
 		if (access(final_path, F_OK) == 0)
 		{
 			free_double_tab(long_path_split, -1);

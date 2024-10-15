@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:16:03 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/14 14:05:15 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:50:21 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	change_in_stdout(t_cmds *cmds)
 		return (1);
 	if (file_fd < 0)
 		return (1);
-	if (saved_stdout(cmds, file_fd) == 1)
-		return (1);
+	//if (saved_stdout(cmds, file_fd) == 1)
+	//	return (1);
 	if (dup2(file_fd, STDOUT_FILENO) < 0)
 	{
 		close(file_fd);
@@ -78,9 +78,10 @@ int	change_in_stdin(t_cmds *cmds)
 	file_fd_value(in, &file_fd);
 	if (file_fd < 0)
 		return (1);
-	cmds->ptr_std->saved_stdin = dup(STDIN_FILENO);
-	if (cmds->ptr_std->saved_stdin < 0
-		|| dup2(file_fd, STDIN_FILENO) < 0)
+	//cmds->ptr_std->saved_stdin = dup(STDIN_FILENO);
+	//if (cmds->ptr_std->saved_stdin < 0
+	//	||
+	if (dup2(file_fd, STDIN_FILENO) < 0)
 	{
 		close(file_fd);
 		return (1);

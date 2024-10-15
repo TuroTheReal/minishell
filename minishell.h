@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 13:48:09 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:44:31 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_gdata
 {
 	unsigned int	nb_command;
 	char			*input;
+	// struct sigaction	signal;
 	t_cmds			*s_cmds;
 	t_env			*s_env;
 }					t_gdata;

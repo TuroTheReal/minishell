@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 14:00:19 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:09:21 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 		free(input);
 	rl_on_new_line();
 }
+
+// static void	setup_signal(t_gdata *data, t_token *tok, t_cmds *cmd)
+// {
+
+// }
+
 
 static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 {
@@ -61,15 +67,16 @@ int	main(int ac, char **av, char **env)
 	t_gdata	*data;
 	t_token	*tok;
 	t_cmds	*cmd;
+// 	struct sigaction	sa;
 
-	(void)ac;
-	(void)av;
+	(void)ac, (void)av;
 	tok = NULL;
 	cmd = NULL;
 	data = ft_calloc(sizeof(t_gdata), 1);
 	data->s_env = ft_calloc(sizeof(t_env), 1);
 	if (init_struct_env(env, data->s_env))
 		return (free(data), 1);
+	//setup_signal();
 	minishell(data, tok, cmd);
 	clear_history();
 	free_double(data->s_env->tab_env);

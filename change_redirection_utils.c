@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_redirection_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:43:31 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/09 14:08:07 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:37:22 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_token	*last_token_node(t_cmds *cmds, int flag)
 	if (cmds->nb_redir == 0)
 		return (NULL);
 	temp = cmds->redir;
-	while (temp->next != NULL)
+	while (temp->next)
 		temp = temp->next;
-	while (temp != NULL)
+	while (temp)
 	{
 		if (flag == 0)
 		{
@@ -75,6 +75,7 @@ int	verif_file(t_cmds *cmds)
 	t_token	*temp;
 
 	temp = cmds->redir;
+	printf("%u\n", temp->type);
 	while (temp != NULL)
 	{
 		if (temp->type == TOK_IR)

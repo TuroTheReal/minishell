@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:41:00 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 13:34:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:57:19 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@
 # include <pthread.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include <stddef.h>
-# include <string.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdio.h>
 # include <stdarg.h>
+# include <string.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-# include <signal.h>
 # include <unistd.h>
 
 //  *************************  LIBFT  *************************
@@ -67,6 +68,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *s, int len);
 char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin_no_free(char *s1, char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 
 char	*ft_itoa(int n);
