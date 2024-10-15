@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 14:44:31 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:27:47 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 /******************************************************************************
 #                                    ARTHUR                                   *
 #*****************************************************************************/
+
+extern int				g_sig_status;
 
 typedef struct s_cmds	t_cmds;
 
@@ -126,6 +128,9 @@ void	handle_dollar(t_token *tok, t_env *s_env);
 
 //Handle Redir
 void	handle_redir(t_cmds *cmd, t_token **tok);
+
+//Handle Signal
+void	init_signal(void);
 
 /******************************************************************************
 #                                    DIEGO                                    *

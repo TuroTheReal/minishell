@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/15 15:38:12 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:30:42 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	minishell_exec(t_cmds *cmds, t_env *struct_env)
 	else if (cmds->g_data->nb_command == 1)
 		one_command(cmds, struct_env);
 	else
-	{
-
 		multiple_commands(cmds, struct_env);
-	}
 }
 
 void	multiple_commands(t_cmds *cmds, t_env *struct_env)
@@ -37,7 +34,6 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env)
 
 	infile = STDIN_FILENO;
 	temp = cmds;
-	//printf("%u\n", temp->redir->type);
 	while (temp != NULL)
 	{
 		if (pipe(fd) == -1 && temp->next != NULL)
@@ -47,10 +43,7 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env)
 			return (fork_error(temp, fd));
 		temp->flag_error = 1;
 		if (pid == 0)
-		{
-			//printf("la\n");
 			child_process(temp, infile, fd, struct_env);
-		}
 		else
 			parent_process(fd, &infile, pid);
 		temp = temp->next;

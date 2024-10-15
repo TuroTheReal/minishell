@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:38:50 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:46:34 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:40:05 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ static int	get_close_quote(char *s, char c)
 static int	get_token_str_len(char *s)
 {
 	int	i;
-	int	d_q;
-	int	s_q;
 
-	d_q = 0;
-	s_q = 0;
 	i = 0;
 	while (s[i])
 	{

@@ -6,11 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 16:02:21 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:40:52 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sig_status = 0;
 
 void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 {
@@ -23,18 +25,13 @@ void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 	rl_on_new_line();
 }
 
-// static void	setup_signal(t_gdata *data, t_token *tok, t_cmds *cmd)
-// {
-
-// }
-
-
 static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 {
 	t_cmds	*test; // pour print sans bouger tete de liste
 	while (1)
 	{
-		data->input = readline("minishell > ");
+		init_signal();
+		data->input = readline("MINISHELL ~ ");
 		if (!data->input)
 			return ;
 		add_history(data->input);
@@ -67,7 +64,6 @@ int	main(int ac, char **av, char **env)
 	t_gdata	*data;
 	t_token	*tok;
 	t_cmds	*cmd;
-// 	struct sigaction	sa;
 
 	(void)ac, (void)av;
 	tok = NULL;
@@ -76,7 +72,6 @@ int	main(int ac, char **av, char **env)
 	data->s_env = ft_calloc(sizeof(t_env), 1);
 	if (init_struct_env(env, data->s_env))
 		return (free(data), 1);
-	//setup_signal();
 	minishell(data, tok, cmd);
 	clear_history();
 	free_double(data->s_env->tab_env);
