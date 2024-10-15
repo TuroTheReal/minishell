@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/11 14:41:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:20:33 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ static char	*copy_str(char *str, char c)
 	return (new_str);
 }
 
-static char	*extract_dollar_n_replace(char *s, char **env, int *index)
+static char	*extract_n_replace(char *s, t_env *s_env, int *index)
 {
 	int		start;
 	char	*to_ret;
 	char	*to_find;
 	char	*var;
 
-	(void)env;
 	start = *index + 1;
 	(*index)++;
 	while (s[*index] && (ft_isalnum(s[*index]) || s[*index] == '_'))
@@ -49,7 +48,7 @@ static char	*extract_dollar_n_replace(char *s, char **env, int *index)
 	to_find = ft_substr(s, start, *index - start);
 	if (!to_find)
 		return (NULL);
-	var = getenv(to_find);
+	var = ft_getenv(s_env, to_find);
 	free(to_find);
 	if (var)
 		to_ret = ft_strdup(var);
@@ -58,13 +57,13 @@ static char	*extract_dollar_n_replace(char *s, char **env, int *index)
 	return (to_ret);
 }
 
-static char	*make_var(char *s, char **env, int *i, char *result)
+static char	*make_var(char *s, t_env *s_env, int *i, char *result)
 {
 	char	*tmp;
 	char	*new_res;
 	int		res_len;
 
-	tmp = extract_dollar_n_replace(s, env, i);
+	tmp = extract_n_replace(s, s_env, i);
 	if (!tmp)
 		return (free(result), NULL);
 	res_len = ft_strlen(result) + ft_strlen(tmp);
@@ -78,7 +77,7 @@ static char	*make_var(char *s, char **env, int *i, char *result)
 	return (new_res);
 }
 
-static char	*replace_dollar(char *s, char **env)
+static char	*replace_dollar(char *s, t_env *s_env)
 {
 	int		i;
 	char	*result;
@@ -91,7 +90,7 @@ static char	*replace_dollar(char *s, char **env)
 	{
 		if (s[i] == '$')
 		{
-			result = make_var(s, env, &i, result);
+			result = make_var(s, s_env, &i, result);
 			if (!result)
 				return (NULL);
 		}
@@ -105,7 +104,7 @@ static char	*replace_dollar(char *s, char **env)
 	return (result);
 }
 
-void	handle_dollar(t_token *tok, char **env)
+void	handle_dollar(t_token *tok, t_env *s_env)
 {
 	char	*new_token;
 
@@ -113,7 +112,7 @@ void	handle_dollar(t_token *tok, char **env)
 	{
 		if (tok->type == TOK_STR || tok->type == TOK_D_Q)
 		{
-			new_token = replace_dollar(tok->token, env);
+			new_token = replace_dollar(tok->token, s_env);
 			if (new_token)
 			{
 				free(tok->token);

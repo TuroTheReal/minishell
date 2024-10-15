@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:13:43 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/14 14:29:36 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:21:01 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	init_cmd(t_cmds **head, t_cmds **curr, t_gdata *data)
 	data->nb_command = 1;
 }
 
-t_cmds	*parser(t_token *tok, t_gdata *data, char **env)
+t_cmds	*parser(t_token *tok, t_gdata *data)
 {
 	t_cmds	*head;
 	t_cmds	*curr;
@@ -35,7 +35,7 @@ t_cmds	*parser(t_token *tok, t_gdata *data, char **env)
 	curr = NULL;
 	tmp = tok;
 	init_cmd(&head, &curr, data);
-	handle_dollar(tmp, env);
+	handle_dollar(tmp, data->s_env);
 	parsenize(curr, tmp, data);
 	// print_token(tmp); // debug
 	return (head);
