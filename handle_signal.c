@@ -6,41 +6,51 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:50:30 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:33:53 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	handle_sigquit(int sig)
-// {
-// 	(void)sig;
-// 	write(1, "\n", 1);
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// 	// changer valeur global pour $?
-// }
+int	sig_code = 0;
 
 static void	handle_sigint(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_sig_status = sig;
+	sig_code = sig;
 }
 
-// void	signal_handler_child(int sig)
-// {
-// 	(void)sig;
-// 	signal(SIGQUIT, SIG_DFL);
-// }
-
-void	init_signal(void)
+static void	init_child_signal(void)
 {
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle_sigint);
-	// heredoc ?
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+}
+
+static void	init_sigint_heredoc(int sig)
+{
+	(void)sig;
+	rl_replace_line("", 0);
+	rl_redisplay();
+	rl_done = 1;
+	sig_code = sig;
+}
+
+void	init_signal(int option)
+{
+	if (option == 0)
+	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (option == 1)
+	{
+		signal(SIGINT, init_sigint_heredoc);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (option == 2)
+		init_child_signal();
 }

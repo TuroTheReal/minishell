@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:27:47 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:41:43 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,32 @@
 #                                    ARTHUR                                   *
 #*****************************************************************************/
 
-extern int				g_sig_status;
+// enter = segfault, corrige
+
+// echook / sleep5
+// MINISHELL ~ echook
+// Wrong path : No such file or directory
+// must be
+// bash-5.1$ sleep5
+// bash: sleep5: command not found
+// bash-5.1$ echook
+// bash: echook: command not found
+
+
+// "CTRL C"
+// TERMINAL : OK
+// CHILD PROCESS: stop + double prompt, devrait juste stop +  prompt
+// HDOC : bug d'affichage et ne stop pas
+
+// "CTRL \"
+// TERMINAL : OK
+// CHILD PROCESS:  pas de message Quit (core dumped)
+// HDOC : OK
+
+// "CTRL D"
+// TERMINAL : OK
+// CHILD PROCESS: Ok
+// HDOC : OK
 
 typedef struct s_cmds	t_cmds;
 
@@ -31,6 +56,8 @@ typedef struct s_cmds	t_cmds;
 # define APP_ERROR "minishell: syntax error near unexpected token '>>'\n"
 # define HDOC_ERROR "minishell: syntax error near unexpected token '<<'\n"
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
+
+extern int	sig_code;
 
 typedef struct s_std
 {
@@ -70,7 +97,7 @@ typedef struct s_gdata
 {
 	unsigned int	nb_command;
 	char			*input;
-	// struct sigaction	signal;
+	unsigned int	heredoc;
 	t_cmds			*s_cmds;
 	t_env			*s_env;
 }					t_gdata;
@@ -130,7 +157,7 @@ void	handle_dollar(t_token *tok, t_env *s_env);
 void	handle_redir(t_cmds *cmd, t_token **tok);
 
 //Handle Signal
-void	init_signal(void);
+void	init_signal(int option);
 
 /******************************************************************************
 #                                    DIEGO                                    *
@@ -147,7 +174,8 @@ int		is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
 //Minishell_exec
 void	minishell_exec(t_cmds *cmds, t_env *struct_env);
 void	multiple_commands(t_cmds *cmds, t_env *struct_env);
-void	parent_process(int *fd, int *infile, pid_t pid);
+void	all_waitpid(t_cmds *cmds, pid_t *pid);
+void	parent_process(int *fd, int *infile);
 void	child_process(t_cmds *temp, int infile, int *fd, t_env *struct_env);
 
 //Minishell_exec_2

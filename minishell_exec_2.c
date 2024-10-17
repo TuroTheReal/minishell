@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/15 15:48:00 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:34:14 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 
 void	child_process_one_command(t_cmds *cmds, t_env *struct_env)
 {
+	init_signal(2);
 	if (is_it_heredoc(cmds) == 1)
 		create_hdoc_file(cmds);
 	redirection(cmds, struct_env);
@@ -72,6 +73,7 @@ void	create_hdoc_file(t_cmds *cmds)
 	char	*line;
 	t_token	*temp_tok;
 
+	init_signal(1);
 	line = NULL;
 	temp_tok = cmds->redir;
 	while (temp_tok != NULL)
