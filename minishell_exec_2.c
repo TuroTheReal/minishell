@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/17 14:34:14 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:51:24 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	cmds->flag_error = 1;
 	if (pid == 0)
 		child_process_one_command(cmds, struct_env);
+	if (pid > 0) //ajout ARTHUR
+	{
+		signal(SIGINT, SIG_IGN);
+		printf("PARENT SGL CMD\n");
+	}
 	close (fd[1]);
 	close (fd[0]);
 	waitpid(pid, NULL, 0);
@@ -42,6 +47,7 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 void	child_process_one_command(t_cmds *cmds, t_env *struct_env)
 {
 	init_signal(2);
+	printf("CHILD SGL CMD\n");
 	if (is_it_heredoc(cmds) == 1)
 		create_hdoc_file(cmds);
 	redirection(cmds, struct_env);

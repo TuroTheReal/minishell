@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/17 14:30:03 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:33:10 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 		data->input = readline("MINISHELL ~ ");
 		if (!data->input)
 			return ;
-		if (ft_strstr(data->input, "<<"))
-			init_signal(1);
-		else
-			init_signal(0);
+		init_signal(0);
 		add_history(data->input);
 		tok = lexer(data);
 		print_token(tok); // debug
@@ -55,29 +52,26 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 			print_token(test->redir);
 			test = test->next;
 		}
-		minishell_exec(cmd, data->s_env);
+		minishell_exec(cmd, &data->s_env);
 		free_minishell(cmd, tok, data->input);
 	}
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_gdata	*data;
+	t_gdata	data;
 	t_token	*tok;
 	t_cmds	*cmd;
 
 	(void)ac, (void)av;
 	tok = NULL;
 	cmd = NULL;
-	data = ft_calloc(sizeof(t_gdata), 1);
-	data->s_env = ft_calloc(sizeof(t_env), 1);
-	if (init_struct_env(env, data->s_env))
-		return (free(data), EXIT_FAILURE);
-	minishell(data, tok, cmd);
+	if (init_struct_env(env, &data.s_env))
+		return (EXIT_FAILURE);
+	init_signal(0);
+	minishell(&data, tok, cmd);
 	clear_history();
-	free_double(data->s_env->tab_env);
-	free(data->s_env);
-	free(data);
+	free_double(data.s_env.tab_env);
 	ft_putstr_fd("exit\n", 2);
 	return (0);
 }

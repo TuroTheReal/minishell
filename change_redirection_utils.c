@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:43:31 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/15 15:37:22 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:29:02 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	verif_file(t_cmds *cmds)
 	t_token	*temp;
 
 	temp = cmds->redir;
-	printf("%u\n", temp->type);
 	while (temp != NULL)
 	{
 		if (temp->type == TOK_IR)

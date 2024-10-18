@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:13:43 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 11:21:01 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:25:32 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_cmds	*parser(t_token *tok, t_gdata *data)
 	curr = NULL;
 	tmp = tok;
 	init_cmd(&head, &curr, data);
-	handle_dollar(tmp, data->s_env);
+	handle_dollar(tmp, &data->s_env);
 	parsenize(curr, tmp, data);
 	// print_token(tmp); // debug
 	return (head);

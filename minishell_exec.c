@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/17 14:31:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:51:07 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,20 @@ void	all_waitpid(t_cmds *cmds, pid_t *pid)
 
 void	parent_process(int *fd, int *infile)
 {
+	signal(SIGINT, SIG_IGN);
+	printf("PARENT MTP CMD\n");
 	close(fd[1]);
 	if (*infile != STDIN_FILENO)
 		close(*infile);
 	*infile = fd[0];
+	init_signal(0);
+	printf("OFF PARENT MTP CMD\n");
 }
 
 void	child_process(t_cmds *temp, int infile, int *fd, t_env *struct_env)
 {
 	init_signal(2);
+	printf("CHILD MTP CMD\n");
 	if (is_it_heredoc(temp) == 1)
 		create_hdoc_file(temp);
 	if (infile != STDIN_FILENO)

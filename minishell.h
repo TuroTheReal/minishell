@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/17 14:41:43 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:09:11 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,15 @@
 #                                    ARTHUR                                   *
 #*****************************************************************************/
 
-// enter = segfault, corrige
-
-// echook / sleep5
-// MINISHELL ~ echook
-// Wrong path : No such file or directory
-// must be
-// bash-5.1$ sleep5
-// bash: sleep5: command not found
-// bash-5.1$ echook
-// bash: echook: command not found
-
-
-// "CTRL C"
+// "CTRL C" SIGINT
+// echo ok | sleep 4, MINISHELL ~ MINISHELL ERREUR
 // TERMINAL : OK
-// CHILD PROCESS: stop + double prompt, devrait juste stop +  prompt
-// HDOC : bug d'affichage et ne stop pas
+// CHILD PROCESS:manque retour a la ligne
+// HDOC : remplace prompt par ^C, devrait stop
 
-// "CTRL \"
+// "CTRL \" SIGQUIT
 // TERMINAL : OK
-// CHILD PROCESS:  pas de message Quit (core dumped)
+// CHILD PROCESS: manque retour a la ligne et \Quit (core dumped)
 // HDOC : OK
 
 // "CTRL D"
@@ -56,6 +45,7 @@ typedef struct s_cmds	t_cmds;
 # define APP_ERROR "minishell: syntax error near unexpected token '>>'\n"
 # define HDOC_ERROR "minishell: syntax error near unexpected token '<<'\n"
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
+# define SIG_OFFSET 128
 
 extern int	sig_code;
 
@@ -99,7 +89,7 @@ typedef struct s_gdata
 	char			*input;
 	unsigned int	heredoc;
 	t_cmds			*s_cmds;
-	t_env			*s_env;
+	t_env			s_env;
 }					t_gdata;
 
 typedef struct s_cmds
@@ -162,6 +152,26 @@ void	init_signal(int option);
 /******************************************************************************
 #                                    DIEGO                                    *
 #*****************************************************************************/
+
+// ERREUR A CHECKER
+// echook / sleep5
+// MINISHELL ~ echook
+// Wrong path : No such file or directory
+// must be
+// bash-5.1$ sleep5
+// bash: sleep5: command not found
+// bash-5.1$ echook
+// bash: echook: command not found
+
+// echo $USER > TXT
+// ==473759== Invalid write of size 4
+// ==473759==    at 0x404F83: saved_stdout (change_redirection.c:44)
+// ==473759==    by 0x404F02: change_in_stdout (change_redirection.c:31)
+// ==473759==    by 0x405CF4: redirection (minishell_exec_2.c:68)
+// ==473759==    by 0x404ACF: minishell_exec (minishell_exec.c:20)
+// ==473759==    by 0x401576: minishell (main.c:63)
+// ==473759==    by 0x4013D3: main (main.c:81)
+// ==473759==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
 
 //Builtins_export
 void	my_export(t_env *struct_env, t_cmds *t_cmds);
