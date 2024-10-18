@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/18 13:51:07 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:54:50 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ void	parent_process(int *fd, int *infile)
 	if (*infile != STDIN_FILENO)
 		close(*infile);
 	*infile = fd[0];
-	init_signal(0);
-	printf("OFF PARENT MTP CMD\n");
 }
 
 void	child_process(t_cmds *temp, int infile, int *fd, t_env *struct_env)

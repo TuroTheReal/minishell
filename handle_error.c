@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:09:27 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/12 15:49:23 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:40:59 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	pipe_error(t_token *tok)
 			return (ft_printf("%s", PIPE_ERROR), 1);
 		if (tok->next->type == TOK_SPC)
 		{
-			if (!tok->next->next || !is_cmd(tok->next->next->type))
+			if (!tok->next->next)
 				return (ft_printf("%s", PIPE_ERROR), 1);
 		}
 		if (tok->prev->type == TOK_SPC)

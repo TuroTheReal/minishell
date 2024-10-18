@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/18 14:09:11 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:24:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@
 #*****************************************************************************/
 
 // "CTRL C" SIGINT
-// echo ok | sleep 4, MINISHELL ~ MINISHELL ERREUR
 // TERMINAL : OK
-// CHILD PROCESS:manque retour a la ligne
+// CHILD PROCESS : manque retour a la ligne
 // HDOC : remplace prompt par ^C, devrait stop
 
 // "CTRL \" SIGQUIT
@@ -33,7 +32,7 @@
 // "CTRL D"
 // TERMINAL : OK
 // CHILD PROCESS: Ok
-// HDOC : OK
+// HDOC : manque averstissement et quitte sans print le hdoc
 
 typedef struct s_cmds	t_cmds;
 
@@ -45,7 +44,7 @@ typedef struct s_cmds	t_cmds;
 # define APP_ERROR "minishell: syntax error near unexpected token '>>'\n"
 # define HDOC_ERROR "minishell: syntax error near unexpected token '<<'\n"
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
-# define SIG_OFFSET 128
+// # define SIG_OFFSET 128
 
 extern int	sig_code;
 
@@ -154,6 +153,7 @@ void	init_signal(int option);
 #*****************************************************************************/
 
 // ERREUR A CHECKER
+
 // echook / sleep5
 // MINISHELL ~ echook
 // Wrong path : No such file or directory
@@ -162,6 +162,34 @@ void	init_signal(int option);
 // bash: sleep5: command not found
 // bash-5.1$ echook
 // bash: echook: command not found
+
+// < main.c > TXT
+// fichier sortie sans cmd, ne creer pas les fichiers
+
+// < main.c cat
+// ne cat pas
+
+// heredoc
+// exec le heredoc mais ne save pas linput
+// exemple : cat << EOF
+// > lwekrn lwkerlkmwe
+// > welkrn
+// > EOF
+// MINISHELL ~
+// au lieu de
+// bash-5.1$ cat <<EOF
+// > ewrnwer
+// > werjn
+// > EOF
+// ewrnwusaluter
+// werjn
+// bash-5.1$
+
+
+// < TXT
+// pas de message derreur
+// devrait print
+// bash: TXT: No such file or directory
 
 // echo $USER > TXT
 // ==473759== Invalid write of size 4
@@ -172,6 +200,9 @@ void	init_signal(int option);
 // ==473759==    by 0x401576: minishell (main.c:63)
 // ==473759==    by 0x4013D3: main (main.c:81)
 // ==473759==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+// void	multiple_commands(t_cmds *cmds, t_env *struct_env)
+// trop de ligne
 
 //Builtins_export
 void	my_export(t_env *struct_env, t_cmds *t_cmds);

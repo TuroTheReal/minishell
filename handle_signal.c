@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/18 13:48:02 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:08:04 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,31 @@ static void	handle_sigint(int sig)
 	sig_code = sig;
 }
 
+static void	handle_sigint_child(int sig)
+{
+	static int	i;
+
+	(void)sig;
+	i = 0;
+	signal(SIGINT, SIG_IGN);
+	if (i >= 1)
+		write(STDOUT_FILENO, "\n", 1);
+	i++;
+	sig_code = sig;
+}
+
 static void	init_child_signal(void)
 {
 	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, handle_sigint_child);
 }
 
 static void	init_sigint_heredoc(int sig)
 {
 	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
-	rl_done = 1;
 	sig_code = sig;
 }
 
