@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/10/15 16:55:19 by artberna         ###   ########.fr        #
+#    Updated: 2024/10/21 13:17:00 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,9 @@ MY_LIBRARY = my_library
 MINISHELL_SRC = main utils_parsing lexer lexer_utils lexer_handler  \
 parser parser_utils parser_handler handle_error handle_dollar handle_redir \
 builtins_fonctions builtins_export utils_exec handle_signal \
-builtins_unset builtins_cd builtins_cd_2 minishell_exec change_redirection \
-change_redirection_utils execution utils_exec_2 minishell_exec_2
+builtins_unset builtins_cd builtins_cd_2 builtins_exit minishell_exec \
+change_redirection change_redirection_utils execution utils_exec_2 \
+minishell_exec_2
 
 MINISHELL_FLS = $(addsuffix .c, $(MINISHELL_SRC))
 

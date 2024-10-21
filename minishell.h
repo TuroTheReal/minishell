@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 11:50:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:41:07 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_gdata
 	unsigned int	nb_command;
 	char			*input;
 	unsigned int	heredoc;
+	t_token			*s_tok;
 	t_cmds			*s_cmds;
 	t_env			s_env;
 }					t_gdata;
@@ -271,6 +272,9 @@ int		is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
 void	my_unset(t_env *struct_env, t_cmds *t_cmds);
 int		valide_value_env(char **env, char **cmd, int index);
 void	my_unset_delete(t_env *struct_env, int index);
+
+//Builtins_exit ARTHUR
+int		my_exit(t_env *struct_env, t_cmds *t_cmds);
 
 //Builtins_cd
 void	my_cd(t_env *struct_env, t_cmds *t_cmds);

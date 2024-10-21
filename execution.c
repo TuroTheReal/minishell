@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/15 14:27:30 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:50:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	is_it_builtins(t_cmds *cmds)
 		|| ft_strncmp(cmds->cmd[0], "cd", 10) == 0
 		|| ft_strncmp(cmds->cmd[0], "export", 10) == 0
 		|| ft_strncmp(cmds->cmd[0], "unset", 10) == 0
-		|| ft_strncmp(cmds->cmd[0], "echo", 10) == 0)
+		|| ft_strncmp(cmds->cmd[0], "echo", 10) == 0
+		|| ft_strncmp(cmds->cmd[0], "exit", ft_strlen(cmds->cmd[0])) == 0)
 		return (0);
 	return (1);
 }

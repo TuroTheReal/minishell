@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:49:21 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/12 13:18:03 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:41:01 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	handle_redir(t_cmds *cmd, t_token **tok)
 	new_tok = create_token((*tok)->token, ft_strlen((*tok)->token), type);
 	if (!new_tok)
 		exit_error("create_token failed");
-	cmd->nb_redir++;
 	if (cmd->redir)
 		add_token(&(cmd->redir), new_tok);
 	else
 		cmd->redir = new_tok;
+	cmd->nb_redir++;
 }

@@ -3,40 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_fonctions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:39:46 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/08 14:11:17 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:47:23 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtins_fonctions(t_cmds *t_cmds, t_env *struct_env)
+int	builtins_fonctions(t_cmds *cmd, t_env *struct_env)
 {
-	if ((ft_strncmp(t_cmds->cmd[0], "env", 10) == 0) && t_cmds->cmd[1] == NULL)
+	if ((ft_strncmp(cmd->cmd[0], "env", 10) == 0) && cmd->cmd[1] == NULL)
 		my_env(struct_env);
-	else if ((ft_strncmp(t_cmds->cmd[0], "pwd", 10) == 0)
-		&& t_cmds->cmd[1] == NULL)
+	else if ((ft_strncmp(cmd->cmd[0], "pwd", 10) == 0)
+		&& cmd->cmd[1] == NULL)
 		my_pwd();
-	else if (ft_strncmp(t_cmds->cmd[0], "export", 10) == 0
-		&& t_cmds->cmd[1] != NULL && t_cmds->cmd[2] != NULL)
-		my_export(struct_env, t_cmds);
-	else if (ft_strncmp(t_cmds->cmd[0], "unset", 10) == 0
-		&& t_cmds->cmd[1] != NULL)
-		my_unset(struct_env, t_cmds);
-	else if (ft_strncmp(t_cmds->cmd[0], "echo", 10) == 0)
-		my_echo(t_cmds->cmd);
-	else if (ft_strncmp(t_cmds->cmd[0], "cd", 10) == 0)
-		my_cd(struct_env, t_cmds);
-	//else if (ft_strncmp(t_cmds->cmd[0], "exit", 10) == 0
-	//	&& t_cmds->cmd[1] != NULL)
-	//	my_exit(struct_env, t_cmds);
+	else if (ft_strncmp(cmd->cmd[0], "export", 10) == 0
+		&& cmd->cmd[1] != NULL && cmd->cmd[2] != NULL)
+		my_export(struct_env, cmd);
+	else if (ft_strncmp(cmd->cmd[0], "unset", 10) == 0
+		&& cmd->cmd[1] != NULL)
+		my_unset(struct_env, cmd);
+	else if (ft_strncmp(cmd->cmd[0], "echo", 10) == 0)
+		my_echo(cmd->cmd);
+	else if (ft_strncmp(cmd->cmd[0], "cd", 10) == 0)
+		my_cd(struct_env, cmd);
+	else if (ft_strncmp(cmd->cmd[0], "exit", ft_strlen(cmd->cmd[0])) == 0) // && cmd->cmd[1] != NULL)
+		my_exit(struct_env, cmd);
 	else
-	{
-		ft_error("builtins fonctions ", t_cmds);
-		return (1);
-	}
+		return (ft_error("builtins fonctions", cmd), 1);
 	return (0);
 }
 

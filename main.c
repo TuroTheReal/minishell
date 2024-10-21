@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 11:28:29 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:10:26 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,16 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 	while (1)
 	{
 		init_signal(0);
-		data->input = readline("MINISHELL ~ ");
+		data->input = readline("minishell ~ ");
 		if (!data->input)
 			return ;
 		add_history(data->input);
 		tok = lexer(data);
-		print_token(tok); // debug
+		data->s_tok = tok;
+		print_token(data->s_tok); // debug
 		if (error_handler(&tok, data))
 			continue ;
-		cmd = parser(tok, data);
-		if (!cmd || !cmd->cmd)
-		{
-			free_minishell(cmd, tok, data->input);
-			continue ;
-		}
+		cmd = parser(tok, data); // refaire test avec commande vide ou enter apres fix de Diego
 		test = cmd; // debug
 		print_cmd(test); // debug
 		printf("NB COMMAND = %d\n", data->nb_command); // debug
