@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/18 16:24:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:50:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,11 @@ void	init_signal(int option);
 #*****************************************************************************/
 
 // ERREUR A CHECKER
+
+// unset pwd
+// $PWD ne doit rien afficher
+// echo $PWD et $PWD affiche le PWD mais ne devrait pas
+// cd ne fonctionne pas mais devrait fonctionner.
 
 // echook / sleep5
 // MINISHELL ~ echook

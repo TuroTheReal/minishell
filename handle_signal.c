@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/18 15:08:04 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:38:30 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ void	init_signal(int option)
 {
 	if (option == 0)
 	{
-		printf("NORMAL MODE\n");
+		printf("NORMAL MODE\n"); //debug
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (option == 1)
 	{
-		printf("HDOC MODE\n");
+		printf("HDOC MODE\n"); //debug
 		signal(SIGINT, init_sigint_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (option == 2)
 	{
-		printf("CHILD MODE\n");
+		printf("CHILD MODE\n"); //debug
 		init_child_signal();
 	}
 }

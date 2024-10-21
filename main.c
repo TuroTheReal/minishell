@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/18 16:15:14 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:28:29 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 	t_cmds	*test; // pour print sans bouger tete de liste
 	while (1)
 	{
+		init_signal(0);
 		data->input = readline("MINISHELL ~ ");
 		if (!data->input)
 			return ;
-		init_signal(0);
 		add_history(data->input);
 		tok = lexer(data);
 		print_token(tok); // debug
@@ -68,7 +68,6 @@ int	main(int ac, char **av, char **env)
 	cmd = NULL;
 	if (init_struct_env(env, &data.s_env))
 		return (EXIT_FAILURE);
-	init_signal(0);
 	minishell(&data, tok, cmd);
 	clear_history();
 	free_double(data.s_env.tab_env);
