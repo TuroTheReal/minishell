@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 15:41:07 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:07:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 /******************************************************************************
 #                                    ARTHUR                                   *
 #*****************************************************************************/
+
+// a join:
+// minishell_exec, utils_exec2, execution, .h
 
 // "CTRL C" SIGINT
 // TERMINAL : OK
@@ -46,7 +49,7 @@ typedef struct s_cmds	t_cmds;
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
 // # define SIG_OFFSET 128
 
-extern int	sig_code;
+extern int	g_sig_code;
 
 typedef struct s_std
 {
@@ -190,7 +193,6 @@ void	init_signal(int option);
 // ewrnwusaluter
 // werjn
 // bash-5.1$
-
 
 // < TXT
 // pas de message derreur

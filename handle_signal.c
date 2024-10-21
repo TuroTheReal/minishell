@@ -6,13 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 13:41:43 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:56:05 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	sig_code = 0;
+int	g_sig_code = 0;
 
 static void	handle_sigint(int sig)
 {
@@ -21,7 +21,7 @@ static void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	sig_code = sig;
+	g_sig_code = sig;
 }
 
 static void	handle_sigint_child(int sig)
@@ -34,7 +34,7 @@ static void	handle_sigint_child(int sig)
 	if (i >= 1)
 		write(STDOUT_FILENO, "\n", 1);
 	i++;
-	sig_code = sig;
+	g_sig_code = sig;
 }
 
 static void	init_child_signal(void)
@@ -49,7 +49,7 @@ static void	init_sigint_heredoc(int sig)
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
-	sig_code = sig;
+	g_sig_code = sig;
 }
 
 void	init_signal(int option)

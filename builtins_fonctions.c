@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:39:46 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/21 14:47:23 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:00:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	builtins_fonctions(t_cmds *cmd, t_env *struct_env)
 		my_echo(cmd->cmd);
 	else if (ft_strncmp(cmd->cmd[0], "cd", 10) == 0)
 		my_cd(struct_env, cmd);
-	else if (ft_strncmp(cmd->cmd[0], "exit", ft_strlen(cmd->cmd[0])) == 0) // && cmd->cmd[1] != NULL)
+	else if (ft_strncmp(cmd->cmd[0], "exit", \
+	ft_strlen(cmd->cmd[0])) == 0) // && cmd->cmd[1] != NULL)
 		my_exit(struct_env, cmd);
 	else
 		return (ft_error("builtins fonctions", cmd), 1);
