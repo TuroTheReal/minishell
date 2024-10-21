@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/21 14:50:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:31:50 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ void	execution(t_cmds *cmds, t_env *struct_env)
 		if (builtins_fonctions(cmds, struct_env) == 1)
 			return ;
 	}
+	else if (is_it_builtins(cmds) == 2)
+		return ;
 	else
 		exec_command(cmds, struct_env);
 }
 
 int	is_it_builtins(t_cmds *cmds)
 {
+	if (cmds->cmd == NULL)
+		return (2);
 	if (ft_strncmp(cmds->cmd[0], "env", 10) == 0
 		|| ft_strncmp(cmds->cmd[0], "pwd", 10) == 0
 		|| ft_strncmp(cmds->cmd[0], "cd", 10) == 0
@@ -39,8 +43,16 @@ int	is_it_builtins(t_cmds *cmds)
 void	exec_command(t_cmds *cmds, t_env *struct_env)
 {
 	int		i;
+	int		fd;
 
 	i = 0;
+	fd = open(cmds->cmd[0], O_RDONLY, 0777);
+	if (fd >= 0)
+	{
+		close (fd);
+		ft_error("command not found", cmds);
+	}
+	close (fd);
 	if (access(cmds->cmd[0], F_OK) == 0)
 	{
 		if (execve(cmds->cmd[0], cmds->cmd, struct_env->tab_env) == -1)
@@ -56,7 +68,7 @@ void	exec_command_2(t_cmds *cmds, t_env *struct_env)
 
 	path = find_command(cmds->cmd[0], struct_env);
 	if (!path)
-		ft_error("Wrong path ", cmds);
+		ft_error("command not found", cmds);
 	if (execve(path, cmds->cmd, struct_env->tab_env) == -1)
 	{
 		free(path);

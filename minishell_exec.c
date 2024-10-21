@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/18 16:32:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:04:05 by dsindres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	minishell_exec(t_cmds *cmds, t_env *struct_env)
 {
-	if (is_it_builtins(cmds) == 0 && cmds->g_data->nb_command == 1)
+	if (is_it_builtins(cmds) == 0 && cmds->g_data->nb_command == 1
+			&& is_it_heredoc(cmds) == 0)
 	{
-		if (cmds->nb_redir == 0 || is_it_heredoc(cmds) == 0)
-			redirection(cmds, struct_env);
+		//cmds->nb_redir == 0 || 
+		//if (is_it_heredoc(cmds) == 0)
+		redirection(cmds, struct_env);                 
 	}
 	else if (cmds->g_data->nb_command == 1)
 		one_command(cmds, struct_env);

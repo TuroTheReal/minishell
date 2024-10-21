@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   utils_exec_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:54:13 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/14 14:05:05 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:03:39 by dsindres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	ft_error(char *str, t_cmds *cmds)
 {
-	perror(str);
+	if (errno == ENOENT)
+		perror(str);
+	else
+		fprintf(stderr, "%s: command not found\n", cmds->cmd[0]);
 	if (cmds->flag_error == 1)
 		exit (EXIT_FAILURE);
 }

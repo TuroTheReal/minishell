@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 18:07:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:29:44 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,6 @@ typedef struct s_cmds	t_cmds;
 // # define SIG_OFFSET 128
 
 extern int	g_sig_code;
-
-typedef struct s_std
-{
-	int		saved_stdout;
-	int		saved_stdin;
-}			t_std;
 
 typedef struct s_env
 {
@@ -103,9 +97,10 @@ typedef struct s_cmds
 	int				flag_error;
 	struct s_token	*redir;
 	struct s_gdata	*g_data;
-	struct s_std	*ptr_std;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
+	int				saved_stdout;
+	int				saved_stdin;
 }					t_cmds;
 
 // Main
@@ -298,7 +293,8 @@ int		init_struct_env(char **env, t_env *struct_env);
 void	free_list(t_cmds *cmds);
 
 //Utils_exec_2
-void	ft_error(char *str, t_cmds *cmds);
+void	ft_error(char *str, t_cmds *cmds); 
+void	ft_error_2(char *str, char *err, t_cmds *cmds);
 void	fork_error(t_cmds *temp, int *fd);
 int		is_it_heredoc(t_cmds *cmds);
 int		is_it_heredoc_2(t_cmds *cmds);
