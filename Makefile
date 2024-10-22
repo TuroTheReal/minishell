@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/10/21 13:17:00 by artberna         ###   ########.fr        #
+#    Updated: 2024/10/22 10:26:21 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,23 +22,43 @@ HEADER = minishell.h
 #******************************************************************************
 
 OBJ_DEP_DIR = obj_dep/
-SRC_DIR = src/
 MY_LIBRARY = my_library
+BUILTIN_DIR = builtin/
+EXEC_DIR = exec/
+LEXING_DIR = lexing/
+PARSING_DIR = parsing/
+ALL_DIR = $(OBJ_DEP_DIR) $(OBJ_DEP_DIR)$(BUILTIN_DIR) \
+$(OBJ_DEP_DIR)$(EXEC_DIR) $(OBJ_DEP_DIR)$(LEXING_DIR) \
+$(OBJ_DEP_DIR)$(PARSING_DIR)
 
 #******************************************************************************
 #                       SOURCES, OBJECTS & DEPENDENCIES                       *
 #******************************************************************************
 
-MINISHELL_SRC = main utils_parsing lexer lexer_utils lexer_handler  \
-parser parser_utils parser_handler handle_error handle_dollar handle_redir \
-builtins_fonctions builtins_export utils_exec handle_signal \
-builtins_unset builtins_cd builtins_cd_2 builtins_exit minishell_exec \
-change_redirection change_redirection_utils execution utils_exec_2 \
-minishell_exec_2
+MINISHELL_SRC = main
+
+BUILTIN_SRC = builtins_cd builtins_cd_2 builtins_exit builtins_export \
+builtins_fonctions builtins_unset
+
+EXEC_SRC = change_redirection_utils change_redirection execution \
+minishell_exec minishell_exec_2 utils_exec utils_exec_2
+
+LEXING_SRC = handle_error lexer_handler lexer_utils lexer
+
+PARSING_SRC = handle_dollar handle_redir handle_signal parser_handler \
+parser_utils parser utils_parsing
 
 MINISHELL_FLS = $(addsuffix .c, $(MINISHELL_SRC))
 
-SRC = $(MINISHELL_FLS)
+BUILTIN_FLS = $(addprefix $(BUILTIN_DIR), $(addsuffix .c, $(BUILTIN_SRC)))
+
+EXEC_FLS = $(addprefix $(EXEC_DIR), $(addsuffix .c, $(EXEC_SRC)))
+
+LEXING_FLS = $(addprefix $(LEXING_DIR), $(addsuffix .c, $(LEXING_SRC)))
+
+PARSING_FLS = $(addprefix $(PARSING_DIR), $(addsuffix .c, $(PARSING_SRC)))
+
+SRC = $(MINISHELL_FLS) $(BUILTIN_FLS) $(EXEC_FLS) $(LEXING_FLS) $(PARSING_FLS)
 
 OBJ = $(addprefix $(OBJ_DEP_DIR), $(SRC:.c=.o))
 
@@ -85,7 +105,7 @@ $(OBJ_DEP_DIR)%.o: %.c $(HEADER) | $(OBJF)
 	@echo "$(BLEU)Compiling $< to $@$(RESET)"
 
 $(OBJF):
-	@mkdir -p $(OBJ_DEP_DIR)
+	@mkdir -p $(ALL_DIR)
 
 clean :
 	@$(RM) $(OBJ_DEP_DIR)
