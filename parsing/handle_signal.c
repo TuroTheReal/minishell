@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 17:56:05 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:54:08 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	handle_sigint(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_code = sig;
+	printf ("SIGCODE = %d \n", g_sig_code);
 }
 
 static void	handle_sigint_child(int sig)
@@ -35,6 +36,7 @@ static void	handle_sigint_child(int sig)
 		write(STDOUT_FILENO, "\n", 1);
 	i++;
 	g_sig_code = sig;
+	printf ("CHILD SIGCODE = %d \n", g_sig_code);
 }
 
 static void	init_child_signal(void)
@@ -50,6 +52,7 @@ static void	init_sigint_heredoc(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_code = sig;
+	printf ("HDOD SIGCODE = %d \n", g_sig_code);
 }
 
 void	init_signal(int option)

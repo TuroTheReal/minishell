@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_fonctions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:39:46 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/21 18:00:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:14:37 by dsindres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	my_echo(char **cmd)
 {
 	int	i;
 
-	if (ft_strncmp(cmd[1], "-n", 4) == 0)
+	if (cmd[1] == NULL)
+		write(1, "\n", 1);
+	else if (ft_strncmp(cmd[1], "-n", 4) == 0)
 	{
 		i = 2;
 		while (cmd[i])

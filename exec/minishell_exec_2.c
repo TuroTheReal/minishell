@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/18 16:34:26 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:54:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,10 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	pid_t	pid;
 
 	if (pipe(fd) == -1)
-	{
-		ft_error("pipe failed ", cmds);
-		return ;
-	}
+		return (ft_error("pipe failed ", cmds));
 	pid = fork();
 	if (pid == -1)
-	{
-		fork_error(cmds, fd);
-		return ;
-	}
+		return (fork_error(cmds, fd));
 	cmds->flag_error = 1;
 	if (pid == 0)
 		child_process_one_command(cmds, struct_env);

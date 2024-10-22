@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/22 11:30:36 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:11:46 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,28 @@
 
 void	minishell_exec(t_cmds *cmds, t_env *struct_env)
 {
-	t_cmds	*temp;
+	pid_t	*pid;
+
 	if (is_it_builtins(cmds) == 0 && cmds->g_data->nb_command == 1
-			&& is_it_heredoc(cmds) == 0)
-	{
-		//cmds->nb_redir == 0 ||
-		//if (is_it_heredoc(cmds) == 0)
+		&& is_it_heredoc(cmds) == 0)
 		redirection(cmds, struct_env);
-	}
 	else if (cmds->g_data->nb_command == 1)
 		one_command(cmds, struct_env);
 	else
 	{
-		temp = cmds;
-		multiple_commands(cmds, struct_env, -1, temp);
+		pid = ft_calloc(cmds->g_data->nb_command, sizeof(pid_t));
+		multiple_commands(cmds, struct_env, -1, pid);
 	}
 }
 
-void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, t_cmds *temp)
+void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, pid_t *pid)
 {
 	int		fd[2];
 	int		infile;
-	pid_t	*pid;
+	t_cmds	*temp;
 
 	infile = STDIN_FILENO;
-	pid = ft_calloc(cmds->g_data->nb_command, sizeof(pid_t));
+	temp = cmds;
 	while (temp != NULL)
 	{
 		if (pipe(fd) == -1 && temp->next != NULL)
@@ -50,17 +47,17 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, t_cmds *temp)
 		if (pid[i] == 0)
 			child_process(temp, infile, fd, struct_env);
 		else
+		{
+			if (is_it_heredoc(temp) == 1)
+				waitpid(pid[i], NULL, 0);
 			parent_process(fd, &infile);
+		}
 		temp = temp->next;
 	}
-	all_waitpid(cmds, pid);
-	if (is_it_heredoc_2(cmds) == 1)
-		unlink("/tmp/HDOC_FILE");
-	if (infile != STDIN_FILENO)
-		close(infile);
+	all_waitpid(cmds, pid, &infile);
 }
 
-void	all_waitpid(t_cmds *cmds, pid_t *pid)
+void	all_waitpid(t_cmds *cmds, pid_t *pid, int *infile)
 {
 	int		i;
 	t_cmds	*temp;
@@ -71,11 +68,17 @@ void	all_waitpid(t_cmds *cmds, pid_t *pid)
 	temp = cmds;
 	while (count > 0)
 	{
-		waitpid(pid[i], NULL, 0);
+		if (is_it_heredoc(temp) == 0)
+			waitpid(pid[i], NULL, 0);
 		count--;
 		i++;
+		temp = temp->next;
 	}
 	free(pid);
+	if (is_it_heredoc_2(cmds) == 1)
+		unlink("/tmp/HDOC_FILE");
+	if (*infile != STDIN_FILENO)
+		close(*infile);
 }
 
 void	parent_process(int *fd, int *infile)

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:37:23 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/22 11:20:37 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:30:24 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,20 @@ char	*ft_getenv(t_env *struct_env, char *dir)
 	int		i;
 
 	i = 0;
+	if (!ft_strncmp(dir, "?", 1))
+	{
+		printf ("GETENV SIGCODE = %d \n", g_sig_code);
+		return (ft_itoa(g_sig_code));
+	}
 	t_dir.cmd = malloc(sizeof(char *) * (2));
 	t_dir.cmd[0] = "cd";
 	t_dir.cmd[1] = dir;
 	index = is_new_var_env(struct_env, &t_dir);
+	if (index == -1)
+	{
+		free(t_dir.cmd);
+		return (NULL);
+	}
 	while (struct_env->tab_env[index][i] != '=')
 		i++;
 	i++;

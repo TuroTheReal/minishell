@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/22 11:29:08 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:54:11 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,10 @@
 #                                    ARTHUR                                   *
 #*****************************************************************************/
 
-// a join:
-// minishell_exec, utils_exec2, execution, .h
-
 // "CTRL C" SIGINT
 // TERMINAL : OK
 // CHILD PROCESS : manque retour a la ligne
-// HDOC : remplace prompt par ^C, devrait stop
+// HDOC : display ^C et \n mais ne stop pas, devrait stop
 
 // "CTRL \" SIGQUIT
 // TERMINAL : OK
@@ -35,7 +32,7 @@
 // "CTRL D"
 // TERMINAL : OK
 // CHILD PROCESS: Ok
-// HDOC : manque averstissement et quitte sans print le hdoc
+// HDOC : manque averstissement
 
 typedef struct s_cmds	t_cmds;
 
@@ -47,7 +44,6 @@ typedef struct s_cmds	t_cmds;
 # define APP_ERROR "minishell: syntax error near unexpected token '>>'\n"
 # define HDOC_ERROR "minishell: syntax error near unexpected token '<<'\n"
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
-// # define SIG_OFFSET 128
 
 extern int	g_sig_code;
 
@@ -153,18 +149,7 @@ void	init_signal(int option);
 
 // ERREUR A CHECKER
 
-// ./minishell: command not found
-// ./run.sh: command not found
-
-// $USEr
-// minishell ~ $USEr // $Term
-// token node n= 0, input = $USEr, type = 1
-// ==123695== Invalid read of size 8
-// ==123695==    at 0x401A7D: ft_getenv (builtins_cd_2.c:26)
-// ==123695==    by 0x4055A7: extract_n_replace (handle_dollar.c:51)
-// ==123695==    by 0x405318: make_var (handle_dollar.c:66)
-// ==123695==    by 0x405272: replace_dollar (handle_dollar.c:93)
-// ./run.sh: line 5: 123695 Segmentation fault      (core dumped) valgrind --leak-check=full --child-silent-after-fork=yes --suppressions=readline.supp ./minishell
+//<main.c cat > TXT | cat TXT si pas de droit sur main, ne fini plante
 
 // unset pwd
 // $PWD ne doit rien afficher
@@ -185,9 +170,6 @@ void	init_signal(int option);
 // devrait print
 // bash: TXT: No such file or directory
 
-// void	multiple_commands(t_cmds *cmds, t_env *struct_env)
-// trop de ligne
-
 //Builtins_export
 void	my_export(t_env *struct_env, t_cmds *t_cmds);
 void	my_export_create(t_env *struct_env, t_cmds *t_cmds, int len);
@@ -198,8 +180,8 @@ int		is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
 
 //Minishell_exec
 void	minishell_exec(t_cmds *cmds, t_env *struct_env);
-void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, t_cmds *temp);
-void	all_waitpid(t_cmds *cmds, pid_t *pid);
+void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, pid_t *pid);
+void	all_waitpid(t_cmds *cmds, pid_t *pid, int *infile);
 void	parent_process(int *fd, int *infile);
 void	child_process(t_cmds *temp, int infile, int *fd, t_env *struct_env);
 

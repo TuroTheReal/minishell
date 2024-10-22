@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 11:20:33 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:22:12 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*extract_n_replace(char *s, t_env *s_env, int *index)
 
 	start = *index + 1;
 	(*index)++;
-	while (s[*index] && (ft_isalnum(s[*index]) || s[*index] == '_'))
+	while (s[*index] && ((ft_isalnum(s[*index]) || s[*index] == '_') || s[*index] == '?'))
 	{
 		if (s[*index] == '$')
 			break ;
@@ -48,6 +48,7 @@ static char	*extract_n_replace(char *s, t_env *s_env, int *index)
 	to_find = ft_substr(s, start, *index - start);
 	if (!to_find)
 		return (NULL);
+	printf("TO FIND = %s\n", to_find);
 	var = ft_getenv(s_env, to_find);
 	free(to_find);
 	if (var)
