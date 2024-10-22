@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_exec.c                                   :+:      :+:    :+:   */
+/*   VA                                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/22 11:30:36 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:26:16 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	minishell_exec(t_cmds *cmds, t_env *struct_env)
 {
-	t_cmds	*temp;
 	if (is_it_builtins(cmds) == 0 && cmds->g_data->nb_command == 1
 			&& is_it_heredoc(cmds) == 0)
 	{
@@ -25,25 +24,26 @@ void	minishell_exec(t_cmds *cmds, t_env *struct_env)
 	else if (cmds->g_data->nb_command == 1)
 		one_command(cmds, struct_env);
 	else
-	{
-		temp = cmds;
-		multiple_commands(cmds, struct_env, -1, temp);
-	}
+		multiple_commands(cmds, struct_env);
 }
 
-void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, t_cmds *temp)
+void	multiple_commands(t_cmds *cmds, t_env *struct_env)
 {
 	int		fd[2];
 	int		infile;
 	pid_t	*pid;
+	t_cmds	*temp;
+	int		i;
 
+	i = 0;
 	infile = STDIN_FILENO;
+	temp = cmds;
 	pid = ft_calloc(cmds->g_data->nb_command, sizeof(pid_t));
 	while (temp != NULL)
 	{
 		if (pipe(fd) == -1 && temp->next != NULL)
 			return (ft_error("pipe failed ", temp));
-		pid[++i] = fork();
+		pid[i] = fork();
 		if (pid[i] == -1)
 			return (fork_error(temp, fd));
 		temp->flag_error = 1;
@@ -52,8 +52,10 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, t_cmds *temp)
 		else
 			parent_process(fd, &infile);
 		temp = temp->next;
+		i++;
 	}
 	all_waitpid(cmds, pid);
+	free(pid);
 	if (is_it_heredoc_2(cmds) == 1)
 		unlink("/tmp/HDOC_FILE");
 	if (infile != STDIN_FILENO)
@@ -75,7 +77,6 @@ void	all_waitpid(t_cmds *cmds, pid_t *pid)
 		count--;
 		i++;
 	}
-	free(pid);
 }
 
 void	parent_process(int *fd, int *infile)

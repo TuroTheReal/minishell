@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/21 18:31:50 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:50:07 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,8 @@ int	is_it_builtins(t_cmds *cmds)
 void	exec_command(t_cmds *cmds, t_env *struct_env)
 {
 	int		i;
-	int		fd;
 
 	i = 0;
-	fd = open(cmds->cmd[0], O_RDONLY, 0777);
-	if (fd >= 0)
-	{
-		close (fd);
-		ft_error("command not found", cmds);
-	}
-	close (fd);
 	if (access(cmds->cmd[0], F_OK) == 0)
 	{
 		if (execve(cmds->cmd[0], cmds->cmd, struct_env->tab_env) == -1)

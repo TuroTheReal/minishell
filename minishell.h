@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 18:29:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:29:08 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,19 @@ void	init_signal(int option);
 
 // ERREUR A CHECKER
 
+// ./minishell: command not found
+// ./run.sh: command not found
+
+// $USEr
+// minishell ~ $USEr // $Term
+// token node n= 0, input = $USEr, type = 1
+// ==123695== Invalid read of size 8
+// ==123695==    at 0x401A7D: ft_getenv (builtins_cd_2.c:26)
+// ==123695==    by 0x4055A7: extract_n_replace (handle_dollar.c:51)
+// ==123695==    by 0x405318: make_var (handle_dollar.c:66)
+// ==123695==    by 0x405272: replace_dollar (handle_dollar.c:93)
+// ./run.sh: line 5: 123695 Segmentation fault      (core dumped) valgrind --leak-check=full --child-silent-after-fork=yes --suppressions=readline.supp ./minishell
+
 // unset pwd
 // $PWD ne doit rien afficher
 // echo $PWD et $PWD affiche le PWD mais ne devrait pas
@@ -167,42 +180,10 @@ void	init_signal(int option);
 // bash-5.1$ echook
 // bash: echook: command not found
 
-// < main.c > TXT
-// fichier sortie sans cmd, ne creer pas les fichiers
-
-// < main.c cat
-// ne cat pas
-
-// heredoc
-// exec le heredoc mais ne save pas linput
-// exemple : cat << EOF
-// > lwekrn lwkerlkmwe
-// > welkrn
-// > EOF
-// MINISHELL ~
-// au lieu de
-// bash-5.1$ cat <<EOF
-// > ewrnwer
-// > werjn
-// > EOF
-// ewrnwusaluter
-// werjn
-// bash-5.1$
-
 // < TXT
 // pas de message derreur
 // devrait print
 // bash: TXT: No such file or directory
-
-// echo $USER > TXT
-// ==473759== Invalid write of size 4
-// ==473759==    at 0x404F83: saved_stdout (change_redirection.c:44)
-// ==473759==    by 0x404F02: change_in_stdout (change_redirection.c:31)
-// ==473759==    by 0x405CF4: redirection (minishell_exec_2.c:68)
-// ==473759==    by 0x404ACF: minishell_exec (minishell_exec.c:20)
-// ==473759==    by 0x401576: minishell (main.c:63)
-// ==473759==    by 0x4013D3: main (main.c:81)
-// ==473759==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
 
 // void	multiple_commands(t_cmds *cmds, t_env *struct_env)
 // trop de ligne
@@ -217,7 +198,7 @@ int		is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
 
 //Minishell_exec
 void	minishell_exec(t_cmds *cmds, t_env *struct_env);
-void	multiple_commands(t_cmds *cmds, t_env *struct_env);
+void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, t_cmds *temp);
 void	all_waitpid(t_cmds *cmds, pid_t *pid);
 void	parent_process(int *fd, int *infile);
 void	child_process(t_cmds *temp, int infile, int *fd, t_env *struct_env);
@@ -293,8 +274,7 @@ int		init_struct_env(char **env, t_env *struct_env);
 void	free_list(t_cmds *cmds);
 
 //Utils_exec_2
-void	ft_error(char *str, t_cmds *cmds); 
-void	ft_error_2(char *str, char *err, t_cmds *cmds);
+void	ft_error(char *str, t_cmds *cmds);
 void	fork_error(t_cmds *temp, int *fd);
 int		is_it_heredoc(t_cmds *cmds);
 int		is_it_heredoc_2(t_cmds *cmds);
