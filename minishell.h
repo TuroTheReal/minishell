@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/22 14:54:11 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:06:30 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,15 @@ typedef struct s_cmds	t_cmds;
 # define APP_ERROR "minishell: syntax error near unexpected token '>>'\n"
 # define HDOC_ERROR "minishell: syntax error near unexpected token '<<'\n"
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
+# define SIGOFFSET 128
 
-extern int	g_sig_code;
+typedef struct s_signal
+{
+	int				sig_code;
+	unsigned int	heredoc;
+}					t_signal;
+
+extern t_signal		g_signal;
 
 typedef struct s_env
 {
@@ -79,7 +86,6 @@ typedef struct s_gdata
 {
 	unsigned int	nb_command;
 	char			*input;
-	unsigned int	heredoc;
 	t_token			*s_tok;
 	t_cmds			*s_cmds;
 	t_env			s_env;

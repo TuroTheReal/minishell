@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:16:30 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/22 10:35:17 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:39:19 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ int	my_exit(t_env *env, t_cmds *cmd)
 		if (letter)
 		{
 			print_error(cmd->cmd[1]);
-			g_sig_code = 2;
+			g_signal.sig_code = 2;
 		}
 		if (len == 2)
-			g_sig_code = ft_atoi(cmd->cmd[1]);
+			g_signal.sig_code = ft_atoi(cmd->cmd[1]);
 		printf("SIGCODE TAB = %s\n", cmd->cmd[1]); // debug
-		printf("SIGCODE ATOI = %d\n", g_sig_code); // debug
+		printf("SIGCODE ATOI = %d\n", g_signal.sig_code); // debug
 		free_double(env->tab_env);
 		free_minishell(cmd, cmd->g_data->s_tok, cmd->g_data->input);
-		exit(g_sig_code);
+		exit(g_signal.sig_code);
 	}
 	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-	return (g_sig_code = EXIT_FAILURE);
+	return (g_signal.sig_code = EXIT_FAILURE);
 }
