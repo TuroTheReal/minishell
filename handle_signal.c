@@ -6,13 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/23 09:58:10 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:30:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_signal	g_signal = {0,0};
+int	g_sig_code = 0;
 
 static void	handle_sigint(int sig)
 {
@@ -21,63 +21,68 @@ static void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_signal.sig_code = sig + SIGOFFSET;
-	printf ("SIGCODE = %d \n", g_signal.sig_code);
+	g_sig_code = sig + SIGOFFSET;
+	printf ("SIGCODE = %d \n", g_sig_code);
 }
 
 static void	handle_sigint_child(int sig)
 {
 	static int	i;
 
-	(void)sig;
 	i = 0;
+	write(STDOUT_FILENO, "\n", 1);
 	signal(SIGINT, SIG_IGN);
 	if (i >= 1)
 		write(STDOUT_FILENO, "\n", 1);
 	i++;
-	g_signal.sig_code = sig + SIGOFFSET;
-	printf ("CHILD SIGCODE = %d \n", g_signal.sig_code);
+	g_sig_code = sig + SIGOFFSET;
+	printf ("CHILD SIGCODE = %d \n", g_sig_code);
+}
+
+static void	handle_sigquit_child(int sig)
+{
+	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+	g_sig_code = sig + SIGOFFSET;
+	printf ("CHILD SIGCODE = %d \n", g_sig_code);
 }
 
 static void	init_child_signal(void)
 {
-	signal(SIGQUIT, SIG_DFL);
+	printf("CHILD MODE\n"); //debug
+	signal(SIGQUIT, handle_sigquit_child);
 	signal(SIGINT, handle_sigint_child);
 }
 
-static void	init_sigint_heredoc(int sig)
+static void	init_sigint_heredoc(int sig, int *heredoc)
 {
 	(void)sig;
-	if (g_signal.heredoc != 1)
+	if (*heredoc != 1)
 	{
-		g_signal.heredoc = 1;
+		*heredoc = 1;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_signal.sig_code = sig + SIGOFFSET;
-		printf ("HDOC SIGCODE = %d \n", g_signal.sig_code);
-		exit(EXIT_FAILURE);
+		g_sig_code = sig + SIGOFFSET;
+		printf ("HDOC SIGCODE = %d \n", g_sig_code);
+		exit(EXIT_SUCCESS);
 	}
 }
 
-void	init_signal(int option)
+void	init_signal(int option, int *heredoc)
 {
+	(void)heredoc;
 	if (option == 0)
 	{
 		printf("NORMAL MODE\n"); //debug
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else if (option == 1)
+	if (option == 1)
 	{
 		printf("HDOC MODE\n"); //debug
-		g_signal.heredoc = 0;
-		signal(SIGINT, init_sigint_heredoc);
+		signal(SIGINT, (void (*)(int))init_sigint_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else if (option == 2)
-	{
-		printf("CHILD MODE\n"); //debug
+	if (option == 2)
 		init_child_signal();
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:49:32 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/15 13:45:26 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:14:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 void	putstr(char *str)
 {
+	int	i;
+
+	i = 0;
 	while (*str)
 	{
-		write(1, str, 1);
+		i = write(1, str, 1);
+		if (i == -1)
+			return (perror("minishell: echo: write error"));
 		str++;
 	}
 }

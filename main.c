@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/21 15:10:26 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:18:16 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 	t_cmds	*test; // pour print sans bouger tete de liste
 	while (1)
 	{
-		init_signal(0);
+		init_signal(0, NULL);
 		data->input = readline("minishell ~ ");
 		if (!data->input)
 			return ;

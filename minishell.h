@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/23 11:38:48 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:56:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 #                                    ARTHUR                                   *
 #*****************************************************************************/
 
-// sig_code se reinitialise trop tot ?
+// a corriger / implementer
+// exit code pour $? instead of sig_code et si C D ou \ exit code = sig code
 
 // "CTRL C" SIGINT
 // TERMINAL : OK
@@ -48,13 +49,7 @@ typedef struct s_cmds	t_cmds;
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
 # define SIGOFFSET 128
 
-typedef struct s_signal
-{
-	int	sig_code;
-	int	heredoc;
-}		t_signal;
-
-extern t_signal		g_signal;
+extern int		g_sig_code;
 
 typedef struct s_env
 {
@@ -89,6 +84,7 @@ typedef struct s_gdata
 	unsigned int	nb_command;
 	char			*input;
 	int				exit_code;
+	int				heredoc;
 	t_token			*s_tok;
 	t_cmds			*s_cmds;
 	t_env			s_env;
@@ -150,7 +146,7 @@ void	handle_dollar(t_token *tok, t_env *s_env);
 void	handle_redir(t_cmds *cmd, t_token **tok);
 
 //Handle Signal
-void	init_signal(int option);
+void	init_signal(int option, int *heredoc);
 
 /******************************************************************************
 #                                    DIEGO                                    *

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/23 09:44:11 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:29:24 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	int		fd[2];
 	pid_t	pid;
 
+	init_signal(2, NULL);
+	printf("CHILD SGL CMD\n"); //debug
 	if (pipe(fd) == -1)
 		return (ft_error("pipe failed ", cmds));
 	pid = fork();
@@ -25,14 +27,14 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	cmds->flag_error = 1;
 	if (pid == 0)
 		child_process_one_command(cmds, struct_env);
-	if (pid > 0) //ajout Arthur signaux
-	{
-		signal(SIGINT, SIG_IGN);
-		printf("PARENT SGL CMD\n"); //debug
-	}
+	// if (pid > 0) //ajout Arthur signaux
+	// {
+	// 	signal(SIGINT, SIG_IGN);
+	// 	printf("PARENT SGL CMD\n"); //debug
+	// }
 	close (fd[1]);
 	close (fd[0]);
-	waitpid(pid, &g_signal.heredoc, 0);
+	waitpid(pid, NULL, 0); // remplacer par &status et link avec exit_code
 	if (is_it_heredoc(cmds) == 1)
 		unlink("/tmp/HDOC_FILE");
 	return ;
@@ -40,8 +42,6 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 
 void	child_process_one_command(t_cmds *cmds, t_env *struct_env)
 {
-	init_signal(2);
-	printf("CHILD SGL CMD\n"); //debug
 	if (is_it_heredoc(cmds) == 1)
 		create_hdoc_file(cmds);
 	redirection(cmds, struct_env);
@@ -73,7 +73,7 @@ void	create_hdoc_file(t_cmds *cmds)
 	char	*line;
 	t_token	*temp_tok;
 
-	init_signal(1);
+	init_signal(1, &cmds->g_data->heredoc);
 	line = NULL;
 	temp_tok = cmds->redir;
 	while (temp_tok != NULL)

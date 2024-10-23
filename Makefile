@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/10/22 15:31:49 by artberna         ###   ########.fr        #
+#    Updated: 2024/10/23 13:11:31 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ $(OBJ_DEP_DIR)$(PARSING_DIR)
 #                       SOURCES, OBJECTS & DEPENDENCIES                       *
 #******************************************************************************
 
-MINISHELL_SRC = main
+MINISHELL_SRC = main handle_signal
 
 BUILTIN_SRC = builtins_cd builtins_cd_2 builtins_exit builtins_export \
 builtins_fonctions builtins_unset
@@ -45,7 +45,7 @@ minishell_exec minishell_exec_2 utils_exec utils_exec_2
 
 LEXING_SRC = handle_error lexer_handler lexer_utils lexer
 
-PARSING_SRC = handle_dollar handle_redir handle_signal parser_handler \
+PARSING_SRC = handle_dollar handle_redir parser_handler \
 parser_utils parser utils_parsing
 
 MINISHELL_FLS = $(addsuffix .c, $(MINISHELL_SRC))
