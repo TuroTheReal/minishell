@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/22 15:47:41 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:44:11 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	}
 	close (fd[1]);
 	close (fd[0]);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &g_signal.heredoc, 0);
 	if (is_it_heredoc(cmds) == 1)
 		unlink("/tmp/HDOC_FILE");
 	return ;

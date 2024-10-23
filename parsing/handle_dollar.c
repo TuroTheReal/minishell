@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/22 14:22:12 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:15:13 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,24 @@ static char	*extract_n_replace(char *s, t_env *s_env, int *index)
 
 	start = *index + 1;
 	(*index)++;
-	while (s[*index] && ((ft_isalnum(s[*index]) || s[*index] == '_') || s[*index] == '?'))
+	while (s[*index] && (s[*index] == '_' || ft_isalnum(s[*index]) || s[*index] == '?'))
 	{
-		if (s[*index] == '$')
+		if (s[*index] == '$' || s[*index] == '?')
 			break ;
 		(*index)++;
 	}
-	to_find = ft_substr(s, start, *index - start);
+	if (s[(*index)++] == '?')
+		to_find = ft_substr(s, start, 1);
+	else
+		to_find = ft_substr(s, start, *index - start);
 	if (!to_find)
 		return (NULL);
-	printf("TO FIND = %s\n", to_find);
 	var = ft_getenv(s_env, to_find);
-	free(to_find);
 	if (var)
 		to_ret = ft_strdup(var);
 	else
 		to_ret = ft_strdup("");
-	return (to_ret);
+	return (free(var), free(to_find), to_ret);
 }
 
 static char	*make_var(char *s, t_env *s_env, int *i, char *result)
@@ -111,7 +112,10 @@ void	handle_dollar(t_token *tok, t_env *s_env)
 
 	while (tok)
 	{
-		if (tok->type == TOK_STR || tok->type == TOK_D_Q)
+		if ((tok->type == TOK_STR || tok->type == TOK_D_Q) \
+		&& !(tok->prev && tok->prev->type == TOK_HDOC) \
+		&& !(tok->prev && tok->prev->type == TOK_SPC && \
+			tok->prev->prev && tok->prev->prev->type == TOK_HDOC))
 		{
 			new_token = replace_dollar(tok->token, s_env);
 			if (new_token)

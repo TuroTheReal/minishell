@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/22 14:11:46 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:43:39 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env, int i, pid_t *pid)
 		else
 		{
 			if (is_it_heredoc(temp) == 1)
-				waitpid(pid[i], NULL, 0);
+				waitpid(pid[i], &g_signal.sig_code, 0);
 			parent_process(fd, &infile);
 		}
 		temp = temp->next;
@@ -69,7 +69,7 @@ void	all_waitpid(t_cmds *cmds, pid_t *pid, int *infile)
 	while (count > 0)
 	{
 		if (is_it_heredoc(temp) == 0)
-			waitpid(pid[i], NULL, 0);
+			waitpid(pid[i], &g_signal.sig_code, 0);
 		count--;
 		i++;
 		temp = temp->next;

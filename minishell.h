@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/22 16:06:30 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:38:48 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 #                                    ARTHUR                                   *
 #*****************************************************************************/
 
+// sig_code se reinitialise trop tot ?
+
 // "CTRL C" SIGINT
 // TERMINAL : OK
 // CHILD PROCESS : manque retour a la ligne
-// HDOC : display ^C et \n mais ne stop pas, devrait stop
+// HDOC : OK
 
 // "CTRL \" SIGQUIT
 // TERMINAL : OK
@@ -48,9 +50,9 @@ typedef struct s_cmds	t_cmds;
 
 typedef struct s_signal
 {
-	int				sig_code;
-	unsigned int	heredoc;
-}					t_signal;
+	int	sig_code;
+	int	heredoc;
+}		t_signal;
 
 extern t_signal		g_signal;
 
@@ -86,6 +88,7 @@ typedef struct s_gdata
 {
 	unsigned int	nb_command;
 	char			*input;
+	int				exit_code;
 	t_token			*s_tok;
 	t_cmds			*s_cmds;
 	t_env			s_env;
