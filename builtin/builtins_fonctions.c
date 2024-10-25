@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:39:46 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/23 17:11:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:04:29 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int	builtins_fonctions(t_cmds *cmd, t_env *struct_env)
 {
 	if ((ft_strncmp(cmd->cmd[0], "env", 10) == 0) && cmd->cmd[1] == NULL)
 		my_env(struct_env);
-	else if ((ft_strncmp(cmd->cmd[0], "pwd", 10) == 0)
-		&& cmd->cmd[1] == NULL)
+	else if (ft_strncmp(cmd->cmd[0], "pwd", 10) == 0)
 		my_pwd();
-	else if (ft_strncmp(cmd->cmd[0], "export", 10) == 0
-		&& cmd->cmd[1] != NULL && cmd->cmd[2] != NULL)
+	else if (ft_strncmp(cmd->cmd[0], "export", 10) == 0)
 		my_export(struct_env, cmd);
 	else if (ft_strncmp(cmd->cmd[0], "unset", 10) == 0
 		&& cmd->cmd[1] != NULL)
@@ -29,9 +27,11 @@ int	builtins_fonctions(t_cmds *cmd, t_env *struct_env)
 		my_echo(cmd->cmd);
 	else if (ft_strncmp(cmd->cmd[0], "cd", 10) == 0)
 		my_cd(struct_env, cmd);
-	else if (ft_strncmp(cmd->cmd[0], "exit", \
-	ft_strlen(cmd->cmd[0])) == 0) // && cmd->cmd[1] != NULL)
+	else if (ft_strncmp(cmd->cmd[0], "exit", 10) == 0)
+	{
 		my_exit(struct_env, cmd);
+		cmd->g_data->heredoc = g_sig_code;
+	}
 	else
 		return (ft_error("builtins fonctions", cmd), 1);
 	return (0);

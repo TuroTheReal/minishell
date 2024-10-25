@@ -3,25 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:49:32 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/23 17:14:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:03:52 by dsindres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	ft_error(char *str, t_cmds *cmds)
+{
+	if (errno == ENOENT)
+		perror(str);
+	if (cmds->flag_error == 1)
+		exit (EXIT_FAILURE);
+}
+
 void	putstr(char *str)
 {
-	int	i;
-
-	i = 0;
 	while (*str)
 	{
-		i = write(1, str, 1);
-		if (i == -1)
-			return (perror("minishell: echo: write error"));
+		write(1, str, 1);
 		str++;
 	}
 }
@@ -62,6 +65,7 @@ int	init_struct_env(char **env, t_env *struct_env)
 	while (env[i])
 		i++;
 	struct_env->len = i;
+	struct_env->oldpwd = NULL;
 	struct_env->tab_env = copy_tab(env, i);
 	return (0);
 }
@@ -81,25 +85,4 @@ char	**copy_tab(char **tab_to_copy, int len)
 		i++;
 	}
 	return (tab);
-}
-
-void	free_list(t_cmds *cmds)
-{
-	t_cmds	*temp;
-	t_token	*temp2;
-
-	while (cmds != NULL)
-	{
-		temp = cmds;
-		while (cmds->redir != NULL)
-		{
-			temp2 = cmds->redir;
-			cmds->redir = cmds->redir->next;
-			free(temp2);
-		}
-		cmds = cmds->next;
-		if (temp->cmd != NULL)
-			free(temp->cmd);
-		free(temp);
-	}
 }

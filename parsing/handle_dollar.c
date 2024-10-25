@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/23 11:15:13 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:16:46 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,28 @@ static char	*copy_str(char *str, char c)
 	return (new_str);
 }
 
-static char	*extract_n_replace(char *s, t_env *s_env, int *index)
+static char	*extract_n_replace(char *s, t_gdata *data, int *i)
 {
 	int		start;
 	char	*to_ret;
 	char	*to_find;
 	char	*var;
 
-	start = *index + 1;
-	(*index)++;
-	while (s[*index] && (s[*index] == '_' || ft_isalnum(s[*index]) || s[*index] == '?'))
+	start = *i + 1;
+	(*i)++;
+	while (s[*i] && (s[*i] == '_' || ft_isalnum(s[*i]) || s[*i] == '?'))
 	{
-		if (s[*index] == '$' || s[*index] == '?')
+		if (s[*i] == '$' || s[*i] == '?')
 			break ;
-		(*index)++;
+		(*i)++;
 	}
-	if (s[(*index)++] == '?')
+	if (s[(*i)++] == '?')
 		to_find = ft_substr(s, start, 1);
 	else
-		to_find = ft_substr(s, start, *index - start);
+		to_find = ft_substr(s, start, *i - start);
 	if (!to_find)
 		return (NULL);
-	var = ft_getenv(s_env, to_find);
+	var = ft_getenv(&data->s_env, to_find, data);
 	if (var)
 		to_ret = ft_strdup(var);
 	else
@@ -59,13 +59,13 @@ static char	*extract_n_replace(char *s, t_env *s_env, int *index)
 	return (free(var), free(to_find), to_ret);
 }
 
-static char	*make_var(char *s, t_env *s_env, int *i, char *result)
+static char	*make_var(char *s, t_gdata *data, int *i, char *result)
 {
 	char	*tmp;
 	char	*new_res;
 	int		res_len;
 
-	tmp = extract_n_replace(s, s_env, i);
+	tmp = extract_n_replace(s, data, i);
 	if (!tmp)
 		return (free(result), NULL);
 	res_len = ft_strlen(result) + ft_strlen(tmp);
@@ -79,7 +79,7 @@ static char	*make_var(char *s, t_env *s_env, int *i, char *result)
 	return (new_res);
 }
 
-static char	*replace_dollar(char *s, t_env *s_env)
+static char	*replace_dollar(char *s, t_gdata *data)
 {
 	int		i;
 	char	*result;
@@ -92,7 +92,7 @@ static char	*replace_dollar(char *s, t_env *s_env)
 	{
 		if (s[i] == '$')
 		{
-			result = make_var(s, s_env, &i, result);
+			result = make_var(s, data, &i, result);
 			if (!result)
 				return (NULL);
 		}
@@ -106,7 +106,7 @@ static char	*replace_dollar(char *s, t_env *s_env)
 	return (result);
 }
 
-void	handle_dollar(t_token *tok, t_env *s_env)
+void	handle_dollar(t_token *tok, t_gdata *data)
 {
 	char	*new_token;
 
@@ -117,7 +117,7 @@ void	handle_dollar(t_token *tok, t_env *s_env)
 		&& !(tok->prev && tok->prev->type == TOK_SPC && \
 			tok->prev->prev && tok->prev->prev->type == TOK_HDOC))
 		{
-			new_token = replace_dollar(tok->token, s_env);
+			new_token = replace_dollar(tok->token, data);
 			if (new_token)
 			{
 				free(tok->token);

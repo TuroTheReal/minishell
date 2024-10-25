@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/22 15:48:04 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/25 14:02:02 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_it_builtins(t_cmds *cmds)
 		|| ft_strncmp(cmds->cmd[0], "export", 10) == 0
 		|| ft_strncmp(cmds->cmd[0], "unset", 10) == 0
 		|| ft_strncmp(cmds->cmd[0], "echo", 10) == 0
-		|| ft_strncmp(cmds->cmd[0], "exit", ft_strlen(cmds->cmd[0])) == 0)
+		|| ft_strncmp(cmds->cmd[0], "exit", 10) == 0)
 		return (0);
 	return (1);
 }
@@ -59,12 +59,10 @@ void	exec_command_2(t_cmds *cmds, t_env *struct_env)
 	char	*path;
 
 	path = find_command(cmds->cmd[0], struct_env);
-	if (!path)
-		ft_error("command not found", cmds);
 	if (execve(path, cmds->cmd, struct_env->tab_env) == -1)
 	{
 		free(path);
-		ft_error("exceve fonction ", cmds);
+		my_error(cmds->cmd[0], " : command not found\n", cmds);
 	}
 }
 

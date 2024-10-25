@@ -6,13 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:37:23 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/23 13:09:33 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:15:38 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_getenv(t_env *struct_env, char *dir)
+char	*ft_getenv(t_env *struct_env, char *dir, t_gdata *data)
 {
 	int		index;
 	t_cmds	t_dir;
@@ -21,8 +21,8 @@ char	*ft_getenv(t_env *struct_env, char *dir)
 	i = 0;
 	if (!ft_strncmp(dir, "?", 1))
 	{
-		printf ("GETENV SIGCODE = %d \n", g_sig_code);
-		return (ft_itoa(g_sig_code));
+		printf ("GETENV EXIT CODE = %d \n", data->exit_code); // exit status
+		return (ft_itoa(data->exit_code));
 	}
 	t_dir.cmd = malloc(sizeof(char *) * (2));
 	t_dir.cmd[0] = "cd";
@@ -52,8 +52,6 @@ char	*display_dir(char *cmd, char *old_dir)
 		dir = opendir(old_dir);
 	if (dir == NULL)
 		return (NULL);
-	if (dir == NULL)
-		return (NULL);
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
@@ -67,4 +65,44 @@ char	*display_dir(char *cmd, char *old_dir)
 	}
 	closedir(dir);
 	return (NULL);
+}
+
+void	replace_dir(t_env *struct_env, char *old_dir,
+		char *new_dir, char *new_old_dir)
+{
+	t_cmds		t_dir;
+	int			i;
+
+	i = 0;
+	t_dir.cmd = malloc(sizeof(char *) * (4));
+	t_dir.cmd[0] = "cd";
+	t_dir.cmd[1] = old_dir;
+	t_dir.cmd[2] = new_dir;
+	t_dir.cmd[3] = NULL;
+	i = is_new_var_env(struct_env, &t_dir);
+	my_export_replace2(struct_env, &t_dir, i);
+	free(t_dir.cmd);
+	if (ft_getenv(struct_env, "OLDPWD", NULL) == NULL)
+	{
+		free(struct_env->oldpwd);
+		struct_env->oldpwd = ft_strdup(new_old_dir);
+		return ;
+	}
+	replace_dir_2(struct_env, new_old_dir);
+}
+
+void	replace_dir_2(t_env *struct_env, char *new_old_dir)
+{
+	t_cmds		t_dir;
+	int			i;
+
+	i = 0;
+	t_dir.cmd = malloc(sizeof(char *) * (4));
+	t_dir.cmd[0] = "cd";
+	t_dir.cmd[1] = "OLDPWD";
+	t_dir.cmd[2] = new_old_dir;
+	t_dir.cmd[3] = NULL;
+	i = is_new_var_env(struct_env, &t_dir);
+	my_export_replace2(struct_env, &t_dir, i);
+	free(t_dir.cmd);
 }

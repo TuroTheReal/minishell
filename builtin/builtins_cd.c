@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:45:11 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/15 13:42:05 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:15:29 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	my_cd(t_env *struct_env, t_cmds *t_cmds)
 {
 	DIR		*path;
 
-	path = opendir(t_cmds->cmd[1]);
+	if (t_cmds->cmd[1] != NULL)
+		path = opendir(t_cmds->cmd[1]);
 	if (t_cmds->cmd[1] == NULL
 		|| ft_strncmp(t_cmds->cmd[1], "~", 10) == 0)
 		cd_dir_env(struct_env, "HOME");
@@ -25,18 +26,26 @@ void	my_cd(t_env *struct_env, t_cmds *t_cmds)
 		return ;
 	else if (ft_strncmp(t_cmds->cmd[1], "-", 10) == 0)
 		cd_dir_env(struct_env, "OLDPWD");
-	else if (ft_strncmp(t_cmds->cmd[1], "..", 10) == 0
+	else
+		my_cd_2(struct_env, t_cmds, path);
+}
+
+void	my_cd_2(t_env *struct_env, t_cmds *t_cmds, DIR *path)
+{
+	if (ft_strncmp(t_cmds->cmd[1], "..", 10) == 0
 		|| ft_strncmp(t_cmds->cmd[1], "../", 10) == 0)
 		cd_dir_move_up(struct_env, "..");
 	else if (path != NULL)
 		cd_dir_path(struct_env, t_cmds->cmd[1]);
 	else
 	{
-		closedir(path);
+		if (t_cmds->cmd[1] != NULL)
+			closedir(path);
 		ft_error("cd fonctions ", t_cmds);
 		return ;
 	}
-	closedir(path);
+	if (t_cmds->cmd[1] != NULL)
+		closedir(path);
 }
 
 void	cd_dir_path(t_env *struct_env, char *path)
@@ -81,36 +90,18 @@ void	cd_dir_env(t_env *struct_env, char *dir)
 		chdir(getenv("HOME"));
 	else
 	{
-		old_dir = ft_getenv(struct_env, dir);
-		chdir(old_dir);
+		old_dir = ft_getenv(struct_env, dir, NULL);
+		if (old_dir == NULL)
+		{
+			old_dir = ft_strdup(struct_env->oldpwd);
+			chdir(old_dir);
+			free(old_dir);
+		}
+		else
+			chdir(old_dir);
 	}
-	new_dir = ft_getenv(struct_env, dir);
+	new_dir = getcwd(NULL, 0);
 	replace_dir(struct_env, "PWD", new_dir, actual_dir);
 	free(actual_dir);
-}
-
-void	replace_dir(t_env *struct_env, char *old_dir,
-		char *new_dir, char *new_old_dir)
-{
-	t_cmds	t_dir;
-	int		i;
-
-	i = 0;
-	t_dir.cmd = malloc(sizeof(char *) * (4));
-	t_dir.cmd[0] = "cd";
-	t_dir.cmd[1] = old_dir;
-	t_dir.cmd[2] = new_dir;
-	t_dir.cmd[3] = NULL;
-	i = is_new_var_env(struct_env, &t_dir);
-	my_export_replace(struct_env, &t_dir, i);
-	free(t_dir.cmd);
-	i = 0;
-	t_dir.cmd = malloc(sizeof(char *) * (4));
-	t_dir.cmd[0] = "cd";
-	t_dir.cmd[1] = "OLDPWD";
-	t_dir.cmd[2] = new_old_dir;
-	t_dir.cmd[3] = NULL;
-	i = is_new_var_env(struct_env, &t_dir);
-	my_export_replace(struct_env, &t_dir, i);
-	free(t_dir.cmd);
+	free(new_dir);
 }

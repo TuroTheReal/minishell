@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:16:03 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/21 18:29:09 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:01:08 by dsindres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,15 @@ int	change_in_stdin(t_cmds *cmds)
 	int		file_fd;
 	t_token	*in;
 
-	if (verif_file(cmds)) // != NULL ? //  mute pour compilation, a debugguer
+	if (verif_file(cmds) == 1)
 	{
-		// ft_error(verif_file(cmds), cmds); // mute pour compilation, a debugguer
-		printf("VERIF FILE ERROR\n"); // debug
+		ft_error("file verif", cmds);
 		return (1);
 	}
 	in = last_token_node(cmds, 1);
 	if (in == NULL)
 		return (1);
-	file_fd_value(in, &file_fd);
+	file_fd_value(in, &file_fd, cmds);
 	if (file_fd < 0)
 		return (1);
 	cmds->saved_stdin = dup(STDIN_FILENO);

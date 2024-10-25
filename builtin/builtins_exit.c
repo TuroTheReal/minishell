@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:16:30 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/23 13:10:00 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:01:36 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	my_exit(t_env *env, t_cmds *cmd)
 	int	letter;
 
 	len = 0;
-	letter = 0;
 	while (cmd->cmd[len])
 		len++;
+	letter = 0;
 	if (len > 1)
 		letter = has_letter(cmd->cmd[1]);
 	printf("DANS MY EXIT\n"); // debug
@@ -57,9 +57,8 @@ int	my_exit(t_env *env, t_cmds *cmd)
 			print_error(cmd->cmd[1]);
 			g_sig_code = 2;
 		}
-		if (len == 2)
+		else if (len == 2)
 			g_sig_code = ft_atoi(cmd->cmd[1]);
-		printf("SIGCODE TAB = %s\n", cmd->cmd[1]); // debug
 		printf("SIGCODE ATOI = %d\n", g_sig_code); // debug
 		free_double(env->tab_env);
 		free_minishell(cmd, cmd->g_data->s_tok, cmd->g_data->input);
