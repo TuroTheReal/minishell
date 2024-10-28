@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:24:37 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/15 14:33:05 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:59:03 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 char	*ft_strjoin_no_free(char *s1, char *s2)
 {
 	char	*new_str;
-	int		i;
-	int		j;
 	int		length;
 
 	if (!s1 && !s2)
@@ -38,8 +36,6 @@ char	*ft_strjoin_no_free(char *s1, char *s2)
 	if (!s2)
 		return (ft_strdup(s1));
 	length = (ft_strlen(s1) + ft_strlen(s2));
-	i = 0;
-	j = 0;
 	new_str = (char *)malloc(sizeof(char) * (length + 1));
 	if (!new_str)
 		return (NULL);

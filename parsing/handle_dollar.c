@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 11:54:50 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:24:13 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	*extract_n_replace(char *s, t_gdata *data, int *i)
 	char	*to_ret;
 	char	*to_find;
 	char	*var;
+	char	*if_zero;
 
 	start = *i + 1;
 	(*i)++;
@@ -45,12 +46,18 @@ static char	*extract_n_replace(char *s, t_gdata *data, int *i)
 			break ;
 		(*i)++;
 	}
+	if (s[*i] == '\0')
+		*i -= 1;
 	if (s[(*i)++] == '?')
 		to_find = ft_substr(s, start, 1);
 	else if (s[start] == '0')
-		return (ft_strdup("minishell"));
+	{
+		if_zero = ft_substr(s, start + 1, *i - start - 1);
+		to_ret = ft_strjoin("minishell", if_zero);
+		return (free(if_zero), to_ret);
+	}
 	else if (ft_isdigit(s[start]))
-		to_find = ft_substr(s, start + 1, *i - start);
+		to_find = ft_substr(s, start + 1, *i - start - 1);
 	else
 		to_find = ft_substr(s, start, *i - start);
 	if (!to_find)

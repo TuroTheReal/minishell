@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/10/17 14:20:06 by artberna         ###   ########.fr        #
+#    Updated: 2024/10/28 14:14:14 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,13 +94,13 @@ BLEU = \033[1;34m
 #******************************************************************************
 
 all : $(NAME)
-	@echo "$(ROSE)COMPILATION FINISHED, FILES CREATED :"
-	@echo "$(COLOR_10)███╗   ███╗██╗   ██╗    ██╗     ██╗██████╗ ██████╗  █████╗ ██████╗ ██╗   ██╗$(RESET)"
-	@echo "$(COLOR_11)████╗ ████║╚██╗ ██╔╝    ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝$(RESET)"
-	@echo "$(COLOR_12)██╔████╔██║ ╚████╔╝     ██║     ██║██████╔╝██████╔╝███████║██████╔╝ ╚████╔╝$(RESET)"
-	@echo "$(COLOR_13)██║╚██╔╝██║  ╚██╔╝      ██║     ██║██╔══██╗██╔══██╗██╔══██║██╔══██╗  ╚██╔╝$(RESET)"
-	@echo "$(COLOR_14)██║ ╚═╝ ██║   ██║       ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║   ██║$(RESET)"
-	@echo "$(COLOR_15)╚═╝     ╚═╝   ╚═╝       ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝$(RESET)"
+	@echo -e "$(ROSE)COMPILATION FINISHED, FILES CREATED :"
+	@echo -e"$(COLOR_10)███╗   ███╗██╗   ██╗    ██╗     ██╗██████╗ ██████╗  █████╗ ██████╗ ██╗   ██╗$(RESET)"
+	@echo -e"$(COLOR_11)████╗ ████║╚██╗ ██╔╝    ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝$(RESET)"
+	@echo -e"$(COLOR_12)██╔████╔██║ ╚████╔╝     ██║     ██║██████╔╝██████╔╝███████║██████╔╝ ╚████╔╝$(RESET)"
+	@echo -e"$(COLOR_13)██║╚██╔╝██║  ╚██╔╝      ██║     ██║██╔══██╗██╔══██╗██╔══██║██╔══██╗  ╚██╔╝$(RESET)"
+	@echo -e"$(COLOR_14)██║ ╚═╝ ██║   ██║       ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║   ██║$(RESET)"
+	@echo -e"$(COLOR_15)╚═╝     ╚═╝   ╚═╝       ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝$(RESET)"
 
 $(NAME) : $(OBJ)
 	@$(AR) $(NAME) $(OBJ)
@@ -108,18 +108,18 @@ $(NAME) : $(OBJ)
 $(OBJ_DEP_DIR)%.o: %.c $(HEADER) | $(OBJF)
 	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) -MMD -MP -c $< -o $@
-	@echo "$(BLEU)Compiling $< to $@$(RESET)"
+	@echo -e"$(BLEU)Compiling $< to $@ $(RESET)"
 
 $(OBJF):
 	@mkdir -p $(OBJ_DEP_DIR)
 
 clean :
 	@$(RM) $(OBJ_DEP_DIR)
-	@echo "$(VIOLET)Suppressing objects & dependencies files of $(NAME)$(RESET)"
+	@echo -e"$(VIOLET)Suppressing objects & dependencies files of $(NAME)$(RESET)"
 
 fclean : clean
 	@$(RM) $(NAME)
-	@echo "$(VERT)Suppressing archives $(NAME)$(RESET)"
+	@echo -e"$(VERT)Suppressing archives $(NAME)$(RESET)"
 
 re : fclean all
 

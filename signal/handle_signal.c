@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/25 17:30:20 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:04:36 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,9 @@ static void	handle_sigquit_child(int sig)
 	printf ("CHILD SIGCODE = %d \n", g_sig_code);
 }
 
-static void	init_sigint_heredoc(int sig, t_gdata *data)
+static void	init_sigint_heredoc(int sig)
 {
 	(void)sig;
-	data->heredoc = 1;
-	printf("heredoc dans sig = %d\n", data->heredoc);
 	write(STDOUT_FILENO, "^C\n", 3);
 	rl_replace_line("", 0);
 	rl_redisplay();
