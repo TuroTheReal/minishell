@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 14:24:13 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:36:04 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,45 +30,7 @@ static char	*copy_str(char *str, char c)
 	return (new_str);
 }
 
-static char	*extract_n_replace(char *s, t_gdata *data, int *i)
-{
-	int		start;
-	char	*to_ret;
-	char	*to_find;
-	char	*var;
-	char	*if_zero;
 
-	start = *i + 1;
-	(*i)++;
-	while (s[*i] && (s[*i] == '_' || ft_isalnum(s[*i]) || s[*i] == '?'))
-	{
-		if (s[*i] == '$' || s[*i] == '?')
-			break ;
-		(*i)++;
-	}
-	if (s[*i] == '\0')
-		*i -= 1;
-	if (s[(*i)++] == '?')
-		to_find = ft_substr(s, start, 1);
-	else if (s[start] == '0')
-	{
-		if_zero = ft_substr(s, start + 1, *i - start - 1);
-		to_ret = ft_strjoin("minishell", if_zero);
-		return (free(if_zero), to_ret);
-	}
-	else if (ft_isdigit(s[start]))
-		to_find = ft_substr(s, start + 1, *i - start - 1);
-	else
-		to_find = ft_substr(s, start, *i - start);
-	if (!to_find)
-		return (NULL);
-	var = ft_getenv(&data->s_env, to_find, data);
-	if (var)
-		to_ret = ft_strdup(var);
-	else
-		to_ret = ft_strdup("");
-	return (free(var), free(to_find), to_ret);
-}
 
 static char	*make_var(char *s, t_gdata *data, int *i, char *result)
 {
@@ -98,7 +60,7 @@ static char	*make_var(char *s, t_gdata *data, int *i, char *result)
 	return (new_res);
 }
 
-static char	*replace_dollar(char *s, t_gdata *data)
+ static char	*replace_dollar(char *s, t_gdata *data)
 {
 	int		i;
 	char	*result;

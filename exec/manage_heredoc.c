@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 09:14:21 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/28 11:37:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:16:29 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	input_heredoc(t_token *temp_tok, char *line, int fd, t_gdata *data)
 	}
 	if (ft_strstr(line, "$"))
 	{
+		(void)data;
 		tmp = replace_dollar_hdoc(line, data);
 		line = tmp;
 		free(line);
