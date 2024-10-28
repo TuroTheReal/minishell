@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:39:46 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/25 17:04:29 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:12:49 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,26 @@ void	my_echo(char **cmd)
 		while (cmd[i])
 		{
 			putstr(cmd[i]);
+			if (cmd[i + 1] != NULL)
+				write(1, " ", 1);
 			i++;
 		}
 	}
 	else if (ft_strncmp(cmd[1], "-n", 4) != 0)
-	{
-		i = 1;
-		while (cmd[i])
-		{
-			putstr(cmd[i]);
-			write(1, "\n", 1);
-			i++;
-		}
-	}
+		my_echo_2(cmd);
 }
 
-void	print_var(char **tab_var)
+void	my_echo_2(char **cmd)
 {
 	int	i;
 
-	i = 0;
-	while (tab_var[i])
+	i = 1;
+	while (cmd[i])
 	{
-		putstr(tab_var[i]);
-		write(1, "\n", 1);
+		putstr(cmd[i]);
+		write(1, " ", 1);
+		if (cmd[i + 1] == NULL)
+			write(1, "\n", 1);
 		i++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:45:47 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/24 15:00:54 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:09:51 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,18 @@ int	is_new_var_env(t_env *struct_env, t_cmds *t_cmds)
 		i++;
 	}
 	return (-1);
+}
+
+
+void	print_var(char **tab_var)
+{
+	int	i;
+
+	i = 0;
+	while (tab_var[i])
+	{
+		putstr(tab_var[i]);
+		write(1, "\n", 1);
+		i++;
+	}
 }

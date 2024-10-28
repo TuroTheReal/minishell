@@ -1,12 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   replace_dollar_hdoc.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/28 11:27:59 by artberna          #+#    #+#             */
+/*   Updated: 2024/10/28 11:37:31 by artberna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 11:54:50 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:18:31 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +59,6 @@ static char	*extract_n_replace(char *s, t_gdata *data, int *i)
 	}
 	if (s[(*i)++] == '?')
 		to_find = ft_substr(s, start, 1);
-	else if (s[start] == '0')
-		return (ft_strdup("minishell"));
-	else if (ft_isdigit(s[start]))
-		to_find = ft_substr(s, start + 1, *i - start);
 	else
 		to_find = ft_substr(s, start, *i - start);
 	if (!to_find)
@@ -91,7 +99,27 @@ static char	*make_var(char *s, t_gdata *data, int *i, char *result)
 	return (new_res);
 }
 
-static char	*replace_dollar(char *s, t_gdata *data)
+// static char	*make_var(char *s, t_gdata *data, int *i, char *result)
+// {
+// 	char	*tmp;
+// 	char	*new_res;
+// 	int		res_len;
+
+// 	tmp = extract_n_replace(s, data, i);
+// 	if (!tmp)
+// 		return (free(result), NULL);
+// 	res_len = ft_strlen(result) + ft_strlen(tmp);
+// 	new_res = ft_calloc(res_len + 2, sizeof(char));
+// 	if (!new_res)
+// 		return (free(result), free(tmp), NULL);
+// 	ft_strcpy(new_res, result);
+// 	ft_strcat(new_res, tmp);
+// 	free(result);
+// 	free(tmp);
+// 	return (new_res);
+// }
+
+char	*replace_dollar_hdoc(char *s, t_gdata *data)
 {
 	int		i;
 	char	*result;
@@ -116,26 +144,4 @@ static char	*replace_dollar(char *s, t_gdata *data)
 		}
 	}
 	return (result);
-}
-
-void	handle_dollar(t_token *tok, t_gdata *data)
-{
-	char	*new_token;
-
-	while (tok)
-	{
-		if ((tok->type == TOK_STR || tok->type == TOK_D_Q) \
-		&& !(tok->prev && tok->prev->type == TOK_HDOC) \
-		&& !(tok->prev && tok->prev->type == TOK_SPC && \
-			tok->prev->prev && tok->prev->prev->type == TOK_HDOC))
-		{
-			new_token = replace_dollar(tok->token, data);
-			if (new_token)
-			{
-				free(tok->token);
-				tok->token = new_token;
-			}
-		}
-		tok = tok->next;
-	}
 }

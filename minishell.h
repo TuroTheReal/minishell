@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/25 17:49:20 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:31:06 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,21 @@
 // bash-5.1$ echo $?
 // 130
 
-// a corriger / implementer
-// exit code pour $? instead of sig_code et si C D ou \ exit code = sig code
+// echo $54 ou $?87
 
-// "CTRL C" SIGINT
-// TERMINAL : OK
-// CHILD PROCESS : OK
-// HDOC : OK
+//free en trop
+// minishell ~ echo $USER "$TERM" '$HOME'
+// ==825655== Invalid free() / delete / delete[] / realloc()
+// ==825655==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+// ==825655==    by 0x40628C: extract_n_replace (handle_dollar.c:59)
+// ==825655==    by 0x405E48: make_var (handle_dollar.c:68)
+// ==825655==    by 0x405DA2: replace_dollar (handle_dollar.c:95)
+// ==825655==    by 0x40607D: handle_dollar (handle_dollar.c:120)
+// ==825655==    by 0x406B55: parser (parser.c:38)
+// ==825655==    by 0x4014AB: minishell (main.c:40)
+// ==825655==    by 0x4013C0: main (main.c:67)
 
-// "CTRL \" SIGQUIT
-// TERMINAL : OK
-// CHILD PROCESS: OK
-// HDOC : OK
-
-// "CTRL D"
-// TERMINAL : OK
-// CHILD PROCESS: Ok
-// HDOC : OK
+// replace dollar hdoc
 
 typedef struct s_cmds	t_cmds;
 
@@ -153,6 +151,7 @@ void		print_cmd(t_cmds *cmd); //debug
 
 // Handle Dollar
 void		handle_dollar(t_token *tok, t_gdata *data);
+char		*replace_dollar_hdoc(char *s, t_gdata *data);
 
 //Handle Redir
 void		handle_redir(t_cmds *cmd, t_token **tok);
@@ -166,15 +165,6 @@ int			get_exit_code(int status);
 /******************************************************************************
 #                                    DIEGO                                    *
 #*****************************************************************************/
-
-// ERREUR A CHECKER
-
-// unset pwd
-// $PWD ne doit rien afficher
-// echo $PWD et $PWD affiche le PWD mais ne devrait pas
-// cd ne fonctionne pas mais devrait fonctionner.
-
-//cd signaux et error
 
 //Minishell_exec
 void		minishell_exec(t_cmds *cmds, t_gdata *data);
@@ -193,7 +183,7 @@ void		all_waitpid(t_cmds *cmds, pid_t *pid);
 void		manage_hdoc(t_cmds *cmds);
 const char	*create_file_name(int i);
 void		create_hdoc_file(t_cmds *cmds, const char *str);
-int			input_heredoc(t_token *temp_tok, char *line, int fd);
+int			input_heredoc(t_token *temp_tok, char *line, int fd, t_gdata *data);
 
 //Manage_heredoc_2
 void		affect_heredoc_name(t_cmds *cmds);
@@ -225,13 +215,14 @@ int			builtins_fonctions(t_cmds *t_cmds, t_env *struct_env);
 void		my_env(t_env *struct_env);
 void		my_pwd(void);
 void		my_echo(char **cmd);
-void		print_var(char **tab_var);
+void		my_echo_2(char **cmd);
 
 //Builtins_export
 void		my_export(t_env *struct_env, t_cmds *t_cmds);
 int			is_new_var_env(t_env *struct_env, t_cmds *t_cmds);
 int			is_new_var_env_2(t_env *struct_env, t_cmds *t_cmds, int j);
 int			good_input(t_cmds *cmds);
+void		print_var(char **tab_var);
 
 //Builtins_export_2
 void		my_export_create(t_env *struct_env, t_cmds *t_cmds, int len);

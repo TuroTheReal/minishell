@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 09:14:21 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/25 17:49:47 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:37:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	create_hdoc_file(t_cmds *cmds, const char *str)
 				ft_error("Failed to open HDOC_FILE", cmds);
 			while (1)
 			{
-				if (input_heredoc(temp_tok, line, fd) == 0 || cmds->g_data->heredoc == 1)
+				if (input_heredoc(temp_tok, line, fd, cmds->g_data) == 0 || cmds->g_data->heredoc == 1)
 					break ;
 			}
 			close (fd);
@@ -79,8 +79,11 @@ void	create_hdoc_file(t_cmds *cmds, const char *str)
 	}
 }
 
-int	input_heredoc(t_token *temp_tok, char *line, int fd)
+int	input_heredoc(t_token *temp_tok, char *line, int fd, t_gdata *data)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	line = readline("> ");
 	if (line == NULL || ft_strncmp(line, temp_tok->token,
 			(ft_strlen(line) + ft_strlen(temp_tok->token))) == 0)
@@ -89,6 +92,12 @@ int	input_heredoc(t_token *temp_tok, char *line, int fd)
 			ft_putstr_fd("minishell: warning: heredoc: called end-of-line\n", 2);
 		free(line);
 		return (0);
+	}
+	if (ft_strstr(line, "$"))
+	{
+		tmp = replace_dollar_hdoc(line, data);
+		line = tmp;
+		free(line);
 	}
 	ft_putstr_fd(line, fd);
 	ft_putstr_fd("\n", fd);
