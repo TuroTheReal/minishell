@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:45:11 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/25 17:15:29 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:44:08 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ void	my_cd(t_env *struct_env, t_cmds *t_cmds)
 		my_cd_2(struct_env, t_cmds, path);
 }
 
-void	my_cd_2(t_env *struct_env, t_cmds *t_cmds, DIR *path)
+void	my_cd_2(t_env *struct_env, t_cmds *cmds, DIR *path)
 {
-	if (ft_strncmp(t_cmds->cmd[1], "..", 10) == 0
-		|| ft_strncmp(t_cmds->cmd[1], "../", 10) == 0)
+	if (ft_strncmp(cmds->cmd[1], "..", 10) == 0
+		|| ft_strncmp(cmds->cmd[1], "../", 10) == 0)
 		cd_dir_move_up(struct_env, "..");
 	else if (path != NULL)
-		cd_dir_path(struct_env, t_cmds->cmd[1]);
+		cd_dir_path(struct_env, cmds->cmd[1]);
 	else
 	{
-		if (t_cmds->cmd[1] != NULL)
+		if (cmds->cmd[1] != NULL)
 			closedir(path);
-		ft_error("cd fonctions ", t_cmds);
+		my_error(cmds->cmd[1], ": No such file or directory\n", cmds);
 		return ;
 	}
-	if (t_cmds->cmd[1] != NULL)
+	if (cmds->cmd[1] != NULL)
 		closedir(path);
 }
 

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 11:09:11 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:09:00 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static char	*copy_str(char *str, char c)
 	new_str[len + 1] = '\0';
 	return (new_str);
 }
-
-
 
 static char	*make_var(char *s, t_gdata *data, int *i, char *result)
 {

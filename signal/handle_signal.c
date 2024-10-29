@@ -6,13 +6,11 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 14:04:36 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 13:49:38 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_sig_code = 0;
 
 static void	handle_sigint(int sig)
 {
@@ -22,7 +20,6 @@ static void	handle_sigint(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_code = SIGINT + SIGOFFSET;
-	printf ("SIGCODE = %d \n", g_sig_code);
 }
 
 static void	handle_sigint_child(int sig)
@@ -48,23 +45,23 @@ static void	handle_sigquit_child(int sig)
 	printf ("CHILD SIGCODE = %d \n", g_sig_code);
 }
 
-static void	init_sigint_heredoc(int sig)
+static void	init_sigint_heredoc(int sig, t_gdata *data)
 {
+	data->heredoc = 1;
 	(void)sig;
 	write(STDOUT_FILENO, "^C\n", 3);
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_code = SIGINT + SIGOFFSET;
 	printf ("HDOC SIGCODE = %d \n", g_sig_code);
-	exit(EXIT_SUCCESS);
+	exit(g_sig_code);
 }
 
 void	init_signal(int option, t_gdata *data)
 {
+	(void)data;
 	if (option == 0)
 	{
-		printf("NORMAL MODE\n"); //debug
-		data->heredoc = 0;
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}

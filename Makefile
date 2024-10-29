@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/10/29 10:56:09 by artberna         ###   ########.fr        #
+#    Updated: 2024/10/29 16:49:58 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ $(OBJ_DEP_DIR)$(PARSING_DIR) $(OBJ_DEP_DIR)$(SIGNAL_DIR)
 MINISHELL_SRC = main
 
 BUILTIN_SRC = builtins_cd builtins_cd_2 builtins_exit builtins_export \
-builtins_fonctions builtins_unset builtins_export_2 builtins_export_3
+builtins_fonctions builtins_fonctions_2 builtins_unset builtins_export_2 \
+builtins_export_3
 
 EXEC_SRC = change_redirection_utils change_redirection execution \
 minishell_exec minishell_exec_2 utils_exec utils_exec_2 manage_heredoc \

@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils_II.c                                  :+:      :+:    :+:   */
+/*   builtins_fonctions_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/12 11:46:07 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 14:54:09 by artberna         ###   ########.fr       */
+/*   Created: 2024/10/29 09:49:16 by dsindres          #+#    #+#             */
+/*   Updated: 2024/10/29 09:52:02 by dsindres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_error(const char *s)
+int	is_n(char *cmd)
 {
-	perror(s);
-	exit(EXIT_FAILURE);
-}
+	int	i;
 
-void	free_double(char **tab)
-{
-	int		i;
-
-	i = 0;
-	while (tab[i])
+	i = 1;
+	if (cmd[0] != '-')
+		return (1);
+	while (cmd[i])
 	{
-		free(tab[i]);
+		if (cmd[i] != 'n')
+			return (1);
 		i++;
 	}
-	free(tab);
+	return (0);
 }

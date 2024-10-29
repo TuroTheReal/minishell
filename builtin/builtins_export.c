@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:45:47 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/28 11:09:51 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:52:09 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	is_new_var_env_2(t_env *struct_env, t_cmds *t_cmds, int j)
 		}
 		new_path[j] = struct_env->tab_env[i][j];
 		if (ft_strncmp(new_path, t_cmds->cmd[1],
-				(ft_strlen(new_path) + ft_strlen(t_cmds->cmd[1]))) == 0)
+				(ft_strlen(new_path) + 0)) == 0)
 			return (free(new_path), i);
 		free(new_path);
 		i++;

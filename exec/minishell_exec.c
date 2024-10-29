@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/25 15:00:41 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:39:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minishell_exec(t_cmds *cmds, t_gdata *data)
 
 	if (is_it_heredoc_2(cmds) == 1)
 		manage_hdoc(cmds);
-	if (is_it_builtins(cmds) == 0 && cmds->g_data->nb_command == 1
+	if (is_it_builtins(cmds) != 1 && cmds->g_data->nb_command == 1
 		&& is_it_heredoc(cmds) == 0)
 		redirection(cmds, &data->s_env);
 	else if (cmds->g_data->nb_command == 1)
@@ -48,7 +48,7 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env, pid_t *pid)
 	while (temp != NULL)
 	{
 		if (pipe(fd) == -1 && temp->next != NULL)
-			return (ft_error("pipe failed ", temp));
+			return (ft_error("pipe failed ", cmds, 1));
 		pid[i] = fork();
 		if (pid[i] == -1)
 			return (fork_error(temp, fd));

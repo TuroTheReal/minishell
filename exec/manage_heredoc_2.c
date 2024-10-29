@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_heredoc_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:55:42 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/24 16:56:56 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:07:48 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	affect_heredoc_name(t_cmds *cmds)
 	int		i;
 	char	*str_total;
 
+	init_signal(0, cmds->g_data);
 	i = 0;
 	temp = cmds;
 	while (temp != NULL)

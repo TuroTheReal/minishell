@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:16:03 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/23 13:01:08 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:40:02 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	change_in_stdin(t_cmds *cmds)
 
 	if (verif_file(cmds) == 1)
 	{
-		ft_error("file verif", cmds);
+		ft_error("file verif", cmds, 1);
 		return (1);
 	}
 	in = last_token_node(cmds, 1);

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/25 17:49:38 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:39:41 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,25 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	int		status;
 
 	init_signal(2, cmds->g_data);
-	printf("SGL CMD");
+	printf("SGL CMD\n");
 	if (pipe(fd) == -1)
-	{
-		ft_error("pipe failed ", cmds);
-		return ;
-	}
+		return (ft_error("pipe failed ", cmds, 1));
 	pid = fork();
 	if (pid == -1)
-	{
-		fork_error(cmds, fd);
-		return ;
-	}
+		return (fork_error(cmds, fd));
 	cmds->flag_error = 1;
 	if (pid == 0)
 		child_process_one_command(cmds, struct_env);
+	waitpid(pid, &status, 0);
+	g_sig_code = get_exit_code(status, cmds->g_data);
 	close (fd[1]);
 	close (fd[0]);
-	waitpid(pid, &status, 0);
-	cmds->g_data->exit_code = get_exit_code(status);
 }
 
 void	child_process_one_command(t_cmds *cmds, t_env *struct_env)
 {
 	redirection(cmds, struct_env);
-	exit(0);
+	//exit(0);
 }
 
 void	redirection(t_cmds *cmds, t_env *struct_env)
@@ -84,7 +78,7 @@ void	all_waitpid(t_cmds *cmds, pid_t *pid)
 	while (count > 0)
 	{
 		waitpid(pid[i], &status, 0);
-		cmds->g_data->exit_code = get_exit_code(status);
+		g_sig_code = get_exit_code(status, cmds->g_data);
 		count--;
 		i++;
 	}

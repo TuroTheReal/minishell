@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:54:13 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/24 13:34:10 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:39:08 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	my_error(char *command, char *message, t_cmds *cmds)
 {
+	(void)cmds;
 	if (command != NULL)
 		write(2, command, ft_strlen(command));
 	if (message != NULL)
 		write(2, message, ft_strlen(message));
-	if (cmds->flag_error == 1)
-		exit (EXIT_FAILURE);
+	//if (cmds->flag_error == 1)
+	//	exit (EXIT_FAILURE);
 }
 
 void	fork_error(t_cmds *temp, int *fd)
@@ -29,7 +30,7 @@ void	fork_error(t_cmds *temp, int *fd)
 		close(fd[0]);
 		close(fd[1]);
 	}
-	ft_error("fork failed", NULL);
+	ft_error("fork failed", temp, 1);
 }
 
 int	is_it_heredoc(t_cmds *cmds)

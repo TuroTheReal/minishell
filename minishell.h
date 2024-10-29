@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 10:55:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:52:49 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void		handle_redir(t_cmds *cmd, t_token **tok);
 void		init_signal(int option, t_gdata *data);
 
 //Handle Exit Code
-int			get_exit_code(int status);
+int			get_exit_code(int status, t_gdata *data);
 
 /******************************************************************************
 #                                    DIEGO                                    *
@@ -218,9 +218,12 @@ int			verif_file_2(char *file);
 //Builtins_fonctions
 int			builtins_fonctions(t_cmds *t_cmds, t_env *struct_env);
 void		my_env(t_env *struct_env);
-void		my_pwd(void);
+void		my_pwd(t_cmds *cmds);
 void		my_echo(char **cmd);
 void		my_echo_2(char **cmd);
+
+//Builtins_fonctions_2
+int			is_n(char *cmd);
 
 //Builtins_export
 void		my_export(t_env *struct_env, t_cmds *t_cmds);
@@ -268,7 +271,7 @@ void		putstr(char *str);
 char		**copy_tab(char **env, int len);
 void		free_double_tab(char **tab, int i);
 int			init_struct_env(char **env, t_env *struct_env);
-void		ft_error(char *str, t_cmds *cmds);
+void	ft_error(char *str, t_cmds *cmd, int out);
 
 //Utils_exec_2
 void		my_error(char *command, char *message, t_cmds *cmds);

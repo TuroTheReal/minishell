@@ -6,26 +6,31 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:12:25 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/25 17:48:24 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:17:31 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_exit_code(int status)
+int	get_exit_code(int status, t_gdata *data)
 {
-	int	to_ret;
-
-	to_ret = 0;
 	if (WIFEXITED(status))
 	{
 		g_sig_code = 0;
-		return (WEXITSTATUS(status));
+		data->exit_code = WEXITSTATUS(status);
+		return (data->exit_code);
 	}
 	else if (WIFSIGNALED(status))
 	{
-		to_ret = g_sig_code;
-		return (to_ret);
+		if (WTERMSIG(status) == SIGINT)
+		{
+			g_sig_code = SIGINT + SIGOFFSET;
+			data->exit_code = g_sig_code;
+			return (g_sig_code);
+		}
+		g_sig_code = SIGOFFSET + WTERMSIG(status);
+		data->exit_code = g_sig_code;
+		return (g_sig_code);
 	}
 	return (-1);
 }

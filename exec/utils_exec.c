@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsindres <dsindres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:49:32 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/24 15:03:52 by dsindres         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:37:49 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_error(char *str, t_cmds *cmds)
+void	ft_error(char *str, t_cmds *cmd, int out)
 {
 	if (errno == ENOENT)
 		perror(str);
-	if (cmds->flag_error == 1)
-		exit (EXIT_FAILURE);
+	if (cmd->flag_error == 1)
+		exit (out);
 }
 
 void	putstr(char *str)

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 09:14:21 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/28 17:16:29 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:07:38 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	manage_hdoc(t_cmds *cmds)
 
 	temp = cmds;
 	i = 0;
+	cmds->g_data->heredoc = 0;
 	pid = fork();
 	if (pid == -1)
 		return ;
@@ -36,9 +37,8 @@ void	manage_hdoc(t_cmds *cmds)
 		exit(EXIT_SUCCESS);
 	}
 	waitpid(pid, &status, 0);
-	cmds->g_data->heredoc = get_exit_code(status);
+	g_sig_code = get_exit_code(status, cmds->g_data);
 	affect_heredoc_name(cmds);
-	init_signal(0, cmds->g_data);
 }
 
 const char	*create_file_name(int i)
@@ -67,10 +67,11 @@ void	create_hdoc_file(t_cmds *cmds, const char *str)
 		{
 			fd = open(str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			if (fd < 0)
-				ft_error("Failed to open HDOC_FILE", cmds);
+				ft_error("Failed to open HDOC_FILE", cmds, 1);
 			while (1)
 			{
-				if (input_heredoc(temp_tok, line, fd, cmds->g_data) == 0 || cmds->g_data->heredoc == 1)
+				if (input_heredoc(temp_tok, line, fd, cmds->g_data) == 0 \
+				|| cmds->g_data->heredoc == 1)
 					break ;
 			}
 			close (fd);

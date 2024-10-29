@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:16:30 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/25 17:01:36 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:07:05 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ int	my_exit(t_env *env, t_cmds *cmd)
 	letter = 0;
 	if (len > 1)
 		letter = has_letter(cmd->cmd[1]);
-	printf("DANS MY EXIT\n"); // debug
-	printf("LEN = %d\n", len); // debug
-	printf("LETTER = %d\n", letter); // debug
 	ft_putstr_fd("MYexit\n", 2); // enlever MY
 	if (len < 3 || letter)
 	{

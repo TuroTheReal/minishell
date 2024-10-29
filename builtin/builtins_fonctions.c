@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:39:46 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/28 11:12:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:03:33 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	builtins_fonctions(t_cmds *cmd, t_env *struct_env)
 	if ((ft_strncmp(cmd->cmd[0], "env", 10) == 0) && cmd->cmd[1] == NULL)
 		my_env(struct_env);
 	else if (ft_strncmp(cmd->cmd[0], "pwd", 10) == 0)
-		my_pwd();
+		my_pwd(cmd);
 	else if (ft_strncmp(cmd->cmd[0], "export", 10) == 0)
 		my_export(struct_env, cmd);
 	else if (ft_strncmp(cmd->cmd[0], "unset", 10) == 0
@@ -33,7 +33,7 @@ int	builtins_fonctions(t_cmds *cmd, t_env *struct_env)
 		cmd->g_data->heredoc = g_sig_code;
 	}
 	else
-		return (ft_error("builtins fonctions", cmd), 1);
+		return (ft_error("builtins fonctions", cmd, 1), 1);
 	return (0);
 }
 
@@ -51,10 +51,24 @@ void	my_env(t_env *struct_env)
 	return ;
 }
 
-void	my_pwd(void)
+void	my_pwd(t_cmds *cmds)
 {
 	char	*pwd;
+	int		i;
+	char	**cmd;
 
+	cmd = cmds->cmd;
+	i = 1;
+	while (cmd[i])
+	{
+		if (cmd[i][0] == '-')
+		{
+			my_error(cmd[i], " : invalid option\n", cmds);
+			cmds->g_data->exit_code = 2;
+			return ;
+		}
+		i++;
+	}
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return ;
@@ -70,9 +84,13 @@ void	my_echo(char **cmd)
 
 	if (cmd[1] == NULL)
 		write(1, "\n", 1);
-	else if (ft_strncmp(cmd[1], "-n", 4) == 0)
+	else if (is_n(cmd[1]) == 0)
 	{
 		i = 2;
+		while (cmd[i] && is_n(cmd[i]) == 0)
+			i++;
+		if (cmd[i] == NULL)
+			return ;
 		while (cmd[i])
 		{
 			putstr(cmd[i]);
@@ -81,7 +99,7 @@ void	my_echo(char **cmd)
 			i++;
 		}
 	}
-	else if (ft_strncmp(cmd[1], "-n", 4) != 0)
+	else
 		my_echo_2(cmd);
 }
 

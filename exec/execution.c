@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 10:40:46 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:18:44 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,16 @@ void	exec_command(t_cmds *cmds, t_env *struct_env)
 {
 	if (access(cmds->cmd[0], F_OK) == 0)
 	{
+		if (access(cmds->cmd[0], X_OK) == -1)
+		{
+			perror(cmds->cmd[0]);
+			exit(126);
+		}
 		if (execve(cmds->cmd[0], cmds->cmd, struct_env->tab_env) == -1)
-			ft_error("execve fonction ", cmds);
+		{
+			perror("Execve 1 ");
+			exit(126);
+		}
 	}
 	else
 		exec_command_2(cmds, struct_env);
@@ -56,10 +64,25 @@ void	exec_command_2(t_cmds *cmds, t_env *struct_env)
 	char	*path;
 
 	path = find_command(cmds->cmd[0], struct_env);
+	if (!path)
+	{
+		if (ft_strstr(cmds->cmd[0], "/"))
+			my_error(cmds->cmd[0], ": No such file or directory\n", cmds);
+		else
+			my_error(cmds->cmd[0], ": command not found\n", cmds);
+		exit(127);
+	}
+	printf("PATH = %s\n", path);
+	if (access(path, X_OK) == -1)
+	{
+		free(path);
+		perror(path);
+		exit(126);
+	}
 	if (execve(path, cmds->cmd, struct_env->tab_env) == -1)
 	{
 		free(path);
-		my_error(cmds->cmd[0], " : command not found\n", cmds);
+		ft_error("Execve 1", cmds, 1);
 	}
 }
 

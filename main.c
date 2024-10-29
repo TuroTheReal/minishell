@@ -6,11 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 10:41:37 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:06:48 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sig_code = 0;
 
 void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 {
@@ -40,7 +42,6 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 		cmd = parser(tok, data); // refaire test avec commande vide ou enter apres fix de Diego
 		test = cmd; // debug
 		print_cmd(test); // debug
-		printf("NB COMMAND = %d\n", data->nb_command); // debug
 		while (test) // debug
 		{
 			printf("STRUCT TOKEN CMD N%d\n", test->index);
