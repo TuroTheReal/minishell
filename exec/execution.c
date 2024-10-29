@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/28 13:46:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:40:46 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	execution(t_cmds *cmds, t_env *struct_env)
 
 int	is_it_builtins(t_cmds *cmds)
 {
-	if (cmds->cmd == NULL)
+	if (cmds == NULL || cmds->cmd == NULL || cmds->cmd[0] == NULL)
 		return (2);
 	if (ft_strncmp(cmds->cmd[0], "env", 10) == 0
 		|| ft_strncmp(cmds->cmd[0], "pwd", 10) == 0

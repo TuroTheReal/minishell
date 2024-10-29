@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/10/28 15:37:53 by artberna         ###   ########.fr        #
+#    Updated: 2024/10/29 10:56:09 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ manage_heredoc_2
 LEXING_SRC = handle_error lexer_handler lexer_utils lexer
 
 PARSING_SRC = handle_dollar handle_dollar_II handle_redir parser_handler \
-parser_utils parser_utils_II parser replace_dollar_hdoc
+parser_utils parser_utils_II parser replace_dollar_hdoc replace_dollar_hdoc_II
+
 
 SIGNAL_SRC = handle_signal handle_exit_code
 

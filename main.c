@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 11:13:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:41:37 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 			test = test->next;
 		}
 		minishell_exec(cmd, data);
-		//printf("EXIT CODE MAIN = %d\n", data->exit_code); // debug
+		printf("EXIT CODE MAIN = %d\n", data->exit_code); // debug
 		free_minishell(cmd, tok, data->input);
 	}
 }
@@ -64,6 +64,7 @@ int	main(int ac, char **av, char **env)
 	cmd = NULL;
 	if (init_struct_env(env, &data.s_env))
 		return (EXIT_FAILURE);
+	data.exit_code = 0;
 	minishell(&data, tok, cmd);
 	clear_history();
 	free_double(data.s_env.tab_env);

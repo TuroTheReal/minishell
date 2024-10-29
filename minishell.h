@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 15:37:30 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:55:49 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,10 @@ void		handle_dollar(t_token *tok, t_gdata *data);
 char		*extract_n_replace(char *s, t_gdata *data, int *i);
 
 // Replace Dollar Hdoc
-char	*replace_dollar_hdoc(char *s, t_gdata *data);
+char		*replace_dollar_hdoc(char *s, t_gdata *data);
+
+// Replace Dollar Hdoc II
+char		*extr_n_repl_case_hdoc(t_gdata *data, char *s, int start, int *i);
 
 //Handle Redir
 void		handle_redir(t_cmds *cmd, t_token **tok);

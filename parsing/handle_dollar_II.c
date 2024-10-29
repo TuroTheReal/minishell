@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:57:39 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 15:31:24 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:36:15 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static char	*extract_n_replace_case(t_gdata *data, char *s, int start, int *i)
 	char	*var;
 
 	to_ret = NULL;
-	if (s[(*i)++] == '?')
-		to_find = ft_substr(s, start, 1);
+	if (s[(*i)++] == '?' && data->exit_code)
+		return (ft_itoa(data->exit_code));
 	else if (ft_isdigit(s[start]))
 	{
 		to_find = ft_substr(s, start + 1, *i - start - 1);

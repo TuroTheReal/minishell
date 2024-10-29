@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:35:43 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 17:31:09 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:54:55 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,6 @@ static char	*copy_str_hdoc(char *str, char c)
 	new_str[len] = c;
 	new_str[len + 1] = '\0';
 	return (new_str);
-}
-
-static char	*extr_n_repl_case_hdoc(t_gdata *data, char *s, int start, int *i)
-{
-	char	*to_find;
-	char	*to_ret;
-	char	*var;
-
-	to_ret = NULL;
-	if (s[(*i)++] == '?')
-		to_find = ft_substr(s, start, 1);
-	else if (ft_isdigit(s[start]))
-	{
-		to_find = ft_substr(s, start + 1, *i - start - 1);
-		if (!to_find)
-			return (NULL);
-		to_ret = ft_strdup(to_find);
-		return (free(to_find), to_ret);
-	}
-	else
-		to_find = ft_substr(s, start, *i - start);
-	if (!to_find)
-		return (NULL);
-	printf("to_find = %s\n", to_find);
-	var = ft_getenv(&data->s_env, to_find, data);
-	printf("var = %s\n", var);
-	if (var)
-		to_ret = ft_strdup(var);
-	else
-		to_ret = ft_strdup("");
-	printf("to_ret = %s\n", to_ret);
-	return (free(var), free(to_find), to_ret);
 }
 
 static char	*extract_n_replace_hdoc(char *s, t_gdata *data, int *i)

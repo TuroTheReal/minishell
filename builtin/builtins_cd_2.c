@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:37:23 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/28 11:44:47 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:33:35 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,8 @@ char	*ft_getenv(t_env *struct_env, char *dir, t_gdata *data)
 	t_cmds	t_dir;
 	int		i;
 
+	(void)data;
 	i = 0;
-	if (!ft_strncmp(dir, "?", 1))
-	{
-		printf ("GETENV EXIT CODE = %d \n", data->exit_code); // exit status
-		return (ft_itoa(data->exit_code));
-	}
 	t_dir.cmd = malloc(sizeof(char *) * (2));
 	t_dir.cmd[0] = "cd";
 	t_dir.cmd[1] = dir;
