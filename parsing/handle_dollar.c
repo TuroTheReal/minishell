@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:06:58 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/28 15:36:04 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/29 11:09:11 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*make_var(char *s, t_gdata *data, int *i, char *result)
 	return (new_res);
 }
 
- static char	*replace_dollar(char *s, t_gdata *data)
+static char	*replace_dollar(char *s, t_gdata *data)
 {
 	int		i;
 	char	*result;
