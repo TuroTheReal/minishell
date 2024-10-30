@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:16:03 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 16:40:02 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:04:02 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	change_in_stdin(t_cmds *cmds)
 	int		file_fd;
 	t_token	*in;
 
-	if (verif_file(cmds) == 1)
+	if (verif_file(cmds) != NULL)
 	{
-		ft_error("file verif", cmds, 1);
+		ft_error(verif_file(cmds), cmds, 1);
 		return (1);
 	}
 	in = last_token_node(cmds, 1);

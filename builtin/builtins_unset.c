@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:08 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/30 10:14:38 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:26:52 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	my_unset(t_env *struct_env, t_cmds *t_cmds)
 {
 	int	i;
 
+	if (t_cmds->cmd[1][0] == '-')
+		my_error(t_cmds->cmd[1], ": invalid option\n", t_cmds);
 	if (ft_strncmp(t_cmds->cmd[1], "OLDPWD", 10) == 0)
 	{
 		if (ft_getenv(struct_env, "OLDPWD", NULL) != NULL)

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/30 10:54:55 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:04:35 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_cmds	t_cmds;
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
 # define SIGOFFSET 128
 
-extern int	g_sig_code;
+extern int g_sig_code;
 
 typedef struct s_env
 {
@@ -187,7 +187,7 @@ int			change_out_stdin(t_cmds *cmds);
 t_token		*last_token_node(t_cmds *cmds, int flag);
 int			create_file(t_cmds *cmds);
 int			create_file_2(t_token *temp);
-int			verif_file(t_cmds *cmds);
+char		*verif_file(t_cmds *cmds);
 int			verif_file_2(char *file);
 
 //Builtins_fonctions

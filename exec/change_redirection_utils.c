@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:43:31 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/18 11:29:02 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:03:34 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	create_file_2(t_token *temp)
 	return (0);
 }
 
-int	verif_file(t_cmds *cmds)
+char	*verif_file(t_cmds *cmds)
 {
 	t_token	*temp;
 
@@ -80,11 +80,11 @@ int	verif_file(t_cmds *cmds)
 		if (temp->type == TOK_IR)
 		{
 			if (verif_file_2(temp->token) == 1)
-				return (1);
+				return (temp->token);
 		}
 		temp = temp->next;
 	}
-	return (0);
+	return (NULL);
 }
 
 int	verif_file_2(char *file)
