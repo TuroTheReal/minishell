@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 16:39:41 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 09:47:56 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	pid_t	pid;
 	int		status;
 
+	printf("SIG avant child %d\n", g_sig_code);
 	init_signal(2, cmds->g_data);
 	printf("SGL CMD\n");
 	if (pipe(fd) == -1)

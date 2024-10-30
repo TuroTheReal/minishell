@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 16:39:25 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:03:36 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	minishell_exec(t_cmds *cmds, t_gdata *data)
 	pid_t	*pid;
 
 	if (is_it_heredoc_2(cmds) == 1)
-		manage_hdoc(cmds);
+	{
+		if (manage_hdoc(cmds) == 130)
+			return ;
+	}
 	if (is_it_builtins(cmds) != 1 && cmds->g_data->nb_command == 1
 		&& is_it_heredoc(cmds) == 0)
 		redirection(cmds, &data->s_env);
@@ -25,6 +28,7 @@ void	minishell_exec(t_cmds *cmds, t_gdata *data)
 		one_command(cmds, &data->s_env);
 	else
 	{
+		printf("SIG avant child %d\n", g_sig_code);
 		init_signal(2, cmds->g_data);
 		pid = init_pid(cmds);
 		multiple_commands(cmds, &data->s_env, pid);

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 17:18:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 09:36:15 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	exec_command_2(t_cmds *cmds, t_env *struct_env)
 			my_error(cmds->cmd[0], ": command not found\n", cmds);
 		exit(127);
 	}
-	printf("PATH = %s\n", path);
+	// printf("PATH = %s\n", path);
 	if (access(path, X_OK) == -1)
 	{
 		free(path);

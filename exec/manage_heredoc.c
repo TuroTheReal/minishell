@@ -6,13 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 09:14:21 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 17:07:38 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:06:21 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	manage_hdoc(t_cmds *cmds)
+int	manage_hdoc(t_cmds *cmds)
 {
 	t_cmds	*temp;
 	int		i;
@@ -20,25 +20,25 @@ void	manage_hdoc(t_cmds *cmds)
 	int		status;
 
 	temp = cmds;
-	i = 0;
-	cmds->g_data->heredoc = 0;
+	i = -1;
 	pid = fork();
 	if (pid == -1)
-		return ;
+		return (1);
 	if (pid == 0)
 	{
 		while (temp != NULL)
 		{
 			if (is_it_heredoc(temp) == 1)
-				create_hdoc_file(temp, create_file_name(i));
+				create_hdoc_file(temp, create_file_name(i++));
 			temp = temp->next;
-			i++;
 		}
 		exit(EXIT_SUCCESS);
 	}
 	waitpid(pid, &status, 0);
 	g_sig_code = get_exit_code(status, cmds->g_data);
-	affect_heredoc_name(cmds);
+	if (g_sig_code == 130)
+		return (g_sig_code);
+	return (affect_heredoc_name(cmds));
 }
 
 const char	*create_file_name(int i)

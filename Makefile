@@ -6,7 +6,7 @@
 #    By: artberna <artberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 13:40:40 by artberna          #+#    #+#              #
-#    Updated: 2024/10/29 16:49:58 by artberna         ###   ########.fr        #
+#    Updated: 2024/10/30 10:08:20 by artberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ BLEU = \033[1;34m
 #******************************************************************************
 
 all : $(NAME)
-	@echo -e "$(ROSE)COMPILATION FINISHED, $(NAME) IS CREATED!$(RESET)"
+	@echo "$(ROSE)COMPILATION FINISHED, $(NAME) IS CREATED!$(RESET)"
 
 $(NAME) : $(OBJ) | $(MY_LIBRARY)/my_library.a
 	@$(CC) $(FLAGS) $(OBJ) $(LIB_FLAGS) $(SPECIAL_FLAGS) -o $(NAME)
@@ -110,7 +110,7 @@ $(MY_LIBRARY)/my_library.a :
 
 $(OBJ_DEP_DIR)%.o: %.c $(HEADER) | $(OBJF)
 	@$(CC) $(FLAGS) -MMD -MP -c $< -o $@
-	@echo -e "$(BLEU)Compiling $< to $@$(RESET)"
+	@echo "$(BLEU)Compiling $< to $@$(RESET)"
 
 $(OBJF):
 	@mkdir -p $(ALL_DIR)
@@ -118,13 +118,13 @@ $(OBJF):
 clean :
 	@$(RM) $(OBJ_DEP_DIR)
 	@make clean -C $(MY_LIBRARY)
-	@echo -e "$(VIOLET)Suppressing objects & dependencies files of $(NAME)$(RESET)"
+	@echo "$(VIOLET)Suppressing objects & dependencies files of $(NAME)$(RESET)"
 
 fclean : clean
 	@$(RM) $(NAME)
 	@rm -f $(MY_LIBRARY)/my_library.a
-	@echo -e "$(VERT)Suppressing archives $(MY_LIBRARY).a$(RESET)"
-	@echo -e "$(VERT)Suppressing archives $(NAME)$(RESET)"
+	@echo "$(VERT)Suppressing archives $(MY_LIBRARY).a$(RESET)"
+	@echo "$(VERT)Suppressing archives $(NAME)$(RESET)"
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 16:52:49 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:06:05 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,13 +185,13 @@ pid_t		*init_pid(t_cmds *cmds);
 void		all_waitpid(t_cmds *cmds, pid_t *pid);
 
 //Manage_heredoc
-void		manage_hdoc(t_cmds *cmds);
+int			manage_hdoc(t_cmds *cmds);
 const char	*create_file_name(int i);
 void		create_hdoc_file(t_cmds *cmds, const char *str);
 int			input_heredoc(t_token *temp_tok, char *line, int fd, t_gdata *data);
 
 //Manage_heredoc_2
-void		affect_heredoc_name(t_cmds *cmds);
+int			affect_heredoc_name(t_cmds *cmds);
 void		supp_all_hdoc_file(t_cmds *cmds);
 
 //Execution

@@ -6,13 +6,13 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:55:42 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 17:07:48 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:05:53 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	affect_heredoc_name(t_cmds *cmds)
+int	affect_heredoc_name(t_cmds *cmds)
 {
 	t_cmds	*temp;
 	char	*str_i;
@@ -35,6 +35,7 @@ void	affect_heredoc_name(t_cmds *cmds)
 		}
 		temp = temp->next;
 	}
+	return (0);
 }
 
 void	supp_all_hdoc_file(t_cmds *cmds)

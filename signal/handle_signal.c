@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 13:49:38 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:02:45 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_signal(int option, t_gdata *data)
 	(void)data;
 	if (option == 0)
 	{
+		printf("NORMAL MODE\n"); //debug
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}
