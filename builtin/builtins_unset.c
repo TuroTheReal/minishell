@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:08 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/25 17:16:17 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:14:38 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	my_unset(t_env *struct_env, t_cmds *t_cmds)
 	if (ft_strncmp(t_cmds->cmd[1], "OLDPWD", 10) == 0)
 	{
 		if (ft_getenv(struct_env, "OLDPWD", NULL) != NULL)
-			struct_env->oldpwd = ft_strdup(ft_getenv(struct_env, "OLDPWD", NULL));
+			struct_env->oldpwd = ft_strdup \
+			(ft_getenv(struct_env, "OLDPWD", NULL));
 	}
 	i = is_new_var_env(struct_env, t_cmds);
 	if (i != -1)

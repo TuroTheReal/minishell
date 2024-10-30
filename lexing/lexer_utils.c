@@ -6,23 +6,11 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:34:48 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 17:08:00 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:13:33 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_token(t_token *tok) // debug
-{
-	while (tok)
-	{
-		printf("token node n= %d, input = %s, type = %u\n", \
-		tok->index, tok->token, tok->type);
-		if (!tok->next)
-			break ;
-		tok = tok->next;
-	}
-}
 
 void	free_token(t_token *tok)
 {

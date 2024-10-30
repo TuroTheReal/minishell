@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:15:00 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/30 09:47:56 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:44:33 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	pid_t	pid;
 	int		status;
 
-	printf("SIG avant child %d\n", g_sig_code);
 	init_signal(2, cmds->g_data);
-	printf("SGL CMD\n");
 	if (pipe(fd) == -1)
 		return (ft_error("pipe failed ", cmds, 1));
 	pid = fork();
@@ -29,16 +27,15 @@ void	one_command(t_cmds *cmds, t_env *struct_env)
 	cmds->flag_error = 1;
 	if (pid == 0)
 		child_process_one_command(cmds, struct_env);
-	waitpid(pid, &status, 0);
-	g_sig_code = get_exit_code(status, cmds->g_data);
 	close (fd[1]);
 	close (fd[0]);
+	waitpid(pid, &status, 0);
+	g_sig_code = get_exit_code(status, cmds->g_data);
 }
 
 void	child_process_one_command(t_cmds *cmds, t_env *struct_env)
 {
 	redirection(cmds, struct_env);
-	//exit(0);
 }
 
 void	redirection(t_cmds *cmds, t_env *struct_env)

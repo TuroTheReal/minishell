@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:45:47 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/29 16:52:09 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:14:08 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int	is_new_var_env(t_env *struct_env, t_cmds *t_cmds)
 	}
 	return (-1);
 }
-
 
 void	print_var(char **tab_var)
 {

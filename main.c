@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:45:49 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 14:06:48 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:16:34 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	free_minishell(t_cmds *cmd, t_token *tok, char *input)
 
 static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 {
-	t_cmds	*test; // pour print sans bouger tete de liste
 	while (1)
 	{
 		init_signal(0, data);
@@ -39,17 +38,8 @@ static void	minishell(t_gdata *data, t_token *tok, t_cmds *cmd)
 		data->s_tok = tok;
 		if (error_handler(&tok, data))
 			continue ;
-		cmd = parser(tok, data); // refaire test avec commande vide ou enter apres fix de Diego
-		test = cmd; // debug
-		print_cmd(test); // debug
-		while (test) // debug
-		{
-			printf("STRUCT TOKEN CMD N%d\n", test->index);
-			print_token(test->redir);
-			test = test->next;
-		}
+		cmd = parser(tok, data);
 		minishell_exec(cmd, data);
-		printf("EXIT CODE MAIN = %d\n", data->exit_code); // debug
 		free_minishell(cmd, tok, data->input);
 	}
 }

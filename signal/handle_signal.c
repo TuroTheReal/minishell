@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:55:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/30 10:02:45 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:12:57 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	handle_sigint_child(int sig)
 		write(STDOUT_FILENO, "\n", 1);
 	i++;
 	g_sig_code = SIGINT + SIGOFFSET;
-	printf ("CHILD SIGCODE = %d \n", g_sig_code);
 }
 
 static void	handle_sigquit_child(int sig)
@@ -42,7 +41,6 @@ static void	handle_sigquit_child(int sig)
 	(void)sig;
 	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
 	g_sig_code = SIGQUIT + SIGOFFSET;
-	printf ("CHILD SIGCODE = %d \n", g_sig_code);
 }
 
 static void	init_sigint_heredoc(int sig, t_gdata *data)
@@ -53,7 +51,6 @@ static void	init_sigint_heredoc(int sig, t_gdata *data)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig_code = SIGINT + SIGOFFSET;
-	printf ("HDOC SIGCODE = %d \n", g_sig_code);
 	exit(g_sig_code);
 }
 
@@ -62,19 +59,16 @@ void	init_signal(int option, t_gdata *data)
 	(void)data;
 	if (option == 0)
 	{
-		printf("NORMAL MODE\n"); //debug
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (option == 1)
 	{
-		printf("HDOC MODE\n"); //debug
 		signal(SIGINT, (void (*)(int))init_sigint_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (option == 2)
 	{
-		printf("CHILD MODE\n"); //debug
 		signal(SIGQUIT, handle_sigquit_child);
 		signal(SIGINT, handle_sigint_child);
 	}

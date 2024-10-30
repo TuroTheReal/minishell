@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/30 10:06:05 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:54:55 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,6 @@
 /******************************************************************************
 #                                    ARTHUR                                   *
 #*****************************************************************************/
-
-// valeur de retour des <<
-// CTRL D
-// bash-5.1$ echo $?
-// 0
-
-// CTRL C
-// bash-5.1$ echo $?
-// 130
-
-// echo $54 ou $?87
-
-//free en trop
-// minishell ~ echo $USER "$TERM" '$HOME'
-// ==825655== Invalid free() / delete / delete[] / realloc()
-// ==825655==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-// ==825655==    by 0x40628C: extract_n_replace (handle_dollar.c:59)
-// ==825655==    by 0x405E48: make_var (handle_dollar.c:68)
-// ==825655==    by 0x405DA2: replace_dollar (handle_dollar.c:95)
-// ==825655==    by 0x40607D: handle_dollar (handle_dollar.c:120)
-// ==825655==    by 0x406B55: parser (parser.c:38)
-// ==825655==    by 0x4014AB: minishell (main.c:40)
-// ==825655==    by 0x4013C0: main (main.c:67)
-
-// replace dollar hdoc
 
 typedef struct s_cmds	t_cmds;
 
@@ -185,7 +160,7 @@ pid_t		*init_pid(t_cmds *cmds);
 void		all_waitpid(t_cmds *cmds, pid_t *pid);
 
 //Manage_heredoc
-int			manage_hdoc(t_cmds *cmds);
+int			manage_hdoc(t_cmds *cmds, int i);
 const char	*create_file_name(int i);
 void		create_hdoc_file(t_cmds *cmds, const char *str);
 int			input_heredoc(t_token *temp_tok, char *line, int fd, t_gdata *data);
@@ -271,7 +246,7 @@ void		putstr(char *str);
 char		**copy_tab(char **env, int len);
 void		free_double_tab(char **tab, int i);
 int			init_struct_env(char **env, t_env *struct_env);
-void	ft_error(char *str, t_cmds *cmd, int out);
+void		ft_error(char *str, t_cmds *cmd, int out);
 
 //Utils_exec_2
 void		my_error(char *command, char *message, t_cmds *cmds);

@@ -6,21 +6,19 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 09:14:21 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/30 10:06:21 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:54:38 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	manage_hdoc(t_cmds *cmds)
+int	manage_hdoc(t_cmds *cmds, int i)
 {
 	t_cmds	*temp;
-	int		i;
 	pid_t	pid;
 	int		status;
 
 	temp = cmds;
-	i = -1;
 	pid = fork();
 	if (pid == -1)
 		return (1);
@@ -29,8 +27,9 @@ int	manage_hdoc(t_cmds *cmds)
 		while (temp != NULL)
 		{
 			if (is_it_heredoc(temp) == 1)
-				create_hdoc_file(temp, create_file_name(i++));
+				create_hdoc_file(temp, create_file_name(i));
 			temp = temp->next;
+			i++;
 		}
 		exit(EXIT_SUCCESS);
 	}

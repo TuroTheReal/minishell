@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:16:30 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 17:07:05 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:14:25 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	my_exit(t_env *env, t_cmds *cmd)
 	letter = 0;
 	if (len > 1)
 		letter = has_letter(cmd->cmd[1]);
-	ft_putstr_fd("MYexit\n", 2); // enlever MY
+	ft_putstr_fd("exit\n", 2);
 	if (len < 3 || letter)
 	{
 		if (letter)
@@ -56,7 +56,6 @@ int	my_exit(t_env *env, t_cmds *cmd)
 		}
 		else if (len == 2)
 			g_sig_code = ft_atoi(cmd->cmd[1]);
-		printf("SIGCODE ATOI = %d\n", g_sig_code); // debug
 		free_double(env->tab_env);
 		free_minishell(cmd, cmd->g_data->s_tok, cmd->g_data->input);
 		exit(g_sig_code);

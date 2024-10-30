@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:54:37 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/29 17:06:26 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:40:04 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*switch_case_hdoc(t_gdata *data, char *s, int start, int *i)
 		to_ret = ft_strdup(var);
 	else
 		to_ret = ft_strdup("");
-	return (free(var), free(to_find), to_ret);
+	return (free(to_find), to_ret);
 }
 
 char	*extr_n_repl_case_hdoc(t_gdata *data, char *s, int start, int *i)
