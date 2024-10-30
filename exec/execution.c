@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/30 10:13:51 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:52:50 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	exec_command(t_cmds *cmds, t_env *struct_env)
 {
 	if (access(cmds->cmd[0], F_OK) == 0)
 	{
+		printf("la\n\n");
 		if (access(cmds->cmd[0], X_OK) == -1)
 		{
 			perror(cmds->cmd[0]);
@@ -56,7 +57,16 @@ void	exec_command(t_cmds *cmds, t_env *struct_env)
 		}
 	}
 	else
-		exec_command_2(cmds, struct_env);
+	{
+		if (ft_getenv(struct_env, "PATH", cmds->g_data))
+			exec_command_2(cmds, struct_env);
+		else
+		{
+			my_error(cmds->cmd[0] \
+			, ": No such file or directory\n", cmds);
+			exit(127);
+		}
+	}
 }
 
 void	exec_command_2(t_cmds *cmds, t_env *struct_env)

@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:29:54 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/30 10:54:44 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:06:56 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env, pid_t *pid)
 		if (pid[i] == 0)
 			child_process(temp, infile, fd, struct_env);
 		else
-			parent_process(fd, &infile);
+			parent_process(fd, &infile, cmds, pid);
 		temp = temp->next;
 		i++;
 	}
@@ -67,8 +67,10 @@ void	multiple_commands(t_cmds *cmds, t_env *struct_env, pid_t *pid)
 		close(infile);
 }
 
-void	parent_process(int *fd, int *infile)
+void	parent_process(int *fd, int *infile, t_cmds *cmds, pid_t *pid)
 {
+	(void)cmds;
+	(void)pid;
 	close(fd[1]);
 	if (*infile != STDIN_FILENO)
 		close(*infile);

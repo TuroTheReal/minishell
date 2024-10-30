@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:25:05 by artberna          #+#    #+#             */
-/*   Updated: 2024/10/30 11:04:35 by artberna         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:11:27 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ typedef struct s_cmds	t_cmds;
 # define HDOC_ERROR "minishell: syntax error near unexpected token '<<'\n"
 # define QUOTE_ERROR "minishell: syntax error near unexpected token 'quote'\n"
 # define SIGOFFSET 128
-
-extern int g_sig_code;
 
 typedef struct s_env
 {
@@ -87,6 +85,8 @@ typedef struct s_cmds
 	int				saved_stdout;
 	int				saved_stdin;
 }					t_cmds;
+
+extern int				g_sig_code;
 
 // Main
 void		free_minishell(t_cmds *cmd, t_token *tok, char *input);
@@ -149,7 +149,7 @@ int			get_exit_code(int status, t_gdata *data);
 //Minishell_exec
 void		minishell_exec(t_cmds *cmds, t_gdata *data);
 void		multiple_commands(t_cmds *cmds, t_env *struct_env, pid_t *pid);
-void		parent_process(int *fd, int *infile);
+void		parent_process(int *fd, int *infile, t_cmds *cmds, pid_t *pid);
 void		child_process(t_cmds *temp, int infile, int *fd, t_env *struct_env);
 
 //Minishell_exec_2
