@@ -6,7 +6,7 @@
 /*   By: artberna <artberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:24:45 by dsindres          #+#    #+#             */
-/*   Updated: 2024/10/30 14:52:50 by artberna         ###   ########.fr       */
+/*   Updated: 2024/11/04 10:54:54 by artberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	exec_command(t_cmds *cmds, t_env *struct_env)
 {
 	if (access(cmds->cmd[0], F_OK) == 0)
 	{
-		printf("la\n\n");
 		if (access(cmds->cmd[0], X_OK) == -1)
 		{
 			perror(cmds->cmd[0]);
