@@ -4,3 +4,5 @@
    ...
    obj:*/libreadline.so.*
 }
+
+#to mute readline leak
