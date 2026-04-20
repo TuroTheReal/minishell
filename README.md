@@ -10,8 +10,8 @@
 - [42 School Standards](#42-school-standards)
 
 ## About
-This repository contains my implementation of the **minishell** project at 42 School.  
-Minishell is a collaborative project that involves creating a simplified version of bash shell in C programming.  
+This repository contains my implementation of the **minishell** project at 42 School.
+Minishell is a collaborative project that involves creating a simplified version of bash shell in C programming.
 The project focuses on understanding Unix processes, command parsing, execution, and implementing core shell functionalities including pipes, redirections, and built-in commands.
 
 **Project Goal:**
@@ -28,7 +28,7 @@ make
 ./minishell
 
 # Shell prompt appears
-minishell$ 
+minishell$
 ```
 
 **Supported Shell Operations:**
@@ -84,7 +84,7 @@ make fclean
 make re
 ```
 
-**Compilation flags:** `-Wall -Wextra -Werror`  
+**Compilation flags:** `-Wall -Wextra -Werror`
 **External library:** `-lreadline` (for command line editing)
 
 
@@ -309,6 +309,13 @@ minishell$ exit "invalid"
 - **Cross-Testing**: Comprehensive testing of integrated functionality
 
 
+## 📝 Related Articles
+
+Blog posts documenting the learning process and context behind this project:
+
+- 📝 [42 Piscine and Common Core: What I Learned](https://arthur-portfolio.com/en/blog/42-piscine-and-core-curriculum) — Reflections on 42 School's selection process and 2-year curriculum
+
+---
 ## Contact
 - **GitHub**: [@TuroTheReal](https://github.com/TuroTheReal)
 - **Email**: arthurbernard.dev@gmail.com
