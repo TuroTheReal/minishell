@@ -8,6 +8,8 @@
 - [Features Implementation](#features-implementation)
 - [Built-in Commands](#built-in-commands)
 - [42 School Standards](#42-school-standards)
+- [Related Articles](#-related-articles)
+- [Contact](#contact)
 
 ## About
 This repository contains my implementation of the **minishell** project at 42 School.
